@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/client/assets/css/contact.min.css" />
+}
+
+<div class="container">
+    <div class="breadcrumbs">
+        <span><a asp-controller="home" asp-action="index">Home </a>>&nbsp;</span><span> Contact</span>
+    </div>
+    <!-- Contact Start -->
+    <section class="contact-section">
+        <form id="contact-form">
+            <h1>Contact</h1>
+            <input placeholder="Name" type="text" id="name" />
+            <input placeholder="Email" type="email" id="email" />
+            <input placeholder="Phone" type="text" id="phone" />
+            <textarea placeholder="Message" type="text" id="phone"></textarea>
+            <button class="btn" type="submit">Send</button>
+        </form>
+        <div class="location-details">
+            <h2>Location & Details</h2>
+            <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id,
+                repudiandae? Officia est veniam cupiditate incidunt praesentium
+                maiores excepturi. Nostrum, odit?
+            </p>
+            <div>Address: <span>4800 San Mateo Ln NE</span></div>
+            <div>Phone: <span>0123-456-789</span></div>
+            <div>Email: <span>demo@demo.com</span></div>
+        </div>
+    </section>
+</div>

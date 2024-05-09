@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Style -->
+    <link rel="stylesheet" href="~/client/assets/css/layout.min.css" />
+    @await RenderSectionAsync("Styles", false)
+    <link rel="icon"
+          type="image/x-icon"
+          href="~/client/assets/icons/favicon.png" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <!-- Header Start -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <!-- Logo -->
+                <div class="left-side">
+                    <div class="burger-menu">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <a asp-controller="home" asp-action="index">
+                        <h1 class="logo">Maxmod</h1>
+                    </a>
+                </div>
+                <!-- Search -->
+                <form class="search" id="search-form">
+                    <input placeholder="Search For Products..." type="text" />
+                    <button class="btn" type="submit">Search</button>
+                </form>
+                <!-- Account-Cart -->
+                <div class="account-cart">
+                    <!-- Account -->
+                    <div class="account-container">
+                        <button class="wrapper">
+                            <img src="~/client/assets/icons/user_icon.svg" alt="" />
+                            <span>Hello, log in</span>
+                        </button>
+
+                        <div class="account-dropdown hidden">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <img src="~/client/assets/icons/signin_icon.svg" alt="" />
+                                        <span>Log In</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="~/client/assets/icons/signup_icon.svg" alt="" />
+                                        <span>Register</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img src="~/client/assets/icons/signout_icon.svg"
+                                             alt="" />
+                                        <span>Log Out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Cart -->
+                    <div class="cart-container">
+                        <button class="header-cart">
+                            <div class="cart-icon">
+                                <img src="~/client/assets/icons/cart_icon.svg" alt="" />
+                                <span>0</span>
+                            </div>
+                            <span class="header-cart-total">$0.00</span>
+                        </button>
+                        <div class="cart-drawer hidden">
+                            <div class="drawer-top">
+                                <h3>Shopping cart (1)</h3>
+                                <button>
+                                    <img src="~/client/assets/icons/close_icon.svg" alt="" />
+                                </button>
+                            </div>
+                            <div class="line"></div>
+                            <ul class="drawer-middle">
+                                <li class="product">
+                                    <a href="#">
+                                        <img src="~/client/assets/images/product/product-1.jpg"
+                                             alt="" />
+                                    </a>
+                                    <div class="right-side">
+                                        <div class="product-detail">
+                                            <a href="#">Lorem ipsum dolor sit amet consectetur.</a>
+                                            <p>Weight: <span>500gm</span></p>
+                                            <span class="price">$19.00</span>
+                                        </div>
+                                        <div class="cart-control">
+                                            <button class="btn">
+                                                <img src="~/client/assets/icons/trashcan_icon.svg"
+                                                     alt="" />
+                                            </button>
+                                            <div class="count-control">
+                                                <button class="decrease" id="decrease-btn">-</button>
+                                                <input value="1" type="number" id="count-input" />
+                                                <button class="increase" id="increase-btn">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="line"></div>
+                            <div class="drawer-bottom">
+                                <div class="subtotal-container">
+                                    <span>Subtotal (1)</span>
+                                    <span class="subtotal">$19.00</span>
+                                </div>
+                                <div class="wrapper">
+                                    <a class="btn" href="#">View Cart</a>
+                                    <a class="btn" href="#">Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overlay hidden"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="line out-of-container"></div>
+            <div class="header-bottom">
+                <nav>
+                    <ul class="navigation">
+                        <li @((string)ViewData["Title"]! == "Home" ? "class=active" : "")>
+                            <a asp-controller="home" asp-action="index">Home</a>
+                        </li>
+                        <li class="categories">
+                            <a href="#">
+                                Categories
+                                <img src="~/client/assets/icons/chevron.svg" alt="" />
+                            </a>
+                            <div class="nav-dropdown hidden">
+                                <ul class="container">
+                                    <li>
+                                        <a href="#">All Products</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Fruits</a>
+                                        <div class="line"></div>
+                                        <div class="children">
+                                            <a href="#">Apple</a>
+                                            <a href="#">Pear</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="line"></div>
+                            </div>
+                        </li>
+                        <li @((string)ViewData["Title"]! == "About Us" ? "class=active" : "")>
+                            <a asp-controller="about" asp-action="index">About Us</a>
+                        </li>
+                        <li @((string)ViewData["Title"]! == "Contact" ? "class=active" : "")>
+                            <a asp-controller="contact" asp-action="index">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="line out-of-container"></div>
+        </div>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <!-- Footer Start -->
+    <footer>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li>
+                        <h3>Contact Info</h3>
+                        <ul>
+                            <li>
+                                <img src="~/client/assets/icons/footer_location.svg" alt="" />
+                                <p>4800 San Mateo Ln NE</p>
+                            </li>
+                            <li>
+                                <img src="~/client/assets/icons/footer_phone.svg" alt="" />
+                                <p>0123-456-789</p>
+                            </li>
+                            <li>
+                                <img src="~/client/assets/icons/footer_mail.svg" alt="asd" />
+                                <p>demo@demo.com</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>Navigation</h3>
+                        <ul>
+                            <li>
+                                <a asp-controller="home" asp-action="index"> Home </a>
+                            </li>
+                            <li>
+                                <a href="#"> Shop </a>
+                            </li>
+                            <li>
+                                <a asp-controller="about" asp-action="index"> About Us </a>
+                            </li>
+                            <li>
+                                <a asp-controller="contact" asp-action="index"> Contact </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>Categories</h3>
+                        <ul>
+                            <li>
+                                <a href="#">Fruits</a>
+                            </li>
+                            <li>
+                                <a href="#">Vegetables</a>
+                            </li>
+                            <li>
+                                <a href="#">Dairy</a>
+                            </li>
+                            <li>
+                                <a href="#">Meat</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div class="line out-of-container"></div>
+            <span class="copyright">@@ 2024 All rights reserved.</span>
+        </div>
+        <button style="
+          background: linear-gradient(
+            to top,
+            rgb(0, 0, 0) 0%,
+            rgb(255, 255, 255) 0%
+          );
+        "
+                class="back-to-top">
+            <img src="~/client/assets/icons/chevron.svg" alt="" />
+        </button>
+    </footer>
+    <!-- Scripts -->
+    <script src="~/client/assets/js/layout.min.js"></script>
+    @await RenderSectionAsync("Scripts", false)
+</body>
+</html>
+

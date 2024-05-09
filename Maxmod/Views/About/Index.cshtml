@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/client/assets/css/about.min.css" />
+}
+
+<div class="container">
+    <div class="breadcrumbs">
+        <span><a asp-controller="home" asp-action="index">Home </a>>&nbsp;</span><span> About Us</span>
+    </div>
+    <!-- About Start -->
+    <section class="about-section">
+        <h1 class="about-title">Our Story</h1>
+        <p class="about-description">
+            Welcome to Sitar, where passion for quality furniture meets
+            exceptional design. We provide furniture that not only elevates
+            spaces but also tells a unique story. Today, we take pride in
+            offering handcrafted pieces that blend functionality with
+            aesthetics.
+        </p>
+        <div class="about-box">
+            <img class="box-image"
+                 src="~/client/assets/images/misc/fruit-snacks-at-picnic.png"
+                 alt="" />
+            <div class="right-side">
+                <span class="box-text">New Arrival</span>
+                <h2 class="box-title">
+                    Fruits Galore: Nature's Gift for a Healthy Life
+                </h2>
+                <p class="box-description">
+                    Dive into the abundance of Mother Nature's treasures with our
+                    "Fruits Galore" collection. Packed with vitamins, minerals, and
+                    natural goodness, these fruits aren't just a treat for your
+                    taste buds but a celebration of health and vitality.
+                </p>
+                <a class="btn" href="#">Shop Now</a>
+            </div>
+        </div>
+    </section>
+</div>

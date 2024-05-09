@@ -1,0 +1,124 @@
+main .about-section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.about-title {
+  font-weight: 400;
+  font-size: 30px;
+}
+
+.about-description {
+  width: 650px;
+  text-align: center;
+  font-weight: 300;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+main .about-section .about-box {
+  display: flex;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  margin-top: 50px;
+  overflow: hidden;
+  width: 100%;
+}
+
+main .about-section .about-box img {
+  max-width: 50%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+main .about-section .about-box .right-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 50px;
+}
+
+main .about-section .about-box .right-side .box-text {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+main .about-section .about-box .right-side .box-title {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 50px;
+}
+
+main .about-section .about-box .right-side .box-description {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 25px;
+}
+
+main .about-section .about-box .right-side .btn {
+  border: 1px solid #000;
+  border-radius: 8px;
+  background-color: transparent;
+  width: 130px;
+  color: #000;
+  text-align: center;
+  padding: 10px 0;
+  transition: color 0.15s ease-in-out;
+}
+
+main .about-section .about-box .right-side .btn:hover {
+  color: #fff;
+}
+
+main .about-section .about-box .right-side .btn::before {
+  background-color: #184434;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    padding-bottom: 300px;
+  }
+
+  .about-description {
+    width: 100%;
+  }
+
+  main .about-section .about-box {
+    flex-direction: column;
+  }
+
+  main .about-section .about-box img {
+    border-radius: 0 0 8px 8px;
+    max-width: 100%;
+  }
+
+  main .about-section .about-box .right-side {
+    gap: 10px;
+    padding: 20px;
+  }
+
+  main .about-section .about-box .right-side .box-text {
+    font-size: 16px;
+  }
+
+  main .about-section .about-box .right-side .box-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+  }
+
+  main .about-section .about-box .right-side .btn {
+    margin-top: 10px;
+    width: 120px;
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  main {
+    padding-bottom: 570px;
+  }
+}
