@@ -259,3 +259,9 @@ C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\runtimes\win-arm64\n
 C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\obj\Debug\net8.0\Maxmod.sourcelink.json

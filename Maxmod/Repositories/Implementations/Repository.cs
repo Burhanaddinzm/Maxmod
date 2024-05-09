@@ -1,22 +1,22 @@
 ﻿using Maxmod.Data.Contexts;
-using Maxmod.Models.BaseModels;
+using Maxmod.Models.Common;
 using Maxmod.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Maxmod.Repositories.Implementations;
 
-public class Repository<T> : IRepository<T> where T : BaseAuditable
+public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
 {
-    //readonly AppDbContext _context;
-    //public Repository(AppDbContext context)
-    //{
-    //    _context = context;
-    //}
+    readonly AppDbContext _context;
+    public Repository(AppDbContext context)
+    {
+        _context = context;
+    }
     public async Task CreateAsync(T entity)
     {
-        //await _context.Set<T>().AddAsync(entity);
-        //await _context.SaveChangesAsync();
+        await _context.Set<T>().AddAsync(entity);
+        await _context.SaveChangesAsync();
     }
 
     public Task DeleteAsync(int id)

@@ -1,9 +1,9 @@
-﻿using Maxmod.Models.BaseModels;
+﻿using Maxmod.Models.Common;
 using System.Linq.Expressions;
 
 namespace Maxmod.Repositories.Interfaces;
 
-public interface IRepository<T> where T : BaseAuditable
+public interface IRepository<T> where T : BaseAuditableEntity
 {
     Task CreateAsync(T entity);
     Task UpdateAsync(T entity);

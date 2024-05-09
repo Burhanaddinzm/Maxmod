@@ -1,6 +1,6 @@
-﻿namespace Maxmod.Models.BaseModels;
+﻿namespace Maxmod.Models.Common;
 
-public class BaseAuditable : BaseModel
+public class BaseAuditableEntity : BaseEntity
 {
     public string IP { get; set; } = null!;
     public string CreatedBy { get; set; } = null!;
