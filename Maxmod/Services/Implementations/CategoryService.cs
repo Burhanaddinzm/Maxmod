@@ -1,22 +1,34 @@
-﻿using Maxmod.Repositories.Interfaces;
+﻿using Maxmod.Models;
+using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Category;
+using Maxmod.Extensions;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Maxmod.Services.Implementations;
 
 public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IHostEnvironment _env;
-    public CategoryService(ICategoryRepository categoryRepository, IHostEnvironment environment)
+    private readonly IWebHostEnvironment _env;
+    public CategoryService(ICategoryRepository categoryRepository, IWebHostEnvironment environment)
     {
         _categoryRepository = categoryRepository;
         _env = environment;
     }
 
-    public Task<CreateCategoryVM> CreateCategoryAsync(CreateCategoryVM createCategoryVM)
+    public async Task CreateCategoryAsync(CreateCategoryVM createCategoryVM)
     {
-        throw new NotImplementedException();
+        var filename = await createCategoryVM.Image.SaveFileAsync(_env.WebRootPath, "client", "assets", "images", "category");
+        Category category = new Category
+        {
+            Name = createCategoryVM.Name,
+            ParentId = createCategoryVM.ParentId,
+        };
+        category.Image = filename;
+
+        await _categoryRepository.CreateAsync(category);
     }
 
     public Task DeleteCategoryAsync(int id, DeleteCategoryVM deleteCategoryVM)
@@ -24,18 +36,30 @@ public class CategoryService : ICategoryService
         throw new NotImplementedException();
     }
 
-    public Task<List<CategoryVM>> GetAllCategoriesAsync()
+    public async Task<Category> GetCategoryAsync(int id)
+    {
+        return await _categoryRepository.GetAsync(id);
+    }
+
+    public async Task<Category> GetCategoryAsync(string categoryName)
+    {
+        return await _categoryRepository.GetAsync(x => x.Name.Trim().ToLower() == categoryName.Trim().ToLower());
+    }
+
+    public Task UpdateCategoryAsync(int id, UpdateCategoryVM updateCategoryVM)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CategoryVM> GetCategoryAsync(int id)
+    public async Task<List<Category>> GetAllCategoriesAsync(Expression<Func<Category, bool>>? expression = null, params string[] includes)
     {
-        throw new NotImplementedException();
+        return await _categoryRepository.GetAllAsync(expression, includes);
     }
 
-    public Task<UpdateCategoryVM> UpdateCategoryAsync(int id, UpdateCategoryVM updateCategoryVM)
+    public async Task<bool> CheckDuplicateAsync(string categoryName)
     {
-        throw new NotImplementedException();
+        var existingCategory = await GetCategoryAsync(categoryName);
+
+        return existingCategory != null;
     }
 }

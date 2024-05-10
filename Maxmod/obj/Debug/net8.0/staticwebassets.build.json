@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RUToeJCOgA8TOaUJTXqKr9JgBgxDoX6nlyT2TPSaE/g=",
+  "Hash": "iAkiPJxQ/yy0qNbzSb+E4u/Y5NoA8KEfesFvukKK8o0=",
   "Source": "Maxmod",
   "BasePath": "_content/Maxmod",
   "Mode": "Default",
@@ -36096,6 +36096,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\client\\assets\\images\\category\\all_product.png"
+    },
+    {
+      "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\category\\ed0ca367-b5e9-43ce-b3b0-504be377cc20_gpu2.png",
+      "SourceId": "Maxmod",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\",
+      "BasePath": "_content/Maxmod",
+      "RelativePath": "client/assets/images/category/ed0ca367-b5e9-43ce-b3b0-504be377cc20_gpu2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\client\\assets\\images\\category\\ed0ca367-b5e9-43ce-b3b0-504be377cc20_gpu2.png"
     },
     {
       "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\misc\\b2.png",

@@ -1,0 +1,27 @@
+﻿﻿@{
+    ViewData["Title"] = "Create Category";
+}
+@model CreateCategoryVM
+
+<form asp-controller="category" asp-action="create" asp-area="admin" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" id="name">
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+    <div class="mb-3">
+        <label for="cat" class="form-label">Image</label>
+        <input asp-for="Image" class="form-control" id="cat">
+        <span class="text-danger" asp-validation-for="Image"></span>
+    </div>
+    <div class="mb-3">
+        <label for="cat" class="form-label">Parent Category</label>
+        <select class="form-control" asp-for="ParentId" asp-items="@(new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name)))">
+            <option value="" selected>No Parent</option>
+        </select>
+        <span class="text-danger" asp-validation-for="ParentId"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="category" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>
