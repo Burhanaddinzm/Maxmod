@@ -1,4 +1,5 @@
 using Maxmod.Data;
+using Maxmod.Repositories;
 using Maxmod.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddData(builder.Configuration);
 builder.Services.AddServices();
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 

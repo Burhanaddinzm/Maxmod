@@ -16,8 +16,6 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="ViewComponents\" />
-    <Folder Include="Services\Interfaces\" />
-    <Folder Include="Services\Implementations\" />
     <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 

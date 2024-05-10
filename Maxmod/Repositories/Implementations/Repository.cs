@@ -26,12 +26,7 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<T>> GetAllAsync()
-    {
-        return await _context.Set<T>().ToListAsync();
-    }
-
-    public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression, params string[] includes)
+    public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? expression = null, params string[] includes)
     {
         IQueryable<T> query = _context.Set<T>().AsQueryable();
 
