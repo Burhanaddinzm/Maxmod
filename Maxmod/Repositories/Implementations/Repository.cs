@@ -19,33 +19,48 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
         await _context.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var entity = await _context.Set<T>().FindAsync(id);
+        entity!.IsDeleted = true;
+        await _context.SaveChangesAsync();
     }
 
-    public Task<List<T>> GetAllAsync()
+    public async Task<List<T>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().ToListAsync();
     }
 
-    public Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression, params string[] includes)
+    public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression, params string[] includes)
     {
-        throw new NotImplementedException();
+        IQueryable<T> query = _context.Set<T>().AsQueryable();
+
+        if (includes.Length > 0)
+        {
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+        }
+
+        return expression == null ?
+            await query.ToListAsync() :
+            await query.Where(expression).ToListAsync();
     }
 
-    public Task<T?> GetAsync(int id)
+    public async Task<T?> GetAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().FindAsync(id);
     }
 
-    public Task<T?> GetAsync(Expression<Func<T, bool>> expression)
+    public async Task<T?> GetAsync(Expression<Func<T, bool>> expression)
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().FirstOrDefaultAsync(expression);
     }
 
-    public Task UpdateAsync(T entity)
+    public async Task UpdateAsync(T entity)
     {
-        throw new NotImplementedException();
+        _context.Set<T>().Update(entity);
+        await _context.SaveChangesAsync();
     }
 }

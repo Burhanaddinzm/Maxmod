@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Maxmod.Models;
-
-public class AppUser : IdentityUser
+namespace Maxmod.Models
 {
-    public string FullName { get; set; } = null!;
+    public class AppUser : IdentityUser
+    {
+        public string FullName { get; set; } = null!;
+    }
 }
