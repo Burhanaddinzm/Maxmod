@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Delete Category";
+}
+@model Category
+
+<form asp-controller="category" asp-action="delete" asp-area="admin" method="post">
+    <input asp-for="Id" style="display:none" />
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" id="name" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="cat" class="form-label">Parent Category</label>
+        <select id="cat" class="form-control" asp-for="ParentId" asp-items="@(new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name)))" disabled>
+            @if (Model.ParentId != null)
+            {
+                <option value="">No Parent</option>
+            }
+            else
+            {
+                <option value="" selected>No Parent</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="category" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>

@@ -10,13 +10,13 @@
         <span class="text-danger" asp-validation-for="Name"></span>
     </div>
     <div class="mb-3">
-        <label for="cat" class="form-label">Image</label>
-        <input asp-for="Image" class="form-control" id="cat">
+        <label for="image" class="form-label">Image</label>
+        <input asp-for="Image" class="form-control" id="image">
         <span class="text-danger" asp-validation-for="Image"></span>
     </div>
     <div class="mb-3">
         <label for="cat" class="form-label">Parent Category</label>
-        <select class="form-control" asp-for="ParentId" asp-items="@(new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name)))">
+        <select id="cat" class="form-control" asp-for="ParentId" asp-items="@(new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name)))">
             <option value="" selected>No Parent</option>
         </select>
         <span class="text-danger" asp-validation-for="ParentId"></span>
