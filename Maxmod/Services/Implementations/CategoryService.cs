@@ -68,9 +68,16 @@ public class CategoryService : ICategoryService
 
     public async Task<bool> CheckDuplicateAsync(string categoryName, int? categoryId = null)
     {
-        var existingCategory = await _categoryRepository.GetAsync(
-            x => x.Name.Trim().ToLower() == categoryName.Trim().ToLower() &&
-            x.Id != categoryId);
+        Category? existingCategory;
+
+        if (categoryId != null)
+        {
+            existingCategory = await _categoryRepository.GetAsync(
+                x => x.Name.Trim().ToLower() == categoryName.Trim().ToLower() &&
+                x.Id != categoryId
+                );
+        }
+        else existingCategory = await _categoryRepository.GetAsync(x => x.Name.Trim().ToLower() == categoryName.Trim().ToLower());
 
         return existingCategory != null;
     }
