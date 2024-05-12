@@ -14,18 +14,11 @@ public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IWebHostEnvironment _env;
-    private readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    public CategoryService(
-        ICategoryRepository categoryRepository,
-        IWebHostEnvironment environment,
-        ITempDataDictionaryFactory tempDataDictionaryFactory,
-        IHttpContextAccessor httpContextAccessor)
+
+    public CategoryService(ICategoryRepository categoryRepository, IWebHostEnvironment environment)
     {
         _categoryRepository = categoryRepository;
         _env = environment;
-        _tempDataDictionaryFactory = tempDataDictionaryFactory;
-        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task CreateCategoryAsync(CreateCategoryVM createCategoryVM)
@@ -41,18 +34,9 @@ public class CategoryService : ICategoryService
         await _categoryRepository.CreateAsync(category);
     }
 
-    public async Task<bool> DeleteCategoryAsync(int id, DeleteCategoryVM deleteCategoryVM)
+    public async Task DeleteCategoryAsync(DeleteCategoryVM deleteCategoryVM)
     {
-        var httpContext = _httpContextAccessor.HttpContext;
-        var tempData = _tempDataDictionaryFactory.GetTempData(httpContext);
-
-        if (id != deleteCategoryVM.Id)
-        {
-            tempData["Error"] = "Id is incorrect";
-            return false;
-        }
         await _categoryRepository.DeleteAsync(deleteCategoryVM.Id);
-        return true;
     }
 
     public Task UpdateCategoryAsync(int id, UpdateCategoryVM updateCategoryVM)

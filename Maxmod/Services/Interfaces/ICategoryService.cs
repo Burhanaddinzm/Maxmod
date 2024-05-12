@@ -8,7 +8,7 @@ public interface ICategoryService
 {
     Task CreateCategoryAsync(CreateCategoryVM createCategoryVM);
     Task UpdateCategoryAsync(int id, UpdateCategoryVM updateCategoryVM);
-    Task<bool> DeleteCategoryAsync(int id, DeleteCategoryVM deleteCategoryVM);
+    Task DeleteCategoryAsync(DeleteCategoryVM deleteCategoryVM);
     Task<List<Category>> GetAllCategoriesAsync(Expression<Func<Category, bool>>? expression = null, params string[] includes);
     Task<Category> GetCategoryAsync(int id);
     Task<bool> CheckDuplicateAsync(string categoryName);

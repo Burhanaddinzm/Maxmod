@@ -23,13 +23,14 @@ namespace Maxmod.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null);
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryVM categoryVM)
         {
-            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null);
+
             if (!ModelState.IsValid) return View(categoryVM);
             if (await _categoryService.CheckDuplicateAsync(categoryVM.Name))
             {
@@ -43,7 +44,7 @@ namespace Maxmod.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null);
 
             if (id == 0)
             {
@@ -62,17 +63,18 @@ namespace Maxmod.Areas.Admin.Controllers
             return View(category);
         }
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeletePOST(int id, DeleteCategoryVM deleteCategoryVM)
+        public async Task<IActionResult> DeletePOST(DeleteCategoryVM deleteCategoryVM)
         {
-            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
 
-            var result = await _categoryService.DeleteCategoryAsync(id, deleteCategoryVM);
-            if (!result)
+            Category? category = await _categoryService.GetCategoryAsync(deleteCategoryVM.Id);
+
+            if (category == null)
             {
-                TempData["Error"] = "Failed to delete category!";
+                TempData["Error"] = "Category not found!";
                 return RedirectToAction("Error", "Home", new { Area = "" });
             }
 
+            await _categoryService.DeleteCategoryAsync(deleteCategoryVM);
             return RedirectToAction("Index");
         }
     }
