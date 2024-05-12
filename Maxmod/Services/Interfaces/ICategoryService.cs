@@ -7,9 +7,10 @@ namespace Maxmod.Services.Interfaces;
 public interface ICategoryService
 {
     Task CreateCategoryAsync(CreateCategoryVM createCategoryVM);
-    Task UpdateCategoryAsync(int id, UpdateCategoryVM updateCategoryVM);
+    Task UpdateCategoryAsync(UpdateCategoryVM updateCategoryVM, Category category);
     Task DeleteCategoryAsync(DeleteCategoryVM deleteCategoryVM);
     Task<List<Category>> GetAllCategoriesAsync(Expression<Func<Category, bool>>? expression = null, params string[] includes);
     Task<Category> GetCategoryAsync(int id);
-    Task<bool> CheckDuplicateAsync(string categoryName);
+    Task<bool> CheckDuplicateAsync(string categoryName, int? categoryId = null);
+    Task<(bool, Category)> CheckExistanceAsync(int id);
 }
