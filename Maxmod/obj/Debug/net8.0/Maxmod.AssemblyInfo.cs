@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Maxmod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d03683f9b081ce57bc82d38640af2ddfcb30be36")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+68013d527aa4e0ecaafede87c020b591e4aca317")]
 [assembly: System.Reflection.AssemblyProductAttribute("Maxmod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Maxmod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
