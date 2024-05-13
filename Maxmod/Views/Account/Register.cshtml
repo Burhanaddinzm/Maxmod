@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+@model RegisterVM
+
+@section Styles {
+    <link rel="stylesheet" href="~/client/assets/css/register.css" />
+}
+
+<div class="container">
+    <div class="breadcrumbs">
+        <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> Register</span>
+    </div>
+    <!-- Register Start -->
+    <section class="register-section">
+        <h1>Create account</h1>
+        <div class="register-wrapper">
+            <form asp-action="register" asp-controller="account" method="post">
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <label for="fullname">Full name</label>
+                        <input asp-for="FullName" id="fullname" placeholder="Full name" />
+                        <span style="color:red;font-size:14px" asp-validation-for="FullName"></span>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="email">Email</label>
+                        <input asp-for="Email" id="email" placeholder="Email" />
+                        <span style="color:red;font-size:14px" asp-validation-for="Email"></span>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="password">Password</label>
+                        <input asp-for="Password" id="password" placeholder="Password" />
+                        <span style="color:red;font-size:14px" asp-validation-for="Password"></span>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="confirm-password">Confirm password</label>
+                        <input asp-for="ConfirmPassword"
+                               id="confirm-password"
+                               placeholder="Confirm password" />
+                        <span style="color:red;font-size:14px" asp-validation-for="ConfirmPassword"></span>
+                    </div>
+                </div>
+                <label for="vendor" class="vendor-checkbox">
+                    <input asp-for="IsVendor" id="vendor">
+                    <span>I am a Vendor</span>
+                </label>
+                <button type="submit" class="btn">Register</button>
+                <div style="color:red;font-size:14px" asp-validation-summary="ModelOnly"></div>
+            </form>
+            <p>Have an account? <a asp-action="login" asp-controller="account">Log in</a> to checkout faster.</p>
+        </div>
+    </section>
+</div>

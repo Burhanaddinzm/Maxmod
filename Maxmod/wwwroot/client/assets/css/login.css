@@ -51,7 +51,11 @@ main .login-section h3 {
   width: 100%;
 }
 
-.login-section .login-wrapper .left-side form input {
+.login-section
+  .login-wrapper
+  .left-side
+  form
+  input:not(.login-section .remember-checkbox input) {
   width: 80%;
   padding: 12px;
   background-color: transparent;
@@ -70,6 +74,23 @@ main .login-section h3 {
   font-weight: 300;
 }
 
+.login-section .remember-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.login-section .remember-checkbox:hover {
+  color: #184434;
+}
+
+.login-section .remember-checkbox input {
+  accent-color: #000;
+}
+
 @media screen and (max-width: 768px) {
   .login-section .login-wrapper {
     gap: 20px;
@@ -79,6 +100,6 @@ main .login-section h3 {
 
 @media screen and (max-width: 425px) {
   main {
-    padding-bottom: 550px ;
+    padding-bottom: 550px;
   }
 }

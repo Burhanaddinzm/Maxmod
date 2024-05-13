@@ -32,12 +32,16 @@
 }
 
 <h1>@TempData["Error"]</h1>
-<a asp-controller="home" asp-action="index">Redirecting to homepage in <span id="countdown">5</span></a>
+<a asp-controller="home" asp-action="index">Redirecting to Homepage in <span id="countdown">5</span></a>
 
 @section Scripts {
     <script>
+        const countDownEl = document.getElementById("countdown");
+        const h1El = document.querySelector("main h1");
+
         let seconds = 5;
-        const countDownEl = document.getElementById("countdown")
+
+        if (h1El.textContent === "") h1El.textContent = "Access Denied!";
 
         const countdown = () => {
             seconds = seconds - 1;

@@ -344,6 +344,19 @@ const moveVendorSlides = () => {
       slideWidth * currentSlideIndex +
       110 * currentSlideIndex
     )}px)`;
+  } else if (windowWidth <= 768 && windowWidth > 425) {
+    if (currentSlideIndex == vendorSlides.length - 3) {
+      currentSlideIndex = vendorSlides.length - 5;
+      direction = -1;
+    } else if (currentSlideIndex < 0) {
+      currentSlideIndex = 1;
+      direction = 1;
+    }
+
+    vendorSlideWrapper.style.transform = `translateX(${-(
+      slideWidth * currentSlideIndex +
+      112 * currentSlideIndex
+    )}px)`;
   } else if (windowWidth <= 425) {
     if (currentSlideIndex == vendorSlides.length - 2) {
       currentSlideIndex = vendorSlides.length - 4;

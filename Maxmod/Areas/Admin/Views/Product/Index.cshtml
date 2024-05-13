@@ -30,7 +30,7 @@
                                     {
                                         <tr>
                                             <td>@product.Name</td>
-                                            <td> @product.Description</td>
+                                            <td>@product.Description</td>
                                             <td>
                                                 <img style="width:150px; height:150px; object-fit:contain" src="~/client/assets/images/product/@product.ProductImages!.FirstOrDefault(x=> x.IsMain)!.Url" />
                                             </td>
@@ -38,8 +38,8 @@
                                             <td>@product.Vendor.Name</td>
                                             <td>@(product.IsNew ? "Yes" : "No")</td>
                                             <td style="display:grid; gap:8px;border-bottom:none;">
-                                                <a class="btn btn-primary" asp-route-id="@product.Id" asp-controller="Category" asp-action="Update">Update</a>
-                                                <a class="btn btn-danger mt-2" asp-route-id="@product.Id" asp-controller="Category" asp-action="Delete">Delete</a>
+                                                <a class="btn btn-primary" asp-route-id="@product.Id" asp-controller="product" asp-action="update">Update</a>
+                                                <a class="btn btn-danger mt-2" asp-route-id="@product.Id" asp-controller="product" asp-action="delete">Delete</a>
                                             </td>
                                         </tr>
                                     }

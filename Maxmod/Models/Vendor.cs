@@ -4,6 +4,10 @@ namespace Maxmod.Models;
 
 public class Vendor : BaseAuditableEntity
 {
-    public string Name { get; set; } = "Vendor_" + Guid.NewGuid().ToString();
-    public string Image { get; set; } = "2_1c4b30d7-c150-41db-8703-2e4d065c8cbe.png";
+    public string Name { get; set; } = null!;
+    public string Image { get; set; } = null!;
+    public string UserId { get; set; } = null!;
+    public AppUser User { get; set; } = null!;
+    public bool IsConfirmed { get; set; }
+    public List<Product>? Products { get; set; }
 }

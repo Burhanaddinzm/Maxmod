@@ -11,6 +11,12 @@ builder.Services.AddData(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 
+builder.Services.ConfigureApplicationCookie(x =>
+{
+    x.LoginPath = "/Account/Login";
+    x.AccessDeniedPath = "/Error/Index";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -20,6 +20,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\client\assets\js\index.js" />
+    <None Include="wwwroot\client\assets\js\index.min.js" />
+    <None Include="wwwroot\client\assets\js\layout.js" />
+    <None Include="wwwroot\client\assets\js\layout.min.js" />
+    <None Include="wwwroot\client\assets\js\product-detail.js" />
+    <None Include="wwwroot\client\assets\js\product-detail.min.js" />
+    <None Include="wwwroot\client\assets\js\shop.js" />
+    <None Include="wwwroot\client\assets\js\shop.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />

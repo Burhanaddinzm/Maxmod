@@ -49,7 +49,7 @@ public class CategoryController : Controller
         var (exists, category) = await _categoryService.CheckExistanceAsync(id);
 
         if (!exists)
-            return RedirectToAction("Error", "Home", new { Area = "" });
+            return RedirectToAction("Index", "Error", new { Area = "" });
 
         UpdateCategoryVM vm = category;
 
@@ -65,7 +65,7 @@ public class CategoryController : Controller
         var (exists, category) = await _categoryService.CheckExistanceAsync(updateCategoryVM.Id);
 
         if (!exists)
-            return RedirectToAction("Error", "Home", new { Area = "" });
+            return RedirectToAction("Index", "Error", new { Area = "" });
 
         if (await _categoryService.CheckDuplicateAsync(updateCategoryVM.Name,updateCategoryVM.Id))
         {
@@ -84,13 +84,13 @@ public class CategoryController : Controller
         if (id == 0)
         {
             TempData["Error"] = "Id is incorrect!";
-            return RedirectToAction("Error", "Home", new { Area = "" });
+            return RedirectToAction("Index", "Error", new { Area = "" });
         }
 
         var (exists, category) = await _categoryService.CheckExistanceAsync(id);
 
         if (!exists)
-            return RedirectToAction("Error", "Home", new { Area = "" });
+            return RedirectToAction("Index", "Error", new { Area = "" });
 
         return View(category);
     }
@@ -100,7 +100,7 @@ public class CategoryController : Controller
         var (exists, category) = await _categoryService.CheckExistanceAsync(deleteCategoryVM.Id);
 
         if (!exists)
-            return RedirectToAction("Error", "Home", new { Area = "" });
+            return RedirectToAction("Index", "Error", new { Area = "" });
 
         await _categoryService.DeleteCategoryAsync(deleteCategoryVM);
         return RedirectToAction("Index");

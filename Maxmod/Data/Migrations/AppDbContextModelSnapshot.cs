@@ -448,6 +448,9 @@ namespace Maxmod.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -461,7 +464,13 @@ namespace Maxmod.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Vendors");
                 });
@@ -654,7 +663,7 @@ namespace Maxmod.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Maxmod.Models.Vendor", "Vendor")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -692,6 +701,17 @@ namespace Maxmod.Data.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Weight");
+                });
+
+            modelBuilder.Entity("Maxmod.Models.Vendor", b =>
+                {
+                    b.HasOne("Maxmod.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -757,6 +777,11 @@ namespace Maxmod.Data.Migrations
                     b.Navigation("ProductImages");
 
                     b.Navigation("ProductWeights");
+                });
+
+            modelBuilder.Entity("Maxmod.Models.Vendor", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Maxmod.Models.Weight", b =>

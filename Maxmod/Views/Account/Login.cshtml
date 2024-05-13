@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+@model LoginVM
+
+@section Styles {
+    <link rel="stylesheet" href="~/client/assets/css/login.min.css" />
+}
+
+<div class="container">
+    <div class="breadcrumbs">
+        <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> Login</span>
+    </div>
+    <!-- Login Start -->
+    <section class="login-section">
+        <h1>Already Registered?</h1>
+        <div class="login-wrapper">
+            <div class="left-side">
+                <h3>Login</h3>
+                <form class="login" id="login-form" asp-action="login" asp-controller="account" method="post">
+                    <input placeholder="Email" asp-for="Email" />
+                    <span style="color:red;font-size:14px" asp-validation-for="Email"></span>
+                    <input placeholder="Password" asp-for="Password" />
+                    <span style="color:red;font-size:14px" asp-validation-for="Password"></span>
+                    <label for="remember" class="remember-checkbox">
+                        <input asp-for="RememberMe" id="remember" />
+                        <span>Remember me</span>
+                    </label>
+                    <button class="btn" type="submit">Log In</button>
+                    <div style="color:red;font-size:14px" asp-validation-summary="ModelOnly"></div>
+                </form>
+            </div>
+            <div class="right-side">
+                <h3>New Customer</h3>
+                <p>
+                    By creating an account you will be able to shop faster, be up to
+                    date on an order's status, and keep track of the orders you have
+                    previously made.
+                </p>
+                <a asp-action="register" asp-controller="account" class="btn">Register</a>
+            </div>
+        </div>
+    </section>
+</div>
