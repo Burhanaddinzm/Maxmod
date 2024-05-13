@@ -1,7 +1,9 @@
 ﻿using Maxmod.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maxmod.Areas.Admin.Controllers;
+[Authorize(Roles = "Admin")]
 [Area("Admin")]
 public class ProductController : Controller
 {

@@ -1,11 +1,12 @@
 ﻿using Maxmod.Models;
 using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Maxmod.Areas.Admin.Controllers;
-
+[Authorize(Roles = "Admin")]
 [Area("Admin")]
 public class CategoryController : Controller
 {

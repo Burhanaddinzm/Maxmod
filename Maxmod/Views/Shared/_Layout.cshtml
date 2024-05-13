@@ -68,7 +68,7 @@
                                 @if (User.Identity.Name != null)
                                 {
                                     <li>
-                                        <a href="#">
+                                        <a asp-action="logout" asp-controller="account">
                                             <img src="~/client/assets/icons/signout_icon.svg"
                                                  alt="" />
                                             <span>Log Out</span>
@@ -172,9 +172,12 @@
                         <li @((string)ViewData["Title"]! == "Contact" ? "class=active" : "")>
                             <a asp-controller="contact" asp-action="index">Contact</a>
                         </li>
-                        <li>
-                            <a asp-controller="dashboard" asp-action="index" asp-area="admin">Dashboard</a>
-                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>
+                                <a asp-controller="dashboard" asp-action="index" asp-area="admin">Dashboard</a>
+                            </li>
+                        }
                     </ul>
                 </nav>
             </div>
