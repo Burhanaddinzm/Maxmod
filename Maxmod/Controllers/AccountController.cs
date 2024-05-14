@@ -31,7 +31,7 @@ public class AccountController : Controller
         if (user == null)
         {
             ModelState.AddModelError("", "Invalid Credentials");
-            return View();
+            return View(loginVM);
         }
 
         var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, true);
@@ -39,10 +39,10 @@ public class AccountController : Controller
         if (!result.Succeeded)
         {
             ModelState.AddModelError("", "Invalid Credentials");
-            return View();
+            return View(loginVM);
         }
 
-        if (roles.Contains("Admin"))
+        if (roles!.Contains("Admin"))
         {
             return RedirectToAction("Index", "Dashboard", new { Area = "Admin" });
         }
@@ -75,7 +75,12 @@ public class AccountController : Controller
             return View(registerVM);
         }
 
-        return RedirectToAction("login");
+        if (registerVM.IsVendor)
+        {
+            TempData["Notification"] = "Your vendor request is sent to the Maxmod team. You will be notified by email.";
+            return View("Notification");
+        }
+        else return RedirectToAction("login");
     }
 
     public async Task<IActionResult> LogOut()

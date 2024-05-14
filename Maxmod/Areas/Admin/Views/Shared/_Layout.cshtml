@@ -78,7 +78,6 @@
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
                    aria-expanded="true" aria-controls="collapseProduct">
@@ -89,6 +88,21 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" asp-controller="product" asp-action="index" asp-area="admin">Product List</a>
                         <a class="collapse-item" asp-controller="product" asp-action="create" asp-area="admin">Product Create</a>
+                    </div>
+                </div>
+            </li>  
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVendor"
+                   aria-expanded="true" aria-controls="collapseVendor">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Vendors</span>
+                </a>
+                <div id="collapseVendor" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-controller="vendor" asp-action="index" asp-area="admin">Vendor List</a>
+                        <a class="collapse-item" asp-controller="vendor" asp-action="requests" asp-area="admin">Vendor Requests</a>
                     </div>
                 </div>
             </li> 
