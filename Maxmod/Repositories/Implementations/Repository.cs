@@ -60,9 +60,7 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
             }
         }
 
-        return expression == null ?
-            await query.FirstOrDefaultAsync() :
-            await query.FirstOrDefaultAsync(expression);
+        return await query.FirstOrDefaultAsync(expression);
     }
 
     public async Task UpdateAsync(T entity)

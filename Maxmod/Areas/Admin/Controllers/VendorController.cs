@@ -45,6 +45,6 @@ public class VendorController : Controller
 
         await _vendorService.RejectVendor(vendor!);
 
-        return View();
+        return RedirectToAction("Requests");
     }
 }

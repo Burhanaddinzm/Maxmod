@@ -22,7 +22,7 @@ public class AccountService : IAccountService
         AppUser newUser = new AppUser
         {
             FullName = registerVM.FullName,
-            UserName = registerVM.FullName.Trim().Replace(' ', '_'),
+            UserName = registerVM.FullName.Trim().Replace(' ', '_') + "_" + Guid.NewGuid().ToString(),
             Email = registerVM.Email
         };
 
