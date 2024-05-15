@@ -65,10 +65,9 @@ public class CategoryController : Controller
 
         var (exists, category) = await _categoryService.CheckExistanceAsync(updateCategoryVM.Id);
 
-        if (!exists)
-            return RedirectToAction("Index", "Error", new { Area = "" });
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
 
-        if (await _categoryService.CheckDuplicateAsync(updateCategoryVM.Name,updateCategoryVM.Id))
+        if (await _categoryService.CheckDuplicateAsync(updateCategoryVM.Name, updateCategoryVM.Id))
         {
             ModelState.AddModelError("Name", "This category already exists!");
             return View(updateCategoryVM);

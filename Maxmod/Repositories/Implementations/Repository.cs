@@ -48,9 +48,21 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
         return await _context.Set<T>().FindAsync(id);
     }
 
-    public async Task<T?> GetAsync(Expression<Func<T, bool>> expression)
+    public async Task<T?> GetAsync(Expression<Func<T, bool>> expression, params string[] includes)
     {
-        return await _context.Set<T>().FirstOrDefaultAsync(expression);
+        IQueryable<T> query = _context.Set<T>().AsQueryable();
+
+        if (includes.Length > 0)
+        {
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+        }
+
+        return expression == null ?
+            await query.FirstOrDefaultAsync() :
+            await query.FirstOrDefaultAsync(expression);
     }
 
     public async Task UpdateAsync(T entity)
