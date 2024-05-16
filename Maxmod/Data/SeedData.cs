@@ -7,7 +7,7 @@ namespace Maxmod.Data;
 
 public static class SeedData
 {
-    public static void SeedSettings(this IServiceScope scope)
+    public static async Task SeedSettings(this IServiceScope scope)
     {
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
@@ -51,8 +51,8 @@ public static class SeedData
                 AboutBoxImage = "fruit-snacks-at-picnic.png"
             };
 
-            dbContext.Settings.Add(settings);
-            dbContext.SaveChanges();
+            await dbContext.Settings.AddAsync(settings);
+            await dbContext.SaveChangesAsync();
         }
     }
 

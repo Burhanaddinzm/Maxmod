@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maxmod.Areas.Admin.Controllers;
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin,Vendor")]
 [Area("Admin")]
 public class DashboardController : Controller
 {

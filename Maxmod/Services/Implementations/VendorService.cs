@@ -1,4 +1,6 @@
-﻿using Maxmod.Enums;
+﻿using Maxmod.Areas.Admin.ViewModels.Vendor;
+using Maxmod.Enums;
+using Maxmod.Extensions;
 using Maxmod.Models;
 using Maxmod.Repositories.Implementations;
 using Maxmod.Repositories.Interfaces;
@@ -17,17 +19,20 @@ public class VendorService : IVendorService
     readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
     readonly IHttpContextAccessor _httpContextAccessor;
     readonly UserManager<AppUser> _userManager;
+    readonly IWebHostEnvironment _env;
 
     public VendorService(
         IVendorRepository vendorRepository,
         ITempDataDictionaryFactory tempDataDictionaryFactory,
         IHttpContextAccessor httpContextAccessor,
-        UserManager<AppUser> userManager)
+        UserManager<AppUser> userManager,
+        IWebHostEnvironment env)
     {
         _vendorRepository = vendorRepository;
         _tempDataDictionaryFactory = tempDataDictionaryFactory;
         _httpContextAccessor = httpContextAccessor;
         _userManager = userManager;
+        _env = env;
     }
 
     SmtpClient smtpClient = new SmtpClient("smtp.office365.com", 587)
@@ -78,6 +83,37 @@ public class VendorService : IVendorService
             tempData["Error"] = "Vendor not found!";
 
         return (vendor != null, vendor);
+    }
+
+    public async Task<bool> CheckDuplicateAsync(string vendorName, int vendorId)
+    {
+        Vendor? existingVendor = await _vendorRepository.GetAsync(
+            x => x.Name.Trim().ToLower() == vendorName.Trim().ToLower() &&
+            x.Id != vendorId
+            );
+
+        return existingVendor != null;
+    }
+
+    public async Task UpdateVendorAsync(UpdateVendorVM updateVendorVM, Vendor vendor)
+    {
+        if (updateVendorVM.Image != null)
+        {
+            var filename = await updateVendorVM.Image.SaveFileAsync(_env.WebRootPath, "client", "assets", "images", "vendor");
+            updateVendorVM.Image.DeleteFile(_env.WebRootPath, "client", "assets", "images", "vendor", vendor.Image);
+            vendor.Image = filename;
+        }
+        vendor.Name = updateVendorVM.Name;
+
+        await _vendorRepository.UpdateAsync(vendor);
+    }
+
+    public async Task DeleteVendorAsync(DeleteVendorVM deleteVendorVM)
+    {
+        await _vendorRepository.DeleteAsync(deleteVendorVM.Id);
+
+        await _userManager.RemoveFromRoleAsync(deleteVendorVM.User, Roles.Vendor.ToString());
+        await _userManager.AddToRoleAsync(deleteVendorVM.User, Roles.Customer.ToString());
     }
 
     public async Task AcceptVendor(Vendor vendor)

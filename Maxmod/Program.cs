@@ -45,7 +45,7 @@ app.MapControllerRoute(
 
 using (var scope = app.Services.CreateScope())
 {
-    scope.SeedSettings();
+    await scope.SeedSettings();
     await scope.SeedAdmin();
 }
 

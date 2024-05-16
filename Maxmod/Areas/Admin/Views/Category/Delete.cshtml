@@ -22,6 +22,10 @@
             }
         </select>
     </div>
+    <div class="mb-3">
+        <label style="display:block" class="form-label">Image</label>
+        <img style="width:150px;height:150px;object-fit:contain" src="~/client/assets/images/category/@Model.Image" />
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <a asp-action="index" asp-controller="category" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
 </form>

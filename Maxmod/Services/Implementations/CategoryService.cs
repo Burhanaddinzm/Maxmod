@@ -1,8 +1,8 @@
-﻿using Maxmod.Extensions;
+﻿using Maxmod.Areas.Admin.ViewModels.Category;
+using Maxmod.Extensions;
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
-using Maxmod.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq.Expressions;
 
@@ -46,12 +46,15 @@ public class CategoryService : ICategoryService
 
     public async Task UpdateCategoryAsync(UpdateCategoryVM updateCategoryVM, Category category)
     {
-        var filename = await updateCategoryVM.Image.SaveFileAsync(_env.WebRootPath, "client", "assets", "images", "category");
-        updateCategoryVM.Image.DeleteFile(_env.WebRootPath, "client", "assets", "images", "category", category.Image);
+        if (updateCategoryVM.Image != null)
+        {
+            var filename = await updateCategoryVM.Image.SaveFileAsync(_env.WebRootPath, "client", "assets", "images", "category");
+            updateCategoryVM.Image.DeleteFile(_env.WebRootPath, "client", "assets", "images", "category", category.Image);
+            category.Image = filename;
+        }
 
         category.Name = updateCategoryVM.Name;
         category.ParentId = updateCategoryVM.ParentId;
-        category.Image = filename;
 
         await _categoryRepository.UpdateAsync(category);
     }
@@ -82,7 +85,7 @@ public class CategoryService : ICategoryService
         return existingCategory != null;
     }
 
-    public async Task<(bool, Category)> CheckExistanceAsync(int id)
+    public async Task<(bool, Category?)> CheckExistanceAsync(int id)
     {
         var httpContext = _httpContextAccessor.HttpContext;
         var tempData = _tempDataDictionaryFactory.GetTempData(httpContext);

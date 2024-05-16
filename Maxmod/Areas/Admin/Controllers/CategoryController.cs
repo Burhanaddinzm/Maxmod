@@ -1,6 +1,6 @@
-﻿using Maxmod.Models;
+﻿using Maxmod.Areas.Admin.ViewModels.Category;
+using Maxmod.Models;
 using Maxmod.Services.Interfaces;
-using Maxmod.ViewModels.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,10 +49,9 @@ public class CategoryController : Controller
 
         var (exists, category) = await _categoryService.CheckExistanceAsync(id);
 
-        if (!exists)
-            return RedirectToAction("Index", "Error", new { Area = "" });
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
 
-        UpdateCategoryVM vm = category;
+        UpdateCategoryVM vm = category!;
 
         return View(vm);
     }
@@ -73,7 +72,7 @@ public class CategoryController : Controller
             return View(updateCategoryVM);
         }
 
-        await _categoryService.UpdateCategoryAsync(updateCategoryVM, category);
+        await _categoryService.UpdateCategoryAsync(updateCategoryVM, category!);
         return RedirectToAction("Index");
     }
 
@@ -89,8 +88,7 @@ public class CategoryController : Controller
 
         var (exists, category) = await _categoryService.CheckExistanceAsync(id);
 
-        if (!exists)
-            return RedirectToAction("Index", "Error", new { Area = "" });
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
 
         return View(category);
     }
@@ -99,8 +97,7 @@ public class CategoryController : Controller
     {
         var (exists, category) = await _categoryService.CheckExistanceAsync(deleteCategoryVM.Id);
 
-        if (!exists)
-            return RedirectToAction("Index", "Error", new { Area = "" });
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
 
         await _categoryService.DeleteCategoryAsync(deleteCategoryVM);
         return RedirectToAction("Index");

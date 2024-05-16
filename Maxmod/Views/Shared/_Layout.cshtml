@@ -172,7 +172,7 @@
                         <li @((string)ViewData["Title"]! == "Contact" ? "class=active" : "")>
                             <a asp-controller="contact" asp-action="index">Contact</a>
                         </li>
-                        @if (User.IsInRole("Admin"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Vendor"))
                         {
                             <li>
                                 <a asp-controller="dashboard" asp-action="index" asp-area="admin">Dashboard</a>

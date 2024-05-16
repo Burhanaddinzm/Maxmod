@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Update Vendor";
+}
+@model UpdateVendorVM
+
+<form asp-controller="vendor" asp-action="update" asp-area="admin" method="post" enctype="multipart/form-data">
+    <input asp-for="Id" style="display:none" />
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" id="name">
+        <span style="color:red" asp-validation-for="Name"></span>
+    </div>
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input asp-for="Image" class="form-control" id="image">
+        <span style="color:red" asp-validation-for="Image"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly" style="color:red"></div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="vendor" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Delete Vendor";
+}
+@model Vendor
+
+<form asp-controller="vendor" asp-action="delete" asp-area="admin" method="post">
+    <input asp-for="Id" style="display:none" />
+    <input style="display:none" asp-for="User" class="form-control" id="user" disabled>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" id="name" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="user" class="form-label">User Email</label>
+        <input asp-for="User.Email" class="form-control" id="user" disabled>
+    </div>
+    <div class="mb-3">
+        <label style="display:block" class="form-label">Image</label>
+        <img style="width:150px;height:150px;object-fit:contain" src="~/client/assets/images/vendor/@Model.Image" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="vendor" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>
