@@ -1,6 +1,9 @@
-﻿using Maxmod.Services.Interfaces;
+﻿using Maxmod.Areas.Admin.ViewModels.Product;
+using Maxmod.Models;
+using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Maxmod.Areas.Admin.Controllers;
 [Authorize(Roles = "Admin,Vendor")]
@@ -8,10 +11,17 @@ namespace Maxmod.Areas.Admin.Controllers;
 public class ProductController : Controller
 {
     readonly IProductService _productService;
+    readonly ICategoryService _categoryService;
+    readonly IVendorService _vendorService;
 
-    public ProductController(IProductService productService)
+    public ProductController(
+        IProductService productService,
+        ICategoryService categoryService,
+        IVendorService vendorService)
     {
         _productService = productService;
+        _categoryService = categoryService;
+        _vendorService = vendorService;
     }
 
     public async Task<IActionResult> Index()
@@ -22,11 +32,24 @@ public class ProductController : Controller
 
     public async Task<IActionResult> Create()
     {
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
+        ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
+
         return View();
     }
-    //[HttpPost]
-    //public async Task<IActionResult> Create()
-    //{
-    //    return RedirectToAction("Index");
-    //}
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateProductVM createProductVM)
+    {
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
+        ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
+
+        if (!ModelState.IsValid) return View(createProductVM);
+
+        if (await _productService.CheckDuplicateAsync(createProductVM.Name))
+        {
+            ModelState.AddModelError("Name", "This category already exists!");
+            return View(createProductVM);
+        }
+        return RedirectToAction("Index");
+    }
 }

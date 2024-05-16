@@ -1,9 +1,8 @@
 ﻿using Maxmod.Extensions;
 using Maxmod.Models;
-using Maxmod.Repositories.Implementations;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq.Expressions;
 using static Maxmod.Extensions.FileExtension;
 
@@ -13,11 +12,19 @@ public class ProductService : IProductService
 {
     readonly IProductRepository _productRepository;
     readonly IWebHostEnvironment _env;
+    readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
+    readonly IHttpContextAccessor _httpContextAccessor;
 
-    public ProductService(IProductRepository productRepository, IWebHostEnvironment env)
+    public ProductService(
+        IProductRepository productRepository,
+        IWebHostEnvironment env,
+        ITempDataDictionaryFactory tempDataDictionaryFactory,
+        IHttpContextAccessor httpContextAccessor)
     {
         _productRepository = productRepository;
         _env = env;
+        _tempDataDictionaryFactory = tempDataDictionaryFactory;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<List<Product>> GetAllProductsAsync(Expression<Func<Product, bool>>? expression = null, params string[] includes)
@@ -50,5 +57,34 @@ public class ProductService : IProductService
         };
 
         return productImage;
+    }
+
+    public async Task<bool> CheckDuplicateAsync(string productName, int? productId = null)
+    {
+        Product? existingProduct;
+
+        if (productId != null)
+        {
+            existingProduct = await _productRepository.GetAsync(
+                x => x.Name.Trim().ToLower() == productName.Trim().ToLower() &&
+                x.Id != productId
+                );
+        }
+        else existingProduct = await _productRepository.GetAsync(x => x.Name.Trim().ToLower() == productName.Trim().ToLower());
+
+        return existingProduct != null;
+    }
+
+    public async Task<(bool, Product?)> CheckExistanceAsync(int id)
+    {
+        var httpContext = _httpContextAccessor.HttpContext;
+        var tempData = _tempDataDictionaryFactory.GetTempData(httpContext);
+
+        Product? product = await _productRepository.GetAsync(id);
+
+        if (product == null)
+            tempData["Error"] = "Product not found!";
+
+        return (product != null, product);
     }
 }

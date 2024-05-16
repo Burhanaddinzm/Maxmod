@@ -9,4 +9,6 @@ public interface IProductService
     Task<List<Product>> GetAllProductsAsync(Expression<Func<Product, bool>>? expression = null, params string[] includes);
     Task<FileValidationResult> ValidateAndCreateImageAsync(List<IFormFile> files, List<ProductImage> productImages);
     Task<ProductImage> CreateProductImageAsync(IFormFile file, bool isMain, bool isHover);
+    Task<(bool, Product?)> CheckExistanceAsync(int id);
+    Task<bool> CheckDuplicateAsync(string productName, int? productId = null);
 }
