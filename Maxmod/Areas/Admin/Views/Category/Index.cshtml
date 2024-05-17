@@ -93,3 +93,17 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script>
+        const selectListCats = document.querySelectorAll(".slct-cat");
+        const productBtnCats = document.querySelectorAll(".product-btn-cat");
+
+        selectListCats.forEach((cat, index) => {
+            productBtnCats[index].href = '@Url.Action("Detail", "Product")/' + cat.value;
+            cat.addEventListener("click", () => {
+                productBtnCats[index].href = '@Url.Action("Detail", "Product")/' + cat.value;
+            });
+        });
+    </script>
+}

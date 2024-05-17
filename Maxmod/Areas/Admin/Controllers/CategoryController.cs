@@ -1,4 +1,5 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.Category;
+using Maxmod.Areas.Admin.ViewModels.Vendor;
 using Maxmod.Models;
 using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -38,8 +39,13 @@ public class CategoryController : Controller
             ModelState.AddModelError("Name", "This category already exists!");
             return View(categoryVM);
         }
-        await _categoryService.CreateCategoryAsync(categoryVM);
 
+        var validationResult = await _categoryService.CreateCategoryAsync(categoryVM);
+        if (validationResult != null)
+        {
+            ModelState.AddModelError("Image", validationResult.ErrorMessage);
+            return View(categoryVM);
+        }
         return RedirectToAction("Index");
     }
 
@@ -72,7 +78,12 @@ public class CategoryController : Controller
             return View(updateCategoryVM);
         }
 
-        await _categoryService.UpdateCategoryAsync(updateCategoryVM, category!);
+        var validationResult = await _categoryService.UpdateCategoryAsync(updateCategoryVM, category!);
+        if (validationResult != null)
+        {
+            ModelState.AddModelError("Image", validationResult.ErrorMessage);
+            return View(updateCategoryVM);
+        }
         return RedirectToAction("Index");
     }
 

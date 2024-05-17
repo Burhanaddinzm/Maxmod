@@ -30,8 +30,8 @@
                                             <tr>
                                                 <td>@vendor.Name</td>
                                                 <td>
-                                                    <select class="slct-cat" style="width:300px" asp-items="@(new SelectList(vendor.Products,nameof(Product.Id),nameof(Product.Name)))"></select>
-                                                    <a href="#" class="product-btn-cat btn btn-secondary ml-2">Go to product</a>
+                                                    <select class="slct-ven" style="width:300px" asp-items="@(new SelectList(vendor.Products,nameof(Product.Id),nameof(Product.Name)))"></select>
+                                                    <a href="#" class="product-btn-ven btn btn-secondary ml-2">Go to product</a>
                                                 </td>
                                                 <td>
                                                     <img style="width:150px; height:150px; object-fit:contain" src="~/client/assets/images/vendor/@vendor.Image" />
@@ -72,3 +72,17 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script>
+        const selectListVens = document.querySelectorAll(".slct-ven");
+        const productBtnVens = document.querySelectorAll(".product-btn-ven");
+
+        selectListVens.forEach((ven, index) => {
+            productBtnVens[index].href = '@Url.Action("Detail", "Product")/' + ven.value;
+            ven.addEventListener("click", () => {
+                productBtnVens[index].href = '@Url.Action("Detail", "Product")/' + ven.value;
+            });
+        });
+    </script>
+}

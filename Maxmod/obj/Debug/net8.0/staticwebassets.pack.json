@@ -7621,6 +7621,18 @@
       "PackagePath": "staticwebassets\\client\\assets\\images\\misc\\intro_img.png"
     },
     {
+      "Id": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\38ca1a87-5847-4e28-8706-07153078819c_product-3.png",
+      "PackagePath": "staticwebassets\\client\\assets\\images\\product\\38ca1a87-5847-4e28-8706-07153078819c_product-3.png"
+    },
+    {
+      "Id": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\5a022724-7cd6-44a1-a712-fae872deede6_product-1.jpg",
+      "PackagePath": "staticwebassets\\client\\assets\\images\\product\\5a022724-7cd6-44a1-a712-fae872deede6_product-1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\88a062d1-2391-46fc-b6a3-bfe7bc5190b7_product-2.png",
+      "PackagePath": "staticwebassets\\client\\assets\\images\\product\\88a062d1-2391-46fc-b6a3-bfe7bc5190b7_product-2.png"
+    },
+    {
       "Id": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\product-1.jpg",
       "PackagePath": "staticwebassets\\client\\assets\\images\\product\\product-1.jpg"
     },
@@ -7635,6 +7647,10 @@
     {
       "Id": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\vendor\\1_c3392416-576e-4c5c-b826-b6e143bb513d.png",
       "PackagePath": "staticwebassets\\client\\assets\\images\\vendor\\1_c3392416-576e-4c5c-b826-b6e143bb513d.png"
+    },
+    {
+      "Id": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\vendor\\2_1c4b30d7-c150-41db-8703-2e4d065c8cbe.png",
+      "PackagePath": "staticwebassets\\client\\assets\\images\\vendor\\2_1c4b30d7-c150-41db-8703-2e4d065c8cbe.png"
     },
     {
       "Id": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\vendor\\3_8b98564b-198e-4ecf-9a56-c23986826fbf.png",

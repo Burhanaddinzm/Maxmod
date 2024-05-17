@@ -56,8 +56,12 @@ public class VendorController : Controller
             return View(updateVendorVM);
         }
 
-        await _vendorService.UpdateVendorAsync(updateVendorVM, vendor!);
-
+        var validationResult = await _vendorService.UpdateVendorAsync(updateVendorVM, vendor!);
+        if (validationResult != null)
+        {
+            ModelState.AddModelError("Image", validationResult.ErrorMessage);
+            return View(updateVendorVM);
+        }
         return RedirectToAction("Index");
     }
 

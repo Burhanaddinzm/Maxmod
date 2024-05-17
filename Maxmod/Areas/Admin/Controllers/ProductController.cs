@@ -47,7 +47,15 @@ public class ProductController : Controller
 
         if (await _productService.CheckDuplicateAsync(createProductVM.Name))
         {
-            ModelState.AddModelError("Name", "This category already exists!");
+            ModelState.AddModelError("Name", "This product already exists!");
+            return View(createProductVM);
+        }
+
+        var validationResult = await _productService.CreateProductAsync(createProductVM);
+
+        if (validationResult != null)
+        {
+            ModelState.AddModelError("", validationResult.ErrorMessage);
             return View(createProductVM);
         }
         return RedirectToAction("Index");

@@ -1,4 +1,5 @@
-﻿using Maxmod.Areas.Admin.ViewModels.Vendor;
+﻿using Maxmod.Areas.Admin.ViewModels.Category;
+using Maxmod.Areas.Admin.ViewModels.Vendor;
 using Maxmod.Enums;
 using Maxmod.Extensions;
 using Maxmod.Models;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq.Expressions;
 using System.Net;
 using System.Net.Mail;
+using static Maxmod.Extensions.FileExtension;
 
 namespace Maxmod.Services.Implementations;
 
@@ -95,10 +97,13 @@ public class VendorService : IVendorService
         return existingVendor != null;
     }
 
-    public async Task UpdateVendorAsync(UpdateVendorVM updateVendorVM, Vendor vendor)
+    public async Task<FileValidationResult?> UpdateVendorAsync(UpdateVendorVM updateVendorVM, Vendor vendor)
     {
         if (updateVendorVM.Image != null)
         {
+            var validationResult = updateVendorVM.Image.ValidateFile();
+            if (!validationResult.IsValid) return validationResult;
+
             var filename = await updateVendorVM.Image.SaveFileAsync(_env.WebRootPath, "client", "assets", "images", "vendor");
             updateVendorVM.Image.DeleteFile(_env.WebRootPath, "client", "assets", "images", "vendor", vendor.Image);
             vendor.Image = filename;
@@ -106,6 +111,7 @@ public class VendorService : IVendorService
         vendor.Name = updateVendorVM.Name;
 
         await _vendorRepository.UpdateAsync(vendor);
+        return null;
     }
 
     public async Task DeleteVendorAsync(DeleteVendorVM deleteVendorVM)

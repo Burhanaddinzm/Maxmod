@@ -1,13 +1,14 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.Category;
 using Maxmod.Models;
 using System.Linq.Expressions;
+using static Maxmod.Extensions.FileExtension;
 
 namespace Maxmod.Services.Interfaces;
 
 public interface ICategoryService
 {
-    Task CreateCategoryAsync(CreateCategoryVM createCategoryVM);
-    Task UpdateCategoryAsync(UpdateCategoryVM updateCategoryVM, Category category);
+    Task<FileValidationResult?> CreateCategoryAsync(CreateCategoryVM createCategoryVM);
+    Task<FileValidationResult?> UpdateCategoryAsync(UpdateCategoryVM updateCategoryVM, Category category);
     Task DeleteCategoryAsync(DeleteCategoryVM deleteCategoryVM);
     Task<List<Category>> GetAllCategoriesAsync(Expression<Func<Category, bool>>? expression = null, params string[] includes);
     Task<Category> GetCategoryAsync(int id);

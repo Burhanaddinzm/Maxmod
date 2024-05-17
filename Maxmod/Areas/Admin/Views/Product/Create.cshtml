@@ -1,0 +1,49 @@
+﻿﻿@{
+    ViewData["Title"] = "Create Product";
+}
+@model CreateProductVM
+
+<form asp-controller="product" asp-action="create" asp-area="admin" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" id="name">
+        <span style="color:red" asp-validation-for="Name"></span>
+    </div> 
+    <div class="mb-3">
+        <label for="desc" class="form-label">Description</label>
+        <input asp-for="Description" class="form-control" id="desc">
+        <span style="color:red" asp-validation-for="Description"></span>
+    </div>
+    <div class="mb-3">
+        <label for="mimage" class="form-label">Main Image</label>
+        <input asp-for="MainImage" class="form-control" id="mimage">
+        <span style="color:red" asp-validation-for="MainImage"></span>
+    </div>  
+    <div class="mb-3">
+        <label for="himage" class="form-label">Hover Image</label>
+        <input asp-for="HoverImage" class="form-control" id="himage">
+        <span style="color:red" asp-validation-for="HoverImage"></span>
+    </div>
+    <div class="mb-3">
+        <label for="aimage" class="form-label">Additional Images</label>
+        <input asp-for="AdditionalImages" class="form-control" id="aimage">
+        <span style="color:red" asp-validation-for="AdditionalImages"></span>
+    </div>
+    <div class="mb-3">
+        <label for="cat" class="form-label">Category</label>
+        <select id="cat" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name)))">
+            <option value="" selected>Pick a category...</option>
+        </select>
+        <span style="color:red" asp-validation-for="CategoryId"></span>
+    </div>
+    <div class="mb-3">
+        <label for="ven" class="form-label">Category</label>
+        <select id="ven" class="form-control" asp-for="VendorId" asp-items="@(new SelectList(ViewBag.Vendors,nameof(Vendor.Id),nameof(Vendor.Name)))">
+            <option value="" selected>Pick a vendor...</option>
+        </select>
+        <span style="color:red" asp-validation-for="VendorId"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly" style="color:red"></div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="product" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>

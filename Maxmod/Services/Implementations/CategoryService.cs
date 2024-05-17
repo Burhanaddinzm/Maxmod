@@ -1,10 +1,12 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.Category;
+using Maxmod.Areas.Admin.ViewModels.Vendor;
 using Maxmod.Extensions;
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq.Expressions;
+using static Maxmod.Extensions.FileExtension;
 
 namespace Maxmod.Services.Implementations;
 
@@ -26,8 +28,11 @@ public class CategoryService : ICategoryService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task CreateCategoryAsync(CreateCategoryVM createCategoryVM)
+    public async Task<FileValidationResult?> CreateCategoryAsync(CreateCategoryVM createCategoryVM)
     {
+        var validationResult = createCategoryVM.Image.ValidateFile();
+        if (!validationResult.IsValid) return validationResult;
+
         var filename = await createCategoryVM.Image.SaveFileAsync(_env.WebRootPath, "client", "assets", "images", "category");
         Category category = new Category
         {
@@ -37,6 +42,7 @@ public class CategoryService : ICategoryService
         category.Image = filename;
 
         await _categoryRepository.CreateAsync(category);
+        return null;
     }
 
     public async Task DeleteCategoryAsync(DeleteCategoryVM deleteCategoryVM)
@@ -44,10 +50,13 @@ public class CategoryService : ICategoryService
         await _categoryRepository.DeleteAsync(deleteCategoryVM.Id);
     }
 
-    public async Task UpdateCategoryAsync(UpdateCategoryVM updateCategoryVM, Category category)
+    public async Task<FileValidationResult?> UpdateCategoryAsync(UpdateCategoryVM updateCategoryVM, Category category)
     {
         if (updateCategoryVM.Image != null)
         {
+            var validationResult = updateCategoryVM.Image.ValidateFile();
+            if (!validationResult.IsValid) return validationResult;
+
             var filename = await updateCategoryVM.Image.SaveFileAsync(_env.WebRootPath, "client", "assets", "images", "category");
             updateCategoryVM.Image.DeleteFile(_env.WebRootPath, "client", "assets", "images", "category", category.Image);
             category.Image = filename;
@@ -57,6 +66,7 @@ public class CategoryService : ICategoryService
         category.ParentId = updateCategoryVM.ParentId;
 
         await _categoryRepository.UpdateAsync(category);
+        return null;
     }
 
     public async Task<Category> GetCategoryAsync(int id)

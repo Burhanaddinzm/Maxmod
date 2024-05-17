@@ -1,4 +1,5 @@
-﻿using Maxmod.Extensions;
+﻿using Maxmod.Areas.Admin.ViewModels.Product;
+using Maxmod.Extensions;
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
@@ -30,6 +31,35 @@ public class ProductService : IProductService
     public async Task<List<Product>> GetAllProductsAsync(Expression<Func<Product, bool>>? expression = null, params string[] includes)
     {
         return await _productRepository.GetAllAsync(expression, includes);
+    }
+
+    public async Task<FileValidationResult?> CreateProductAsync(CreateProductVM createProductVM)
+    {
+        var productImages = new List<ProductImage>();
+
+        if (createProductVM.AdditionalImages != null)
+        {
+            var additionalValidationResult = await ValidateAndCreateImageAsync(createProductVM.AdditionalImages, productImages);
+            if (!additionalValidationResult.IsValid) return additionalValidationResult;
+        }
+
+        var mainValidationResult = await ValidateAndCreateImageAsync(new List<IFormFile> { createProductVM.MainImage }, productImages);
+        if (!mainValidationResult.IsValid) return mainValidationResult;
+
+        var hoverValidationResult = await ValidateAndCreateImageAsync(new List<IFormFile> { createProductVM.HoverImage }, productImages);
+        if (!hoverValidationResult.IsValid) return hoverValidationResult;
+
+        Product product = new Product
+        {
+            Name = createProductVM.Name,
+            Description = createProductVM.Description,
+            ProductImages = productImages,
+            VendorId = createProductVM.VendorId,
+            CategoryId = createProductVM.CategoryId
+        };
+
+        await _productRepository.CreateAsync(product);
+        return null;
     }
 
     public async Task<FileValidationResult> ValidateAndCreateImageAsync(List<IFormFile> files, List<ProductImage> productImages)
