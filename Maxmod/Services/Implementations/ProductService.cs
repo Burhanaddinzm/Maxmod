@@ -1,6 +1,8 @@
-﻿using Maxmod.Areas.Admin.ViewModels.Product;
+﻿using Maxmod.Areas.Admin.ViewModels.Category;
+using Maxmod.Areas.Admin.ViewModels.Product;
 using Maxmod.Extensions;
 using Maxmod.Models;
+using Maxmod.Repositories.Implementations;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -62,6 +64,55 @@ public class ProductService : IProductService
         return null;
     }
 
+    public async Task<FileValidationResult?> UpdateProductAsync(UpdateProductVM updateProductVM, Product product)
+    {
+        var productImages = new List<ProductImage>();
+
+        if (updateProductVM.AdditionalImages != null)
+        {
+            var additionalValidationResult = await ValidateAndCreateImageAsync(updateProductVM.AdditionalImages, productImages);
+            if (!additionalValidationResult.IsValid) return additionalValidationResult;
+        }
+        if (updateProductVM.MainImage != null)
+        {
+            var mainValidationResult = await ValidateAndCreateImageAsync(new List<IFormFile> { updateProductVM.MainImage }, productImages);
+            if (!mainValidationResult.IsValid) return mainValidationResult;
+            product.ProductImages!.FirstOrDefault(x => x.IsMain)!.IsDeleted = true;
+
+        }
+        if (updateProductVM.HoverImage != null)
+        {
+            var hoverValidationResult = await ValidateAndCreateImageAsync(new List<IFormFile> { updateProductVM.HoverImage }, productImages);
+            product.ProductImages!.FirstOrDefault(x => x.IsHover)!.IsDeleted = true;
+            if (!hoverValidationResult.IsValid) return hoverValidationResult;
+        }
+
+        product.Name = updateProductVM.Name;
+        product.Description = updateProductVM.Description;
+        product.CategoryId = updateProductVM.CategoryId;
+        product.VendorId = updateProductVM.VendorId;
+
+        if (product.ProductImages == null)
+        {
+            product.ProductImages = new List<ProductImage>();
+        }
+        if (productImages.Count > 0)
+        {
+            foreach (var image in productImages)
+            {
+                product.ProductImages.Add(image);
+            }
+        }
+
+        await _productRepository.UpdateAsync(product);
+        return null;
+    }
+
+    public async Task DeleteCategoryAsync(DeleteProductVM deleteProductVM)
+    {
+        await _productRepository.DeleteAsync(deleteProductVM.Id);
+    }
+
     public async Task<FileValidationResult> ValidateAndCreateImageAsync(List<IFormFile> files, List<ProductImage> productImages)
     {
         foreach (var file in files)
@@ -110,7 +161,7 @@ public class ProductService : IProductService
         var httpContext = _httpContextAccessor.HttpContext;
         var tempData = _tempDataDictionaryFactory.GetTempData(httpContext);
 
-        Product? product = await _productRepository.GetAsync(id);
+        Product? product = await _productRepository.GetAsync(x => x.Id == id, "ProductImages");
 
         if (product == null)
             tempData["Error"] = "Product not found!";

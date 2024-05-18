@@ -37,7 +37,7 @@
         <span style="color:red" asp-validation-for="CategoryId"></span>
     </div>
     <div class="mb-3">
-        <label for="ven" class="form-label">Category</label>
+        <label for="ven" class="form-label">Vendor</label>
         <select id="ven" class="form-control" asp-for="VendorId" asp-items="@(new SelectList(ViewBag.Vendors,nameof(Vendor.Id),nameof(Vendor.Name)))">
             <option value="" selected>Pick a vendor...</option>
         </select>

@@ -79,8 +79,8 @@ public class VendorController : Controller
 
         return View(vendor);
     }
-    [HttpPost, ActionName("Delete")]
-    public async Task<IActionResult> DeletePOST(DeleteVendorVM deleteVendorVM)
+    [HttpPost]
+    public async Task<IActionResult> Delete(DeleteVendorVM deleteVendorVM)
     {
         var (exists, vendor) = await _vendorService.CheckExistanceAsync(deleteVendorVM.Id);
 

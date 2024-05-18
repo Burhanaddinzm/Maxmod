@@ -10,6 +10,7 @@ public static class DependencyInjection
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IVendorRepository, VendorRepository>();
+        services.AddScoped<IProductImageRepository, ProductImageRepository>();
 
         return services;
     }

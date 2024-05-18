@@ -1,0 +1,20 @@
+﻿@model List<ProductImage>
+
+@foreach (var image in Model)
+{
+    <div class="image-container">
+        @if (image.IsMain)
+        {
+            <div style="display:inline-block">Main Image</div>
+        }
+        else if (image.IsHover)
+        {
+            <div style="display:inline-block">Hover Image</div>
+        }
+        else
+        {
+            <span data-id="@image.Id" class="btn text-danger">X</span>
+        }
+        <img style="width:150px;height:150px;object-fit:cover" class="mx-2" src="~/client/assets/images/product/@image.Url" />
+    </div>
+}

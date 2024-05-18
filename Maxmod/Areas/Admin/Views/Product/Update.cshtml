@@ -1,0 +1,83 @@
+﻿﻿@{
+    ViewData["Title"] = "Update Product";
+}
+@model UpdateProductVM
+
+<form asp-controller="product" asp-action="update" asp-area="admin" method="post" enctype="multipart/form-data">
+    <input asp-for="Id" style="display:none" />
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" id="name">
+        <span style="color:red" asp-validation-for="Name"></span>
+    </div>
+    <div class="mb-3">
+        <label for="desc" class="form-label">Description</label>
+        <input asp-for="Description" class="form-control" id="desc">
+        <span style="color:red" asp-validation-for="Description"></span>
+    </div>
+    <div class="mb-3">
+        <label for="mimage" class="form-label">Main Image</label>
+        <input asp-for="MainImage" class="form-control" id="mimage">
+        <span style="color:red" asp-validation-for="MainImage"></span>
+    </div>
+    <div class="mb-3">
+        <label for="himage" class="form-label">Hover Image</label>
+        <input asp-for="HoverImage" class="form-control" id="himage">
+        <span style="color:red" asp-validation-for="HoverImage"></span>
+    </div>
+    <div class="mb-3">
+        <label for="aimage" class="form-label">Additional Images</label>
+        <input asp-for="AdditionalImages" class="form-control" id="aimage">
+        <span style="color:red" asp-validation-for="AdditionalImages"></span>
+    </div>
+    <div class="mb-3">
+        <label for="cat" class="form-label">Category</label>
+        <select id="cat" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories,nameof(Category.Id),nameof(Category.Name),Model.CategoryId))">
+            <option value="">Pick a category...</option>
+        </select>
+        <span style="color:red" asp-validation-for="CategoryId"></span>
+    </div>
+    <div class="mb-3">
+        <label for="ven" class="form-label">Vendor</label>
+        <select id="ven" class="form-control" asp-for="VendorId" asp-items="@(new SelectList(ViewBag.Vendors,nameof(Vendor.Id),nameof(Vendor.Name),Model.VendorId))">
+            <option value="">Pick a vendor...</option>
+        </select>
+        <span style="color:red" asp-validation-for="VendorId"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly" style="color:red"></div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="product" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>
+<div class="my-5">
+    <h3>Images</h3>
+    <hr />
+    <div class="image-container" style="display:flex;flex-wrap:nowrap;overflow-y:scroll">
+    </div>
+</div>
+@section Scripts {
+    <script>
+        const productId = document.getElementById("Id").value
+        const imageContainer = document.querySelector(".image-container");
+
+        const getProductImagesAsync = async () => {
+            const response = await fetch(`@Url.Action("GetImages", "ProductImage")/${productId}`);
+            const data = await response.text();
+            imageContainer.innerHTML = data
+
+            return document.querySelectorAll(".image-container span");
+        }
+
+        const deleteProductImageAsync = async (imageId) => {
+            const response = await fetch(`@Url.Action("DeleteImage", "ProductImage")/${imageId}`, {
+                method: "POST"
+            });
+        }
+
+        getProductImagesAsync().then(imageSpans => imageSpans.forEach(span => {
+            span.addEventListener("click", async () => {
+                await deleteProductImageAsync(span.dataset.id);
+                window.location.reload();
+            })
+        }))
+    </script>
+}

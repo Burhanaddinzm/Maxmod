@@ -103,8 +103,8 @@ public class CategoryController : Controller
 
         return View(category);
     }
-    [HttpPost, ActionName("Delete")]
-    public async Task<IActionResult> DeletePOST(DeleteCategoryVM deleteCategoryVM)
+    [HttpPost]
+    public async Task<IActionResult> Delete(DeleteCategoryVM deleteCategoryVM)
     {
         var (exists, category) = await _categoryService.CheckExistanceAsync(deleteCategoryVM.Id);
 

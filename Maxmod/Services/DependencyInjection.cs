@@ -11,6 +11,7 @@ public static class DependencyInjection
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IVendorService, VendorService>();
+        services.AddScoped<IProductImageService, ProductImageService>();
         //services.AddHostedService<BackgroundService>();
 
         return services;

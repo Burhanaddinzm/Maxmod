@@ -1,4 +1,5 @@
-﻿using Maxmod.Areas.Admin.ViewModels.Product;
+﻿using Maxmod.Areas.Admin.ViewModels.Category;
+using Maxmod.Areas.Admin.ViewModels.Product;
 using Maxmod.Models;
 using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -32,7 +33,7 @@ public class ProductController : Controller
 
     public async Task<IActionResult> Create()
     {
-        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId != null);
         ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
 
         return View();
@@ -40,7 +41,7 @@ public class ProductController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductVM createProductVM)
     {
-        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x=> x.ParentId != null);
         ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
 
         if (!ModelState.IsValid) return View(createProductVM);
@@ -58,6 +59,85 @@ public class ProductController : Controller
             ModelState.AddModelError("", validationResult.ErrorMessage);
             return View(createProductVM);
         }
+        return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> Update(int id)
+    {
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId != null);
+        ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
+        var (exists, product) = await _productService.CheckExistanceAsync(id);
+        if (!exists)
+        {
+            return RedirectToAction("Index", "Error", new { Area = "" });
+        }
+        var productVm = new UpdateProductVM
+        {
+            Id = product!.Id,
+            Name = product!.Name,
+            Description = product.Description,
+            CategoryId = product.CategoryId,
+            VendorId = product.VendorId,
+        };
+        return View(productVm);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Update(UpdateProductVM updateProductVM)
+    {
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId != null);
+        ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
+
+        if (!ModelState.IsValid) return View(updateProductVM);
+
+        var (exists, product) = await _productService.CheckExistanceAsync(updateProductVM.Id);
+
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        if (await _productService.CheckDuplicateAsync(updateProductVM.Name, updateProductVM.Id))
+        {
+            ModelState.AddModelError("Name", "This product already exists!");
+            return View(updateProductVM);
+        }
+
+        var validationResult = await _productService.UpdateProductAsync(updateProductVM, product!);
+
+        if (validationResult != null)
+        {
+            ModelState.AddModelError("", validationResult.ErrorMessage);
+            return View(updateProductVM);
+        }
+        return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId != null);
+        ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
+
+        if (id == 0)
+        {
+            TempData["Error"] = "Id is incorrect!";
+            return RedirectToAction("Index", "Error", new { Area = "" });
+        }
+
+        var (exists, product) = await _productService.CheckExistanceAsync(id);
+
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        return View(product);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Delete(DeleteProductVM deleteProductVM)
+    {
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId != null);
+        ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
+
+        var (exists, product) = await _categoryService.CheckExistanceAsync(deleteProductVM.Id);
+
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        await _productService.DeleteCategoryAsync(deleteProductVM);
+
         return RedirectToAction("Index");
     }
 }
