@@ -134,7 +134,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Maxmod.Models.Product", b =>
@@ -187,7 +187,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Maxmod.Models.ProductImage", b =>
@@ -235,7 +235,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Maxmod.Models.ProductWeight", b =>
@@ -270,7 +270,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("WeightId");
 
-                    b.ToTable("ProductWeights");
+                    b.ToTable("ProductWeights", (string)null);
                 });
 
             modelBuilder.Entity("Maxmod.Models.Settings", b =>
@@ -422,7 +422,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("Maxmod.Models.Vendor", b =>
@@ -472,7 +472,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Vendors");
+                    b.ToTable("Vendors", (string)null);
                 });
 
             modelBuilder.Entity("Maxmod.Models.Weight", b =>
@@ -509,7 +509,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Weights");
+                    b.ToTable("Weights", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

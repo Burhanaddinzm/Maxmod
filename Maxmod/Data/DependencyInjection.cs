@@ -21,7 +21,7 @@ public static class DependencyInjection
             options.Password.RequiredLength = 8;
             options.Lockout.AllowedForNewUsers = false;
             options.Lockout.MaxFailedAccessAttempts = 5;
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
         }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
         return services;

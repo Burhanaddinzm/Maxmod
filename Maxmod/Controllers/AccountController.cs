@@ -38,7 +38,8 @@ public class AccountController : Controller
 
         if (!result.Succeeded)
         {
-            ModelState.AddModelError("", "Invalid Credentials");
+            if (!result.IsLockedOut) ModelState.AddModelError("", "Invalid Credentials");
+            if (result.IsLockedOut) ModelState.AddModelError("", "You have been locked out, try again in 5 minutes!");
             return View(loginVM);
         }
 
