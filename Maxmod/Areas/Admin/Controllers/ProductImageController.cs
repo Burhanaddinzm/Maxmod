@@ -26,6 +26,6 @@ public class ProductImageController : Controller
         var exist = await _productImageService.DeleteProductImageAsync(id);
 
         if (!exist) return RedirectToAction("Index", "Error", new { Area = "" });
-        return View();
+        return Json("");
     }
 }

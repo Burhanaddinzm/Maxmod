@@ -105,7 +105,6 @@ public class VendorService : IVendorService
             if (!validationResult.IsValid) return validationResult;
 
             var filename = await updateVendorVM.Image.SaveFileAsync(_env.WebRootPath, "client", "assets", "images", "vendor");
-            updateVendorVM.Image.DeleteFile(_env.WebRootPath, "client", "assets", "images", "vendor", vendor.Image);
             vendor.Image = filename;
         }
         vendor.Name = updateVendorVM.Name;

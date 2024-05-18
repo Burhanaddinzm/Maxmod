@@ -76,7 +76,7 @@
         getProductImagesAsync().then(imageSpans => imageSpans.forEach(span => {
             span.addEventListener("click", async () => {
                 await deleteProductImageAsync(span.dataset.id);
-                window.location.reload();
+                getProductImagesAsync();
             })
         }))
     </script>
