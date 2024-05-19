@@ -41,7 +41,7 @@ public class ProductController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductVM createProductVM)
     {
-        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x=> x.ParentId != null);
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId != null);
         ViewBag.Vendors = await _vendorService.GetAllVendorsAsync();
 
         if (!ModelState.IsValid) return View(createProductVM);
@@ -139,5 +139,15 @@ public class ProductController : Controller
         await _productService.DeleteCategoryAsync(deleteProductVM);
 
         return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> Detail(int id)
+    {
+        var (exists, product) = await _productService.CheckExistanceAsync(id);
+        if (!exists)
+        {
+            return RedirectToAction("Index", "Error", new { Area = "" });
+        }
+        return View(product);
     }
 }

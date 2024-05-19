@@ -24,6 +24,8 @@ public static class DependencyInjection
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
         }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+        services.AddHttpContextAccessor();
+
         return services;
     }
 }

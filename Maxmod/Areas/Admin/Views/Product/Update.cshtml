@@ -1,4 +1,4 @@
-﻿﻿@{
+﻿@{
     ViewData["Title"] = "Update Product";
 }
 @model UpdateProductVM
@@ -56,28 +56,48 @@
 </div>
 @section Scripts {
     <script>
-        const productId = document.getElementById("Id").value
+        const productId = document.getElementById("Id").value;
         const imageContainer = document.querySelector(".image-container");
 
         const getProductImagesAsync = async () => {
-            const response = await fetch(`@Url.Action("GetImages", "ProductImage")/${productId}`);
-            const data = await response.text();
-            imageContainer.innerHTML = data
-
-            return document.querySelectorAll(".image-container span");
+            try {
+                const response = await fetch(`@Url.Action("GetImages", "ProductImage")/${productId}`);
+                if (!response.ok) throw new Error('Failed to fetch images');
+                const data = await response.text();
+                imageContainer.innerHTML = data;
+                bindDeleteEvents();
+            } catch (error) {
+                console.error(error.message);
+            }
         }
 
         const deleteProductImageAsync = async (imageId) => {
-            const response = await fetch(`@Url.Action("DeleteImage", "ProductImage")/${imageId}`, {
-                method: "POST"
+            try {
+                const response = await fetch(`@Url.Action("DeleteImage", "ProductImage")/${imageId}`, {
+                    method: "POST"
+                });
+                if (!response.ok) throw new Error('Failed to delete image');
+                await getProductImagesAsync();
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        const bindDeleteEvents = () => {
+            const imageSpans = document.querySelectorAll(".image-container span");
+            imageSpans.forEach(span => {
+                span.removeEventListener("click", handleDelete);
+                span.addEventListener("click", handleDelete);
             });
         }
 
-        getProductImagesAsync().then(imageSpans => imageSpans.forEach(span => {
-            span.addEventListener("click", async () => {
-                await deleteProductImageAsync(span.dataset.id);
-                getProductImagesAsync();
-            })
-        }))
+        const handleDelete = async (event) => {
+            const imageId = event.target.dataset.id;
+            await deleteProductImageAsync(imageId);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            getProductImagesAsync();
+        });
     </script>
 }

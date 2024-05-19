@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jU11kdigB2T/EU5BuSpopAIDcXKsRdB4GYoRwT0FSN4=",
+  "Hash": "XZuYSGu7RVsrYTeHulGEOPpqUJLPKrBWgaDkJaP0daQ=",
   "Source": "Maxmod",
   "BasePath": "_content/Maxmod",
   "Mode": "Default",
@@ -36269,25 +36269,6 @@
       "OriginalItemSpec": "wwwroot\\client\\assets\\images\\misc\\intro_img.png"
     },
     {
-      "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\24eb4501-46fd-42ca-9eb8-3ac9b713c902_product-1.jpg",
-      "SourceId": "Maxmod",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\",
-      "BasePath": "_content/Maxmod",
-      "RelativePath": "client/assets/images/product/24eb4501-46fd-42ca-9eb8-3ac9b713c902_product-1.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\24eb4501-46fd-42ca-9eb8-3ac9b713c902_product-1.jpg"
-    },
-    {
       "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\ab5f938b-f032-472e-bf6d-31a97abf0a3f_product-1.jpg",
       "SourceId": "Maxmod",
       "SourceType": "Discovered",
@@ -36324,6 +36305,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\c847f80a-6128-4270-abcc-c80adb69c599_product-2.png"
+    },
+    {
+      "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\d5aa23ae-0178-439e-bb9a-bbb2c5d89d2a_product-3.png",
+      "SourceId": "Maxmod",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\",
+      "BasePath": "_content/Maxmod",
+      "RelativePath": "client/assets/images/product/d5aa23ae-0178-439e-bb9a-bbb2c5d89d2a_product-3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\d5aa23ae-0178-439e-bb9a-bbb2c5d89d2a_product-3.png"
     },
     {
       "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\product-1.jpg",
@@ -36400,6 +36400,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\client\\assets\\images\\vendor\\1_c3392416-576e-4c5c-b826-b6e143bb513d.png"
+    },
+    {
+      "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\vendor\\2_1c4b30d7-c150-41db-8703-2e4d065c8cbe.png",
+      "SourceId": "Maxmod",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\",
+      "BasePath": "_content/Maxmod",
+      "RelativePath": "client/assets/images/vendor/2_1c4b30d7-c150-41db-8703-2e4d065c8cbe.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\client\\assets\\images\\vendor\\2_1c4b30d7-c150-41db-8703-2e4d065c8cbe.png"
     },
     {
       "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\vendor\\3_8b98564b-198e-4ecf-9a56-c23986826fbf.png",

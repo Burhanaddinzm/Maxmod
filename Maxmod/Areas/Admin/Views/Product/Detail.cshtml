@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Product: " + @Model.Name;
+}
+@model Product
+
+<div class="mb-3">
+    <h3 class="text-primary">Created/Modified</h3>
+    <span style="color:blueviolet">@Model.CreatedAt by @Model.CreatedBy</span> /
+    <span style="color:hotpink">@Model.ModifiedAt by @Model.ModifiedBy</span>
+</div>
+<div class="mb-3">
+    <h3 class="text-primary">Name</h3>
+    <p>@Model.Name</p>
+</div>
+<div class="mb-3">
+    <h3 class="text-primary">Description</h3>
+    <p>@Model.Description</p>
+</div>
+<div class="mb-3">
+    <h3 class="text-primary">New?</h3>
+    <p>@(Model.IsNew ? "Yes" : "No")</p>
+</div>
+<div class="mb-3">
+    <h3 class="text-primary">Category</h3><span>@Model.Category.Name</span>
+</div>
+<div class="mb-3">
+    <h3 class="text-primary">Vendor</h3><span>@Model.Vendor.Name</span>
+</div>
+<div class="mb-3">
+    <h3 class="text-primary">Main Image</h3>
+    <img style="width:100px; height:100px; object-fit:cover;"
+         src="/client/assets/images/product/@Model.ProductImages.FirstOrDefault(x=>x.IsMain).Url">
+</div>
+<div class="mb-3">
+    <h3 class="text-primary">Hover Image</h3>
+    <img style="width:100px; height:100px; object-fit:cover;"
+         src="/client/assets/images/product/@Model.ProductImages.FirstOrDefault(x=>x.IsHover).Url">
+</div>
+<div class="mb-3">
+    <h3 class="text-primary">Additional Images</h3>
+    @foreach (var image in Model.ProductImages.Where(x => !x.IsMain && !x.IsHover))
+    {
+        <img style="width:100px; height:100px; object-fit:cover;" src="/client/assets/images/product/@image.Url">
+    }
+</div>
+<div style="display:grid;gap:10px" class="mb-3">
+    <a class="btn btn-primary" asp-action="update" asp-controller="product" asp-route-id="@Model.Id">Update</a>
+    <a class="btn btn-danger mt-2" asp-action="delete" asp-controller="product" asp-route-id="@Model.Id">Delete</a>
+</div>

@@ -161,7 +161,7 @@ public class ProductService : IProductService
         var httpContext = _httpContextAccessor.HttpContext;
         var tempData = _tempDataDictionaryFactory.GetTempData(httpContext);
 
-        Product? product = await _productRepository.GetAsync(x => x.Id == id, "ProductImages");
+        Product? product = await _productRepository.GetAsync(x => x.Id == id, "ProductImages", "Category", "Vendor");
 
         if (product == null)
             tempData["Error"] = "Product not found!";
