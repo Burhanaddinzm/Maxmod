@@ -134,7 +134,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Maxmod.Models.Product", b =>
@@ -187,7 +187,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Maxmod.Models.ProductImage", b =>
@@ -235,7 +235,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Maxmod.Models.ProductWeight", b =>
@@ -246,11 +246,28 @@ namespace Maxmod.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("DiscountPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("IP")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -270,7 +287,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("WeightId");
 
-                    b.ToTable("ProductWeights", (string)null);
+                    b.ToTable("ProductWeights");
                 });
 
             modelBuilder.Entity("Maxmod.Models.Settings", b =>
@@ -422,7 +439,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings", (string)null);
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Maxmod.Models.Vendor", b =>
@@ -472,7 +489,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Vendors", (string)null);
+                    b.ToTable("Vendors");
                 });
 
             modelBuilder.Entity("Maxmod.Models.Weight", b =>
@@ -509,7 +526,7 @@ namespace Maxmod.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Weights", (string)null);
+                    b.ToTable("Weights");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

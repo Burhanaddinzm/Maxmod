@@ -2,7 +2,7 @@
 
 namespace Maxmod.Models;
 
-public class ProductWeight : BaseEntity
+public class ProductWeight : BaseAuditableEntity
 {
     public int Stock { get; set; }
     public decimal Price { get; set; }

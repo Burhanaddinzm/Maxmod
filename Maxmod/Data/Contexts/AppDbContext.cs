@@ -2,13 +2,13 @@
 using Maxmod.Models.Common;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace Maxmod.Data.Contexts;
 
 public class AppDbContext : IdentityDbContext<AppUser>
 {
-    readonly IHttpContextAccessor _accessor;
+    private readonly IHttpContextAccessor _accessor;
+
     public AppDbContext(DbContextOptions<AppDbContext> options, IHttpContextAccessor accessor) : base(options)
     {
         _accessor = accessor;
@@ -25,28 +25,29 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var entries = ChangeTracker.Entries<BaseAuditableEntity>();
+        var currentUserName = _accessor.HttpContext?.User.Identity?.Name ?? "Anonymous";
+        var currentIpAddress = _accessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
 
         foreach (var entry in entries)
         {
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.CreatedBy = _accessor.HttpContext.User.Identity.Name ?? "newUser";
-                    entry.Entity.CreatedAt = DateTime.UtcNow.AddHours(4);
-                    entry.Entity.IP = _accessor.HttpContext.Connection.RemoteIpAddress!.ToString();
+                    entry.Entity.CreatedBy = currentUserName;
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.IP = currentIpAddress;
                     break;
                 case EntityState.Modified:
-                    entry.Entity.ModifiedBy = _accessor.HttpContext!.User.Identity!.Name!;
-                    entry.Entity.ModifiedAt = DateTime.UtcNow.AddHours(4);
-                    entry.Entity.IP = _accessor.HttpContext.Connection.RemoteIpAddress!.ToString();
-                    break;
-                default:
+                    entry.Entity.ModifiedBy = currentUserName;
+                    entry.Entity.ModifiedAt = DateTime.UtcNow;
+                    entry.Entity.IP = currentIpAddress;
                     break;
             }
         }
 
         return base.SaveChangesAsync(cancellationToken);
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>().HasQueryFilter(x => !x.IsDeleted);
