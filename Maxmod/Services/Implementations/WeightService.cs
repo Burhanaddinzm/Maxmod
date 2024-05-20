@@ -15,7 +15,8 @@ public class WeightService : IWeightService
     private readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public WeightService(IWeightRepository weightRepository,
+    public WeightService(
+        IWeightRepository weightRepository,
         ITempDataDictionaryFactory tempDataDictionaryFactory,
         IHttpContextAccessor httpContextAccessor)
     {

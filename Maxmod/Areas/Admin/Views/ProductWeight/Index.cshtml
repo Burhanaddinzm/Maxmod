@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Product-Weight";
+}
+@model List<ProductWeight>
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Product-Weights</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">Product</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 100px;">Weight</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 100px;">Stock</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 100px;">Price</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 100px;">Discount Price</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 100px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var productWeight in Model)
+                                    {
+                                        <tr>
+                                            <td>@productWeight.Product.Name</td>
+                                            <td>@productWeight.Weight.Name</td>
+                                            <td>@productWeight.Stock</td>
+                                            <td>@productWeight.Price</td>
+                                            <td>@productWeight.DiscountPrice</td>
+                                            <td style="display:grid; gap:8px;border-bottom:none;">
+                                                <a class="btn btn-primary" asp-route-id="@productWeight.Id" asp-controller="productweight" asp-action="update">Update</a>
+                                                <a class="btn btn-danger mt-2" asp-route-id="@productWeight.Id" asp-controller="productweight" asp-action="delete">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">Showing @Model.Count entries</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -8,7 +8,7 @@ namespace Maxmod.Areas.Admin.Controllers;
 [Area("Admin")]
 public class VendorController : Controller
 {
-    readonly IVendorService _vendorService;
+    private readonly IVendorService _vendorService;
 
     public VendorController(IVendorService vendorService)
     {

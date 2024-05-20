@@ -11,7 +11,7 @@ namespace Maxmod.Areas.Admin.Controllers;
 [Area("Admin")]
 public class CategoryController : Controller
 {
-    readonly ICategoryService _categoryService;
+    private readonly ICategoryService _categoryService;
 
     public CategoryController(ICategoryService categoryService)
     {

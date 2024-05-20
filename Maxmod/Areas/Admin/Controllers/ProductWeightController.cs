@@ -1,12 +1,128 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Maxmod.Areas.Admin.ViewModels.ProductWeight;
+using Maxmod.Models;
+using Maxmod.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Maxmod.Areas.Admin.Controllers;
 [Authorize(Roles = "Admin,Vendor")]
 [Area("Admin")]
 public class ProductWeightController : Controller
 {
-    public IActionResult Index()
+    private readonly IProductWeightService _productWeightService;
+    private readonly IProductService _productService;
+    private readonly IWeightService _weightService;
+
+    public ProductWeightController(
+        IProductWeightService productWeightService,
+        IProductService productService,
+        IWeightService weightService)
     {
+        _productWeightService = productWeightService;
+        _productService = productService;
+        _weightService = weightService;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        List<ProductWeight>? productWeights = await _productWeightService.GetAllProductWeightsAsync(null, "Product", "Weight");
+        return View(productWeights);
+    }
+
+    public async Task<IActionResult> Create()
+    {
+        ViewBag.Products = await _productService.GetAllProductsAsync();
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync();
+
         return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateProductWeightVM createProductWeightVM)
+    {
+        ViewBag.Products = await _productService.GetAllProductsAsync();
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync();
+
+        if (!ModelState.IsValid) return View(createProductWeightVM);
+
+        if (await _productWeightService.CheckDuplicateAsync(createProductWeightVM))
+        {
+            ModelState.AddModelError("", "This Product-Weight already exists!");
+            return View(createProductWeightVM);
+        }
+
+        await _productWeightService.CreateProductWeightAsync(createProductWeightVM);
+        return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> Update(int id)
+    {
+        ViewBag.Products = await _productService.GetAllProductsAsync();
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync();
+
+        var (exists, productWeight) = await _productWeightService.CheckExistanceAsync(id);
+
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        var updateProductWeightVM = new UpdateProductWeightVM
+        {
+            Id = productWeight!.Id,
+            Stock = productWeight!.Stock,
+            Price = productWeight!.Price,
+            DiscountPrice = productWeight!.DiscountPrice,
+            ProductId = productWeight!.ProductId,
+            WeightId = productWeight!.WeightId,
+        };
+        return View(updateProductWeightVM);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Update(UpdateProductWeightVM updateProductWeightVM)
+    {
+        ViewBag.Products = await _productService.GetAllProductsAsync();
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync();
+
+        if (!ModelState.IsValid) return View(updateProductWeightVM);
+
+        var (exists, productWeight) = await _productWeightService.CheckExistanceAsync(updateProductWeightVM.Id);
+
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        if (await _productWeightService.CheckDuplicateAsync(null, updateProductWeightVM))
+        {
+            ModelState.AddModelError("", "This Product-Weight already exists!");
+            return View(updateProductWeightVM);
+        }
+
+        await _productWeightService.UpdateProductWeightAsync(updateProductWeightVM, productWeight!);
+        return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        ViewBag.Products = await _productService.GetAllProductsAsync();
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync();
+
+        if (id == 0)
+        {
+            TempData["Error"] = "Id is incorrect!";
+            return RedirectToAction("Index", "Error", new { Area = "" });
+        }
+
+        var (exists, productWeight) = await _productWeightService.CheckExistanceAsync(id);
+
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        return View(productWeight);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Delete(DeleteProductWeightVM deleteProductWeightVM)
+    {
+        ViewBag.Products = await _productService.GetAllProductsAsync();
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync();
+
+        var (exists, productWeight) = await _productWeightService.CheckExistanceAsync(deleteProductWeightVM.Id);
+
+        if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        await _productWeightService.DeleteProductWeightAsync(deleteProductWeightVM);
+        return RedirectToAction("Index");
     }
 }

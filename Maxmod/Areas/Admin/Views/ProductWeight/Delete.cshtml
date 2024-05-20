@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Update Product-Weight";
+}
+@model ProductWeight
+
+<form asp-controller="productweight" asp-action="delete" asp-area="admin" method="post">
+    <input asp-for="Id" style="display:none" />
+    <div class="mb-3">
+        <label for="Product" class="form-label">Product</label>
+        <select disabled id="Product" class="form-control" asp-for="ProductId" asp-items="@(new SelectList(ViewBag.Products,nameof(Product.Id),nameof(Product.Name),Model.ProductId))">
+            <option value="" selected>Pick a product...</option>
+        </select>
+        <span style="color:red" asp-validation-for="ProductId"></span>
+    </div>
+    <div class="mb-3">
+        <label for="Weight" class="form-label">Weight</label>
+        <select disabled id="Weight" class="form-control" asp-for="WeightId" asp-items="@(new SelectList(ViewBag.Weights,nameof(Weight.Id),nameof(Weight.Name),Model.WeightId))">
+            <option value="" selected>Pick a weight...</option>
+        </select>
+        <span style="color:red" asp-validation-for="WeightId"></span>
+    </div>
+    <div class="mb-3">
+        <label for="stock" class="form-label">Stock</label>
+        <input disabled class="form-control" id="stock" asp-for="Stock" />
+        <span style="color:red" asp-validation-for="Stock"></span>
+    </div>
+    <div class="mb-3">
+        <label for="Price" class="form-label">Price</label>
+        <input disabled class="form-control" id="Price" asp-for="Price" />
+        <span style="color:red" asp-validation-for="Price"></span>
+    </div>
+    <div class="mb-3">
+        <label for="DiscountPrice" class="form-label">Discount Price</label>
+        <input disabled class="form-control" id="DiscountPrice" asp-for="DiscountPrice" />
+        <span style="color:red" asp-validation-for="DiscountPrice"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly" style="color:red"></div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="productweight" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>

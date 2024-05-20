@@ -8,8 +8,8 @@ namespace Maxmod.Controllers;
 
 public class AccountController : Controller
 {
-    readonly IAccountService _accountService;
-    readonly SignInManager<AppUser> _signInManager;
+    private readonly IAccountService _accountService;
+    private readonly SignInManager<AppUser> _signInManager;
 
     public AccountController(IAccountService accountService, SignInManager<AppUser> signInManager)
     {

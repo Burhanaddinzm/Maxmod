@@ -121,7 +121,23 @@
                         <a class="collapse-item" asp-controller="weight" asp-action="create" asp-area="admin">Vendor Create</a>
                     </div>
                 </div>
+            </li>
+            
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProductweight"
+                   aria-expanded="true" aria-controls="collapseProductweight">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Product-Weights</span>
+                </a>
+                <div id="collapseProductweight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-controller="productweight" asp-action="index" asp-area="admin">Product-Weight List</a>
+                        <a class="collapse-item" asp-controller="productweight" asp-action="create" asp-area="admin">Product-Weight Create</a>
+                    </div>
+                </div>
             </li> 
+            
         </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->

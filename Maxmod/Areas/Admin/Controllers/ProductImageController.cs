@@ -7,7 +7,7 @@ namespace Maxmod.Areas.Admin.Controllers;
 [Area("Admin")]
 public class ProductImageController : Controller
 {
-    readonly IProductImageService _productImageService;
+    private readonly IProductImageService _productImageService;
 
     public ProductImageController(IProductImageService productImageService)
     {

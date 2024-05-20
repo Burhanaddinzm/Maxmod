@@ -11,9 +11,9 @@ namespace Maxmod.Areas.Admin.Controllers;
 [Area("Admin")]
 public class ProductController : Controller
 {
-    readonly IProductService _productService;
-    readonly ICategoryService _categoryService;
-    readonly IVendorService _vendorService;
+    private readonly IProductService _productService;
+    private readonly ICategoryService _categoryService;
+    private readonly IVendorService _vendorService;
 
     public ProductController(
         IProductService productService,
