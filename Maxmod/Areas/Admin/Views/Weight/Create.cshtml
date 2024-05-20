@@ -1,0 +1,15 @@
+﻿﻿@{
+    ViewData["Title"] = "Create Weight";
+}
+@model CreateWeightVM
+
+<form asp-controller="weight" asp-action="create" asp-area="admin" method="post">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control" id="name">
+        <span style="color:red" asp-validation-for="Name"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly" style="color:red"></div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="weight" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>

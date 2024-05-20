@@ -90,6 +90,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVmVuZG9yXFVwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Burhan/source/repos/Maxmod/Maxmod/Areas/Admin/Views/Weight/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcV2VpZ2h0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Burhan/source/repos/Maxmod/Maxmod/Areas/Admin/Views/Weight/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcV2VpZ2h0XERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Burhan/source/repos/Maxmod/Maxmod/Areas/Admin/Views/Weight/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcV2VpZ2h0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Burhan/source/repos/Maxmod/Maxmod/Areas/Admin/Views/Weight/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcV2VpZ2h0XFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Burhan/source/repos/Maxmod/Maxmod/Areas/Admin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

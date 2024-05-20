@@ -14,5 +14,5 @@ public interface IProductService
     Task<(bool, Product?)> CheckExistanceAsync(int id);
     Task<bool> CheckDuplicateAsync(string productName, int? productId = null);
     Task<FileValidationResult?> UpdateProductAsync(UpdateProductVM updateProductVM, Product product);
-    Task DeleteCategoryAsync(DeleteProductVM deleteProductVM);
+    Task DeleteProductAsync(DeleteProductVM deleteProductVM);
 }

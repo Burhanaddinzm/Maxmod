@@ -14,7 +14,7 @@ public class BackgroundService : IHostedService, IDisposable
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _timer = new Timer(ChangeProductStatus, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+        _timer = new Timer(ChangeProductStatus, null, TimeSpan.Zero, TimeSpan.FromHours(1));
         return Task.CompletedTask;
     }
 

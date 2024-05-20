@@ -136,7 +136,7 @@ public class ProductController : Controller
 
         if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
 
-        await _productService.DeleteCategoryAsync(deleteProductVM);
+        await _productService.DeleteProductAsync(deleteProductVM);
 
         return RedirectToAction("Index");
     }

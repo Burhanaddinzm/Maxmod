@@ -108,7 +108,7 @@ public class ProductService : IProductService
         return null;
     }
 
-    public async Task DeleteCategoryAsync(DeleteProductVM deleteProductVM)
+    public async Task DeleteProductAsync(DeleteProductVM deleteProductVM)
     {
         await _productRepository.DeleteAsync(deleteProductVM.Id);
     }

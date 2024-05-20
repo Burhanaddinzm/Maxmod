@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IVendorService, VendorService>();
         services.AddScoped<IProductImageService, ProductImageService>();
         services.AddScoped<ILayoutService, LayoutService>();
+        services.AddScoped<IWeightService, WeightService>();
         services.AddHostedService<BackgroundService>();
 
         return services;
