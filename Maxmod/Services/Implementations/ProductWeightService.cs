@@ -57,7 +57,7 @@ public class ProductWeightService : IProductWeightService
         var httpContext = _httpContextAccessor.HttpContext;
         var tempData = _tempDataDictionaryFactory.GetTempData(httpContext);
 
-        ProductWeight? productWeight = await _productWeightRepository.GetAsync(id);
+        ProductWeight? productWeight = await _productWeightRepository.GetAsync(x => x.Id == id, "Product.Vendor.User");
 
         if (productWeight == null)
             tempData["Error"] = "Product-Weight not found!";

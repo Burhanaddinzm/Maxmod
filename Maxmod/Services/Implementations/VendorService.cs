@@ -1,9 +1,7 @@
-﻿using Maxmod.Areas.Admin.ViewModels.Category;
-using Maxmod.Areas.Admin.ViewModels.Vendor;
+﻿using Maxmod.Areas.Admin.ViewModels.Vendor;
 using Maxmod.Enums;
 using Maxmod.Extensions;
 using Maxmod.Models;
-using Maxmod.Repositories.Implementations;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -17,11 +15,11 @@ namespace Maxmod.Services.Implementations;
 
 public class VendorService : IVendorService
 {
-    readonly IVendorRepository _vendorRepository;
-    readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
-    readonly IHttpContextAccessor _httpContextAccessor;
-    readonly UserManager<AppUser> _userManager;
-    readonly IWebHostEnvironment _env;
+    private readonly IVendorRepository _vendorRepository;
+    private readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly IWebHostEnvironment _env;
 
     public VendorService(
         IVendorRepository vendorRepository,

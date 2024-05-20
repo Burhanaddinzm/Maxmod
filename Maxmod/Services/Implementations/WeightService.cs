@@ -1,7 +1,5 @@
-﻿using Maxmod.Areas.Admin.ViewModels.Category;
-using Maxmod.Areas.Admin.ViewModels.Weight;
+﻿using Maxmod.Areas.Admin.ViewModels.Weight;
 using Maxmod.Models;
-using Maxmod.Repositories.Implementations;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;

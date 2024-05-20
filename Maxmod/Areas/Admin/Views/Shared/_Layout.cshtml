@@ -62,21 +62,23 @@
             <div class="sidebar-heading">
                 Interface
             </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategory"
-                   aria-expanded="true" aria-controls="collapseCategory">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Categories</span>
-                </a>
-                <div id="collapseCategory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" asp-controller="category" asp-action="index" asp-area="admin">Category List</a>
-                        <a class="collapse-item" asp-controller="category" asp-action="create" asp-area="admin">Category Create</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategory"
+                       aria-expanded="true" aria-controls="collapseCategory">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Categories</span>
+                    </a>
+                    <div id="collapseCategory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" asp-controller="category" asp-action="index" asp-area="admin">Category List</a>
+                            <a class="collapse-item" asp-controller="category" asp-action="create" asp-area="admin">Category Create</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            }
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -91,7 +93,7 @@
                         <a class="collapse-item" asp-controller="product" asp-action="create" asp-area="admin">Product Create</a>
                     </div>
                 </div>
-            </li>  
+            </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -103,11 +105,14 @@
                 <div id="collapseVendor" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" asp-controller="vendor" asp-action="index" asp-area="admin">Vendor List</a>
-                        <a class="collapse-item" asp-controller="vendor" asp-action="requests" asp-area="admin">Vendor Requests</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="collapse-item" asp-controller="vendor" asp-action="requests" asp-area="admin">Vendor Requests</a>
+                        }
                     </div>
                 </div>
-            </li> 
-            
+            </li>
+
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWeight"
@@ -122,7 +127,7 @@
                     </div>
                 </div>
             </li>
-            
+
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProductweight"
@@ -136,8 +141,8 @@
                         <a class="collapse-item" asp-controller="productweight" asp-action="create" asp-area="admin">Product-Weight Create</a>
                     </div>
                 </div>
-            </li> 
-            
+            </li>
+
         </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->

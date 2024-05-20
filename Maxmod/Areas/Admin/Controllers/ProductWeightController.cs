@@ -24,13 +24,23 @@ public class ProductWeightController : Controller
 
     public async Task<IActionResult> Index()
     {
-        List<ProductWeight>? productWeights = await _productWeightService.GetAllProductWeightsAsync(null, "Product", "Weight");
+        List<ProductWeight>? productWeights;
+        if (User.IsInRole("Vendor"))
+        {
+            productWeights = await _productWeightService.GetAllProductWeightsAsync(
+                x => x.Product.Vendor.User.UserName == User.Identity!.Name,
+                "Product", "Weight");
+        }
+        else productWeights = await _productWeightService.GetAllProductWeightsAsync(null, "Product", "Weight");
         return View(productWeights);
     }
 
     public async Task<IActionResult> Create()
     {
-        ViewBag.Products = await _productService.GetAllProductsAsync();
+        if (User.IsInRole("Vendor"))
+            ViewBag.Products = await _productService.GetAllProductsAsync(x=>x.Vendor.User.UserName == User.Identity!.Name);
+        else
+            ViewBag.Products = await _productService.GetAllProductsAsync();
         ViewBag.Weights = await _weightService.GetAllWeightsAsync();
 
         return View();
@@ -38,7 +48,10 @@ public class ProductWeightController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductWeightVM createProductWeightVM)
     {
-        ViewBag.Products = await _productService.GetAllProductsAsync();
+        if (User.IsInRole("Vendor"))
+            ViewBag.Products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name);
+        else
+            ViewBag.Products = await _productService.GetAllProductsAsync();
         ViewBag.Weights = await _weightService.GetAllWeightsAsync();
 
         if (!ModelState.IsValid) return View(createProductWeightVM);
@@ -55,12 +68,21 @@ public class ProductWeightController : Controller
 
     public async Task<IActionResult> Update(int id)
     {
-        ViewBag.Products = await _productService.GetAllProductsAsync();
+        if (User.IsInRole("Vendor"))
+            ViewBag.Products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name);
+        else
+            ViewBag.Products = await _productService.GetAllProductsAsync();
         ViewBag.Weights = await _weightService.GetAllWeightsAsync();
 
         var (exists, productWeight) = await _productWeightService.CheckExistanceAsync(id);
 
         if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        if (User.IsInRole("Vendor"))
+        {
+            if (productWeight!.Product.Vendor.User.UserName != User.Identity!.Name)
+                return RedirectToAction("Index", "Error", new { Area = "" });
+        }
 
         var updateProductWeightVM = new UpdateProductWeightVM
         {
@@ -76,7 +98,10 @@ public class ProductWeightController : Controller
     [HttpPost]
     public async Task<IActionResult> Update(UpdateProductWeightVM updateProductWeightVM)
     {
-        ViewBag.Products = await _productService.GetAllProductsAsync();
+        if (User.IsInRole("Vendor"))
+            ViewBag.Products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name);
+        else
+            ViewBag.Products = await _productService.GetAllProductsAsync();
         ViewBag.Weights = await _weightService.GetAllWeightsAsync();
 
         if (!ModelState.IsValid) return View(updateProductWeightVM);
@@ -97,7 +122,10 @@ public class ProductWeightController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
-        ViewBag.Products = await _productService.GetAllProductsAsync();
+        if (User.IsInRole("Vendor"))
+            ViewBag.Products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name);
+        else
+            ViewBag.Products = await _productService.GetAllProductsAsync();
         ViewBag.Weights = await _weightService.GetAllWeightsAsync();
 
         if (id == 0)
@@ -110,12 +138,21 @@ public class ProductWeightController : Controller
 
         if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
 
+        if (User.IsInRole("Vendor"))
+        {
+            if (productWeight!.Product.Vendor.User.UserName != User.Identity!.Name)
+                return RedirectToAction("Index", "Error", new { Area = "" });
+        }
+
         return View(productWeight);
     }
     [HttpPost]
     public async Task<IActionResult> Delete(DeleteProductWeightVM deleteProductWeightVM)
     {
-        ViewBag.Products = await _productService.GetAllProductsAsync();
+        if (User.IsInRole("Vendor"))
+            ViewBag.Products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name);
+        else
+            ViewBag.Products = await _productService.GetAllProductsAsync();
         ViewBag.Weights = await _weightService.GetAllWeightsAsync();
 
         var (exists, productWeight) = await _productWeightService.CheckExistanceAsync(deleteProductWeightVM.Id);

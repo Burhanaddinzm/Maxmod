@@ -8,8 +8,8 @@ namespace Maxmod.Services.Implementations;
 
 public class AccountService : IAccountService
 {
-    readonly UserManager<AppUser> _userManager;
-    readonly IVendorService _vendorService;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly IVendorService _vendorService;
 
     public AccountService(UserManager<AppUser> userManager, IVendorService vendorService)
     {

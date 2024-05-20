@@ -8,10 +8,10 @@ namespace Maxmod.Services.Implementations;
 
 public class ProductImageService : IProductImageService
 {
-    readonly IProductImageRepository _repository;
+    private readonly IProductImageRepository _repository;
     private readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    readonly IWebHostEnvironment _env;
+    private readonly IWebHostEnvironment _env;
 
     public ProductImageService(IProductImageRepository repository, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env)
     {

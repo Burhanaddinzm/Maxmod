@@ -1,8 +1,6 @@
-﻿using Maxmod.Areas.Admin.ViewModels.Category;
-using Maxmod.Areas.Admin.ViewModels.Product;
+﻿using Maxmod.Areas.Admin.ViewModels.Product;
 using Maxmod.Extensions;
 using Maxmod.Models;
-using Maxmod.Repositories.Implementations;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -13,10 +11,10 @@ namespace Maxmod.Services.Implementations;
 
 public class ProductService : IProductService
 {
-    readonly IProductRepository _productRepository;
-    readonly IWebHostEnvironment _env;
-    readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
-    readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IProductRepository _productRepository;
+    private readonly IWebHostEnvironment _env;
+    private readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public ProductService(
         IProductRepository productRepository,
@@ -161,7 +159,7 @@ public class ProductService : IProductService
         var httpContext = _httpContextAccessor.HttpContext;
         var tempData = _tempDataDictionaryFactory.GetTempData(httpContext);
 
-        Product? product = await _productRepository.GetAsync(x => x.Id == id, "ProductImages", "Category", "Vendor");
+        Product? product = await _productRepository.GetAsync(x => x.Id == id, "ProductImages", "Category", "Vendor.User");
 
         if (product == null)
             tempData["Error"] = "Product not found!";

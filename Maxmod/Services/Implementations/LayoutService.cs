@@ -6,8 +6,8 @@ namespace Maxmod.Services.Implementations;
 
 public class LayoutService : ILayoutService
 {
-    readonly UserManager<AppUser> _userManager;
-    readonly IHttpContextAccessor _contextAccessor;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly IHttpContextAccessor _contextAccessor;
 
     public LayoutService(UserManager<AppUser> userManager, IHttpContextAccessor contextAccessor)
     {

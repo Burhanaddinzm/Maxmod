@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Maxmod.Areas.Admin.ViewModels.Vendor;
+using Maxmod.Models;
 
 namespace Maxmod.Areas.Admin.Controllers;
 [Authorize(Roles = "Admin,Vendor")]
@@ -17,12 +18,22 @@ public class VendorController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var vendors = await _vendorService.GetAllVendorsAsync(x => x.IsConfirmed, "User", "Products");
+        List<Vendor>? vendors;
+        if (User.IsInRole("Vendor"))
+        {
+            vendors = await _vendorService.GetAllVendorsAsync(
+                x => x.IsConfirmed &&
+                x.User.UserName == User.Identity!.Name, "User", "Products");
+        }
+        else vendors = await _vendorService.GetAllVendorsAsync(x => x.IsConfirmed, "User", "Products");
         return View(vendors);
     }
 
     public async Task<IActionResult> Requests()
     {
+        if (User.IsInRole("Vendor"))
+            return RedirectToAction("Index", "Error", new { Area = "" });
+
         var newVendors = await _vendorService.GetAllVendorsAsync(x => !x.IsConfirmed, "User");
         return View(newVendors);
     }
@@ -32,6 +43,12 @@ public class VendorController : Controller
         var (exists, vendor) = await _vendorService.CheckExistanceAsync(id);
 
         if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
+
+        if (User.IsInRole("Vendor"))
+        {
+            if (vendor!.User.UserName != User.Identity!.Name)
+                return RedirectToAction("Index", "Error", new { Area = "" });
+        }
 
         var vendorVM = new UpdateVendorVM
         {
@@ -77,6 +94,12 @@ public class VendorController : Controller
 
         if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
 
+        if (User.IsInRole("Vendor"))
+        {
+            if (vendor!.User.UserName != User.Identity!.Name)
+                return RedirectToAction("Index", "Error", new { Area = "" });
+        }
+
         return View(vendor);
     }
     [HttpPost]
@@ -92,6 +115,8 @@ public class VendorController : Controller
 
     public async Task<IActionResult> Accept(int id)
     {
+        if (User.IsInRole("Vendor")) return RedirectToAction("Index", "Error", new { Area = "" });
+
         var (exists, vendor) = await _vendorService.CheckExistanceAsync(id);
 
         if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
@@ -102,6 +127,8 @@ public class VendorController : Controller
     }
     public async Task<IActionResult> Reject(int id)
     {
+        if (User.IsInRole("Vendor")) return RedirectToAction("Index", "Error", new { Area = "" });
+
         var (exists, vendor) = await _vendorService.CheckExistanceAsync(id);
 
         if (!exists) return RedirectToAction("Index", "Error", new { Area = "" });
