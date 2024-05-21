@@ -1,0 +1,204 @@
+﻿@{
+    ViewData["Title"] = "Update Settings";
+}
+@model UpdateSettingsVM
+
+<form asp-controller="settings" asp-action="update" asp-area="admin" method="post" enctype="multipart/form-data">
+    <input asp-for="Id" style="display:none" />
+    <div class="mb-3">
+        <label for="IntroTitle" class="form-label">Intro Title</label>
+        <input asp-for="IntroTitle" class="form-control" id="IntroTitle">
+        <span style="color:red" asp-validation-for="IntroTitle"></span>
+    </div>
+    <div class="mb-3">
+        <label for="IntroDescription" class="form-label">Intro Description</label>
+        <input asp-for="IntroDescription" class="form-control" id="IntroDescription">
+        <span style="color:red" asp-validation-for="IntroDescription"></span>
+    </div>
+    <div class="mb-3">
+        <h5 style="color:red">Avoid light colored images!</h5>
+        <label for="IntroImage" class="form-label">Intro Image</label>
+        <input asp-for="IntroImage" class="form-control" id="IntroImage">
+        <span style="color:red" asp-validation-for="IntroImage"></span>
+    </div>
+    <div class="mb-3">
+        <label for="MarqueeText1" class="form-label">Marquee Text 1</label>
+        <input asp-for="MarqueeText1" class="form-control" id="MarqueeText1">
+        <span style="color:red" asp-validation-for="MarqueeText1"></span>
+    </div>
+    <div class="mb-3">
+        <label for="MarqueeText2" class="form-label">Marquee Text 2</label>
+        <input asp-for="MarqueeText2" class="form-control" id="MarqueeText2">
+        <span style="color:red" asp-validation-for="MarqueeText2"></span>
+    </div>
+    <div class="mb-3">
+        <h5 style="color:green">Use @("<span>Your text here</span>") for lighter font weight</h5>
+        <label for="PromoTitle" class="form-label">Promo Title</label>
+        <input asp-for="PromoTitle" class="form-control" id="PromoTitle">
+        <span style="color:red" asp-validation-for="PromoTitle"></span>
+        <input class="mt-3" type="text" value="<span></span>" id="myInput">
+        <button type="button" onclick="myFunction()">
+            Copy text
+        </button>
+    </div>
+    <div class="mb-3">
+        <label for="PromoDescription" class="form-label">Promo Description</label>
+        <input asp-for="PromoDescription" class="form-control" id="PromoDescription">
+        <span style="color:red" asp-validation-for="PromoDescription"></span>
+    </div>
+    <div class="mb-3">
+        <label for="PromoImage" class="form-label">Promo Image</label>
+        <input asp-for="PromoImage" class="form-control" id="PromoImage">
+        <span style="color:red" asp-validation-for="PromoImage"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoHeading1" class="form-label">Small Promo Heading 1</label>
+        <input asp-for="SmallPromoHeading1" class="form-control" id="SmallPromoHeading1">
+        <span style="color:red" asp-validation-for="SmallPromoHeading1"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoTitle1" class="form-label">Small Promo Title 1</label>
+        <input asp-for="SmallPromoTitle1" class="form-control" id="SmallPromoTitle1">
+        <span style="color:red" asp-validation-for="SmallPromoTitle1"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoText1" class="form-label">Small Promo Text 1</label>
+        <input asp-for="SmallPromoText1" class="form-control" id="SmallPromoText1">
+        <span style="color:red" asp-validation-for="SmallPromoText1"></span>
+    </div>
+    <div class="mb-3">
+        <h5 style="color:red">Avoid dark colored images!</h5>
+        <label for="SmallPromoImage1" class="form-label">Small Promo Image 1</label>
+        <input asp-for="SmallPromoImage1" class="form-control" id="SmallPromoImage1">
+        <span style="color:red" asp-validation-for="SmallPromoImage1"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoHeading2" class="form-label">Small Promo Heading 2</label>
+        <input asp-for="SmallPromoHeading2" class="form-control" id="SmallPromoHeading2">
+        <span style="color:red" asp-validation-for="SmallPromoHeading2"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoTitle2" class="form-label">Small Promo Title 2</label>
+        <input asp-for="SmallPromoTitle2" class="form-control" id="SmallPromoTitle2">
+        <span style="color:red" asp-validation-for="SmallPromoTitle2"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoText2" class="form-label">Small Promo Text 2</label>
+        <input asp-for="SmallPromoText2" class="form-control" id="SmallPromoText2">
+        <span style="color:red" asp-validation-for="SmallPromoText2"></span>
+    </div>
+    <div class="mb-3">
+        <h5 style="color:red">Avoid dark colored images!</h5>
+        <label for="SmallPromoImage2" class="form-label">Small Promo Image 2</label>
+        <input asp-for="SmallPromoImage2" class="form-control" id="SmallPromoImage2">
+        <span style="color:red" asp-validation-for="SmallPromoImage2"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoHeading3" class="form-label">Small Promo Heading 3</label>
+        <input asp-for="SmallPromoHeading3" class="form-control" id="SmallPromoHeading3">
+        <span style="color:red" asp-validation-for="SmallPromoHeading3"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoTitle3" class="form-label">Small Promo Title 3</label>
+        <input asp-for="SmallPromoTitle3" class="form-control" id="SmallPromoTitle3">
+        <span style="color:red" asp-validation-for="SmallPromoTitle3"></span>
+    </div>
+    <div class="mb-3">
+        <label for="SmallPromoText3" class="form-label">Small Promo Text 3</label>
+        <input asp-for="SmallPromoText3" class="form-control" id="SmallPromoText3">
+        <span style="color:red" asp-validation-for="SmallPromoText3"></span>
+    </div>
+    <div class="mb-3">
+        <h5 style="color:red">Avoid dark colored images!</h5>
+        <label for="SmallPromoImage3" class="form-label">Small Promo Image 3</label>
+        <input asp-for="SmallPromoImage3" class="form-control" id="SmallPromoImage3">
+        <span style="color:red" asp-validation-for="SmallPromoImage3"></span>
+    </div>
+    <div class="mb-3">
+        <label for="BigPromoHeading" class="form-label">Big Promo Heading</label>
+        <input asp-for="BigPromoHeading" class="form-control" id="BigPromoHeading">
+        <span style="color:red" asp-validation-for="BigPromoHeading"></span>
+    </div>
+    <div class="mb-3">
+        <label for="BigPromoTitle" class="form-label">Big Promo Title</label>
+        <input asp-for="BigPromoTitle" class="form-control" id="BigPromoTitle">
+        <span style="color:red" asp-validation-for="BigPromoTitle"></span>
+    </div>
+    <div class="mb-3">
+        <label for="BigPromoText" class="form-label">Big Promo Text</label>
+        <input asp-for="BigPromoText" class="form-control" id="BigPromoText">
+        <span style="color:red" asp-validation-for="BigPromoText"></span>
+    </div>
+    <div class="mb-3">
+        <h5 style="color:red">Avoid light colored images!</h5>
+        <label for="BigPromoImage" class="form-label">Big Promo Image</label>
+        <input asp-for="BigPromoImage" class="form-control" id="BigPromoImage">
+        <span style="color:red" asp-validation-for="BigPromoImage"></span>
+    </div>
+    <div class="mb-3">
+        <label for="Address" class="form-label">Address</label>
+        <input asp-for="Address" class="form-control" id="Address">
+        <span style="color:red" asp-validation-for="Address"></span>
+    </div>
+    <div class="mb-3">
+        <label for="Phone" class="form-label">Phone</label>
+        <input asp-for="Phone" class="form-control" id="Phone">
+        <span style="color:red" asp-validation-for="Phone"></span>
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" id="Email">
+        <span style="color:red" asp-validation-for="Email"></span>
+    </div>
+    <div class="mb-3">
+        <label for="ContactText" class="form-label">Contact Text</label>
+        <input asp-for="ContactText" class="form-control" id="ContactText">
+        <span style="color:red" asp-validation-for="ContactText"></span>
+    </div>
+    <div class="mb-3">
+        <label for="AboutTitle" class="form-label">About Title</label>
+        <input asp-for="AboutTitle" class="form-control" id="AboutTitle">
+        <span style="color:red" asp-validation-for="AboutTitle"></span>
+    </div>
+    <div class="mb-3">
+        <label for="AboutDescription" class="form-label">About Description</label>
+        <input asp-for="AboutDescription" class="form-control" id="AboutDescription">
+        <span style="color:red" asp-validation-for="AboutDescription"></span>
+    </div>
+    <div class="mb-3">
+        <label for="AboutBoxHeading" class="form-label">About Box Heading</label>
+        <input asp-for="AboutBoxHeading" class="form-control" id="AboutBoxHeading">
+        <span style="color:red" asp-validation-for="AboutBoxHeading"></span>
+    </div>
+    <div class="mb-3">
+        <label for="AboutBoxTitle" class="form-label">About Box Title</label>
+        <input asp-for="AboutBoxTitle" class="form-control" id="AboutBoxTitle">
+        <span style="color:red" asp-validation-for="AboutBoxTitle"></span>
+    </div>
+    <div class="mb-3">
+        <label for="AboutBoxText" class="form-label">About Box Text</label>
+        <input asp-for="AboutBoxText" class="form-control" id="AboutBoxText">
+        <span style="color:red" asp-validation-for="AboutBoxText"></span>
+    </div>
+    <div class="mb-3">
+        <label for="AboutBoxImage" class="form-label">About Box Image</label>
+        <input asp-for="AboutBoxImage" class="form-control" id="AboutBoxImage">
+        <span style="color:red" asp-validation-for="AboutBoxImage"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly" style="color:red"></div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a asp-action="index" asp-controller="settings" asp-area="admin" class="btn btn-secondary mx-2">Back to list</a>
+</form>
+
+@section Scripts {
+    <script>
+        function myFunction() {
+            var copyText = document.getElementById("myInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            navigator.clipboard.writeText(copyText.value), function (err) {
+                console.error('Failed to copy: ', err);
+            };
+        }
+    </script>
+}

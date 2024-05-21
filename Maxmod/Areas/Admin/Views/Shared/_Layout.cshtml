@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="~/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    @await RenderSectionAsync("Styles",false)
 
 </head>
 
@@ -62,6 +63,24 @@
             <div class="sidebar-heading">
                 Interface
             </div>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSettings"
+                       aria-expanded="true" aria-controls="collapseSettings">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <div id="collapseSettings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" asp-controller="settings" asp-action="index" asp-area="admin">Settings</a>
+                        </div>
+                    </div>
+                </li>
+            }
+
             @if (User.IsInRole("Admin"))
             {
                 <!-- Nav Item - Pages Collapse Menu -->
@@ -78,7 +97,7 @@
                         </div>
                     </div>
                 </li>
-            }
+            }  
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">

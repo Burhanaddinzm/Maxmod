@@ -151,19 +151,8 @@
                                 <img src="~/client/assets/icons/chevron.svg" alt="" />
                             </a>
                             <div class="nav-dropdown hidden">
-                                <ul class="container">
-                                    <li>
-                                        <a href="#">All Products</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Fruits</a>
-                                        <div class="line"></div>
-                                        <div class="children">
-                                            <a href="#">Apple</a>
-                                            <a href="#">Pear</a>
-                                        </div>
-                                    </li>
-                                </ul>
+                                @* Category Component *@
+                                @await Component.InvokeAsync("Category")
                                 <div class="line"></div>
                             </div>
                         </li>

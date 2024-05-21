@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
-    <Folder Include="ViewComponents\" />
-    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 
 namespace Maxmod.Models
 {
-    public class Settings : BaseEntity
+    public class Settings : BaseAuditableEntity
     {
         public string IntroTitle { get; set; } = null!;
         public string IntroDescription { get; set; } = null!;

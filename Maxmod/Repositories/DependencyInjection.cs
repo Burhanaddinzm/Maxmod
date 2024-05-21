@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IProductImageRepository, ProductImageRepository>();
         services.AddScoped<IWeightRepository, WeightRepository>();
         services.AddScoped<IProductWeightRepository, ProductWeightRepository>();
+        services.AddScoped<ISettingsRepository, SettingsRepository>();
 
         return services;
     }

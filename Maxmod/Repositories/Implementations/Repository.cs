@@ -48,9 +48,11 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
         return await _context.Set<T>().FindAsync(id);
     }
 
-    public async Task<T?> GetAsync(Expression<Func<T, bool>> expression, params string[] includes)
+    public async Task<T?> GetAsync(Expression<Func<T, bool>>? expression, params string[] includes)
     {
         IQueryable<T> query = _context.Set<T>().AsQueryable();
+
+        if (expression == null) return await query.FirstOrDefaultAsync();
 
         if (includes.Length > 0)
         {
