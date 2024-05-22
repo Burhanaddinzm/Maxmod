@@ -1,6 +1,8 @@
 ﻿using Maxmod.Data.Contexts;
 using Maxmod.Enums;
 using Maxmod.Models;
+using Maxmod.Repositories.Interfaces;
+using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Maxmod.Data;
@@ -89,4 +91,15 @@ public static class SeedData
             }
         }
     }
+
+    public static async Task SeedProductWeight(this IServiceScope scope)
+    {
+        var weightRepository = scope.ServiceProvider.GetRequiredService<IWeightRepository>();
+
+        if (await weightRepository.GetAsync(x => x.Name == "Default") == null)
+        {
+            await weightRepository.CreateAsync(new Weight { Name = "Default" });
+        }
+    }
+
 }

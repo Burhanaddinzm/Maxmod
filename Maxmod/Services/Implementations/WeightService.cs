@@ -68,12 +68,17 @@ public class WeightService : IWeightService
        int? take = null,
        params string[] includes)
     {
-        return await _weightRepository.GetAllAsync(where,order,take, includes);
+        return await _weightRepository.GetAllAsync(where, order, take, includes);
     }
 
     public async Task UpdateWeightAsync(UpdateWeightVM updateWeightVM, Weight Weight)
     {
         Weight.Name = updateWeightVM.Name;
         await _weightRepository.UpdateAsync(Weight);
+    }
+
+    public async Task<Weight?> GetWeightByNameAsync(string name)
+    {
+        return await _weightRepository.GetAsync(x => x.Name == name);
     }
 }

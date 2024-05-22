@@ -4,7 +4,6 @@
 @model UpdateSettingsVM
 
 <form asp-controller="settings" asp-action="update" asp-area="admin" method="post" enctype="multipart/form-data">
-    <input asp-for="Id" style="display:none" />
     <div class="mb-3">
         <label for="IntroTitle" class="form-label">Intro Title</label>
         <input asp-for="IntroTitle" class="form-control" id="IntroTitle">

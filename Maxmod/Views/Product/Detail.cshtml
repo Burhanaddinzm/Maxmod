@@ -1,0 +1,152 @@
+﻿@model Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/client/assets/css/product-detail.min.css" />
+}
+
+<div class="container">
+    <div class="breadcrumbs">
+        <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> @Model.Name</span>
+    </div>
+    <!-- Product Detail Start -->
+    <section class="product-detail-section">
+        <div class="left-side">
+            <img src="~/client/assets/images/product/@Model.ProductImages!.First().Url"
+                 alt=""
+                 class="main-img run-animation" />
+            <div class="slider">
+                <button class="slider-back">
+                    <img src="~/client/assets/icons/arrow_icon.svg" alt="" />
+                </button>
+                <div class="slide-container">
+                    <div class="img-container">
+                        @foreach (var image in Model.ProductImages!)
+                        {
+                            if (image == Model.ProductImages.First())
+                            {
+                                <img src="~/client/assets/images/product/@image.Url"
+                                     alt=""
+                                     class="active" />
+                            }
+                            else
+                            {
+                                <img src="~/client/assets/images/product/@image.Url"
+                                     alt="" />
+                            }
+                        }
+
+                    </div>
+                </div>
+                <button class="slider-frwd">
+                    <img src="~/client/assets/icons/arrow_icon.svg" alt="" />
+                </button>
+                <div class="mobile-slider">
+                    <button class="mobile-back">
+                        <img src="~/client/assets/icons/arrow_icon.svg" alt="" />
+                    </button>
+                    <span class="slide-count">1 / 6</span>
+                    <button class="mobile-frwd">
+                        <img src="~/client/assets/icons/arrow_icon.svg" alt="" />
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="right-side">
+            <h1 class="product-title">@Model.Name</h1>
+            <div class="price-container">
+                <span class="selling-price">$19.00</span>
+                <span class="old-price">$21.00</span>
+                <span class="sale-badge"></span>
+            </div>
+            <div class="in-stock">&nbsp;&nbsp;&nbsp;In stock</div>
+            <div class="line"></div>
+            <div class="variation-name">Weight: <span>500gm</span></div>
+            <div class="variations">
+                <label for="variation-500gm" class="variation active">500gm</label>
+                <input checked="checked"
+                       style="display: none"
+                       type="radio"
+                       id="variation-500gm"
+                       name="variation" />
+                <label for="variation-1kg" class="variation out">1kg</label>
+                <input style="display: none"
+                       type="radio"
+                       id="variation-1kg"
+                       name="variation"
+                       disabled />
+                <label for="variation-2kg" class="variation">2kg</label>
+                <input style="display: none"
+                       type="radio"
+                       id="variation-2kg"
+                       name="variation" />
+            </div>
+            <div class="quantity">Quantity</div>
+            <div class="count-control">
+                <button class="decrease">-</button>
+                <input value="1" type="number" />
+                <button class="increase">+</button>
+            </div>
+            <div class="btn-wrapper">
+                <a class="btn" href="#">Add To Cart</a>
+                <a class="btn" href="#">Buy It Now</a>
+            </div>
+            <p class="shipping-text">Free standard shipping on $100+</p>
+            <div class="shop-principles">
+                <div>
+                    <img src="~/client/assets/icons/shiping_icon.svg" alt="" />
+                    <span>Free Shiping</span>
+                </div>
+                <div>
+                    <img src="~/client/assets/icons/safe_payment_icon.svg" alt="" />
+                    <span>Safe payment</span>
+                </div>
+                <div>
+                    <img src="~/client/assets/icons/free_returns_icon.svg" alt="" />
+                    <span>Free returns</span>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <span>Vendor:</span>
+                    <p>@Model.Vendor.Name</p>
+                </li>
+                <li>
+                    <span>Category:</span>
+                    <p>@Model.Category.Name</p>
+                </li>
+            </ul>
+            <h3>Description</h3>
+            <p class="product-description">@Model.Description</p>
+            <div class="shipping-return">
+                <div class="line"></div>
+                <button class="top">
+                    <h4>Shipping And Return</h4>
+                    <img src="~/client/assets/icons/chevron.svg" alt="" />
+                </button>
+                <div class="bottom hidden">
+                    <p>
+                        For all orders exceeding a value of 100USD shipping is offered
+                        for free.
+                    </p>
+                    <p>
+                        Returns will be accepted for up to 10 days of Customer's
+                        receipt or tracking number on unworn items. You, as a
+                        Customer, are obliged to inform us via email before you return
+                        the item.
+                    </p>
+                    <p>
+                        Otherwise, standard shipping charges apply. Check out our
+                        delivery&nbsp;Terms &amp; Conditions&nbsp;for more details.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script src="~/client/assets/js/product-detail.min.js"></script>
+}

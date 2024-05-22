@@ -41,7 +41,7 @@ public class ProductWeightController : Controller
             ViewBag.Products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name);
         else
             ViewBag.Products = await _productService.GetAllProductsAsync();
-        ViewBag.Weights = await _weightService.GetAllWeightsAsync();
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync(x=> x.Name != "Default");
 
         return View();
     }
@@ -52,7 +52,7 @@ public class ProductWeightController : Controller
             ViewBag.Products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name);
         else
             ViewBag.Products = await _productService.GetAllProductsAsync();
-        ViewBag.Weights = await _weightService.GetAllWeightsAsync();
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync(x => x.Name != "Default");
 
         if (!ModelState.IsValid) return View(createProductWeightVM);
 

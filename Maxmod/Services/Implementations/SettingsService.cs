@@ -26,7 +26,7 @@ public class SettingsService : ISettingsService
 
     public async Task<FileValidationResult?> UpdateSettingsAsync(UpdateSettingsVM updateSettingsVM)
     {
-        var settings = await _settingsRepository.GetAsync(updateSettingsVM.Id);
+        var settings = await GetSettingsAsync();
 
         settings.IntroTitle = updateSettingsVM.IntroTitle;
         settings.IntroDescription = updateSettingsVM.IntroDescription;

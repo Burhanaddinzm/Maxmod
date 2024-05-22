@@ -15,17 +15,20 @@ public class ProductService : IProductService
     private readonly IWebHostEnvironment _env;
     private readonly ITempDataDictionaryFactory _tempDataDictionaryFactory;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IWeightService _weightService;
 
     public ProductService(
         IProductRepository productRepository,
         IWebHostEnvironment env,
         ITempDataDictionaryFactory tempDataDictionaryFactory,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor,
+        IWeightService weightService)
     {
         _productRepository = productRepository;
         _env = env;
         _tempDataDictionaryFactory = tempDataDictionaryFactory;
         _httpContextAccessor = httpContextAccessor;
+        _weightService = weightService;
     }
 
     public async Task<List<Product>> GetAllProductsAsync(
@@ -61,6 +64,15 @@ public class ProductService : IProductService
             VendorId = createProductVM.VendorId,
             CategoryId = createProductVM.CategoryId
         };
+
+        product.ProductWeights.Add(new ProductWeight
+        {
+            Stock = 0,
+            Price = 0,
+            DiscountPrice = 0,
+            Product = product,
+            Weight = await _weightService.GetWeightByNameAsync("Default")
+        });
 
         await _productRepository.CreateAsync(product);
         return null;
@@ -163,7 +175,7 @@ public class ProductService : IProductService
         var httpContext = _httpContextAccessor.HttpContext;
         var tempData = _tempDataDictionaryFactory.GetTempData(httpContext);
 
-        Product? product = await _productRepository.GetAsync(x => x.Id == id, "ProductImages", "Category", "Vendor.User");
+        Product? product = await _productRepository.GetAsync(x => x.Id == id, "ProductImages", "Category", "Vendor.User", "ProductWeights.Weight");
 
         if (product == null)
             tempData["Error"] = "Product not found!";

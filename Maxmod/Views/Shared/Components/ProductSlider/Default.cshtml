@@ -17,57 +17,146 @@
                     @foreach (var product in Model)
                     {
                         <div class="slide">
-                            <div class="top">
-                                <div class="badges">
-                                    <div class="new-badge"></div>
-                                    <div class="out-of-stock-badge"></div>
-                                    <div class="save-badge" data-dollar="1.00"></div>
+                            <form>
+                                <div class="top">
+                                    <div class="badges">
+                                        <div class="new-badge"></div>
+                                        @if (!product.ProductWeights.Any(x => x.Stock > 0))
+                                        {
+                                            <div class="out-of-stock-badge"></div>
+                                        }
+                                        @if (product.ProductWeights.First().DiscountPrice != 0)
+                                        {
+                                            <div class="save-badge" data-dollar="@(product.ProductWeights.First().Price - product.ProductWeights.First().DiscountPrice)"></div>
+                                        }
+                                    </div>
+                                    <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">
+                                        <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
+                                             alt=""
+                                             class="main-img" />
+                                        <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
+                                             alt=""
+                                             class="hover-img" />
+                                    </a>
+                                    <div class="actions">
+                                        <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id" class="btn">Detailed Look</a>
+                                        <button type="submit" class="btn">Add To Cart</button>
+                                    </div>
                                 </div>
-                                <a href="#">
-                                    <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
-                                         alt=""
-                                         class="main-img" />
-                                    <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
-                                         alt=""
-                                         class="hover-img" />
-                                </a>
-                                <div class="actions">
-                                    <a href="#" class="btn">Detailed Look</a>
-                                    <a href="#" class="btn">Add To Cart</a>
+                                <div class="bottom">
+                                    <h6>@product.Vendor.Name</h6>
+                                    <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">@product.Name</a>
+                                    @if (product.ProductWeights.First().DiscountPrice != 0)
+                                    {
+                                        <div class="price-wrapper">
+                                            <span class="selling-price">$@product.ProductWeights.First().DiscountPrice</span>
+                                            <span class="old-price">$@product.ProductWeights.First().Price</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="price-wrapper">
+                                            <span class="selling-price">$@product.ProductWeights.First().Price</span>
+                                        </div>
+                                    }
+                                    @if (!product.ProductWeights.Any(x => x.Weight.Name == "Default"))
+                                    {
+                                        <div class="line"></div>
+                                        <h5>Weight</h5>
+                                        <div class="variations">
+                                            @foreach (var productWeight in product.ProductWeights)
+                                            {
+                                                if (productWeight == @product.ProductWeights.First() && productWeight.Stock == 0)
+                                                {
+                                                    <label data-stock="@productWeight.Stock"
+                                                           data-price="@productWeight.Price"
+                                                           data-discount-price="@productWeight.DiscountPrice"
+                                                           for="variation-@productWeight.Id"
+                                                           class="variation out">
+                                                        @productWeight.Weight.Name
+                                                    </label>
+                                                    <input style="display: none"
+                                                           type="radio"
+                                                           id="variation-@productWeight.Id"
+                                                           value="@productWeight.Id"
+                                                           name="variation-@product.Id"
+                                                           disabled />
+                                                }
+                                                else if (productWeight == @product.ProductWeights.First() && productWeight.Stock > 0)
+                                                {
+                                                    <label data-stock="@productWeight.Stock"
+                                                           data-price="@productWeight.Price"
+                                                           data-discount-price="@productWeight.DiscountPrice"
+                                                           for="variation-@productWeight.Id"
+                                                           class="variation active">
+                                                        @productWeight.Weight.Name
+                                                    </label>
+                                                    <input checked="checked"
+                                                           style="display: none"
+                                                           type="radio"
+                                                           id="variation-@productWeight.Id"
+                                                           value="@productWeight.Id"
+                                                           name="variation-@product.Id" />
+                                                }
+                                                else if (productWeight != @product.ProductWeights.First() && productWeight.Stock == 0)
+                                                {
+                                                    <label data-stock="@productWeight.Stock"
+                                                           data-price="@productWeight.Price"
+                                                           data-discount-price="@productWeight.DiscountPrice"
+                                                           for="variation-@productWeight.Id"
+                                                           class="variation out">
+                                                        @productWeight.Weight.Name
+                                                    </label>
+                                                    <input style="display: none"
+                                                           type="radio"
+                                                           id="variation-@productWeight.Id"
+                                                           value="@productWeight.Weight.Id"
+                                                           name="variation-@product.Id"
+                                                           disabled />
+                                                }
+                                                else if (productWeight != @product.ProductWeights.First() && productWeight.Stock > 0)
+                                                {
+                                                    <label data-stock="@productWeight.Stock"
+                                                           data-price="@productWeight.Price"
+                                                           data-discount-price="@productWeight.DiscountPrice"
+                                                           for="variation-@productWeight.Id"
+                                                           class="variation">
+                                                        @productWeight.Weight.Name
+                                                    </label>
+                                                    <input style="display: none"
+                                                           type="radio"
+                                                           id="variation-@productWeight.Id"
+                                                           value="@productWeight.Id"
+                                                           name="variation-@product.Id" />
+                                                }
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        if (product.ProductWeights.First().Stock > 0)
+                                        {
+                                            <input style="display: none"
+                                                   checked="checked"
+                                                   type="radio"
+                                                   id="variation-@product.ProductWeights.First().Id"
+                                                   value="@product.ProductWeights.First().Id"
+                                                   name="variation-@product.ProductWeights.First().Id" />
+                                        }
+                                        else
+                                        {
+                                            <input style="display: none"
+                                                   type="radio"
+                                                   id="variation-@product.ProductWeights.First().Id"
+                                                   value="@product.ProductWeights.First().Id"
+                                                   name="variation-@product.ProductWeights.First()"
+                                                   disabled />
+                                        }
+                                    }
                                 </div>
-                            </div>
-                            <div class="bottom">
-                                <h6>Vendor.Name</h6>
-                                <a href="#">Product.Name</a>
-                                <div class="price-wrapper">
-                                    <span class="selling-price">$5.00</span>
-                                    <span class="old-price">$6.00</span>
-                                </div>
-                                <div class="line"></div>
-                                <h5>Weight</h5>
-                                <div class="variations">
-                                    <label for="variation-500gm" class="variation active">500gm</label>
-                                    <input checked="checked"
-                                           style="display: none"
-                                           type="radio"
-                                           id="variation-500gm"
-                                           name="variation" />
-                                    <label for="variation-1kg" class="variation out">1kg</label>
-                                    <input style="display: none"
-                                           type="radio"
-                                           id="variation-1kg"
-                                           name="variation"
-                                           disabled />
-                                    <label for="variation-2kg" class="variation">2kg</label>
-                                    <input style="display: none"
-                                           type="radio"
-                                           id="variation-2kg"
-                                           name="variation" />
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     }
-
                 </div>
             </div>
             <button class="slider-frwd btn">
@@ -76,3 +165,4 @@
         </div>
     </div>
 </section>
+

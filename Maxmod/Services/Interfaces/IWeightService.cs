@@ -16,4 +16,5 @@ public interface IWeightService
     Task<bool> CheckDuplicateAsync(string weightName, int? weightId = null);
     Task UpdateWeightAsync(UpdateWeightVM updateWeightVM, Weight Weight);
     Task DeleteWeightAsync(DeleteWeightVM deleteWeightVM);
+    Task<Weight?> GetWeightByNameAsync(string name);
 }

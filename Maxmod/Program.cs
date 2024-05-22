@@ -47,6 +47,7 @@ using (var scope = app.Services.CreateScope())
 {
     await scope.SeedSettings();
     await scope.SeedAdmin();
+    await scope.SeedProductWeight();
 }
 
 app.Run();

@@ -76,6 +76,11 @@ public class ProductWeightService : IProductWeightService
             WeightId = createProductWeightVM.WeightId,
         };
         await _productWeightRepository.CreateAsync(productWeight);
+
+        var defaultProductWeight = await _productWeightRepository.GetAsync(
+            x => x.ProductId == createProductWeightVM.ProductId && x.Weight.Name == "Default");
+        defaultProductWeight!.IsDeleted = true;
+        await _productWeightRepository.UpdateAsync(defaultProductWeight);
     }
 
     public async Task DeleteProductWeightAsync(DeleteProductWeightVM deleteProductWeightVM)
