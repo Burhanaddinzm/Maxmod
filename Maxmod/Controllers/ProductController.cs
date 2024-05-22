@@ -16,10 +16,16 @@ public class ProductController : Controller
     {
         return View();
     }
+
     public async Task<IActionResult> Detail(int id)
     {
         var (exists, product) = await _productService.CheckExistanceAsync(id);
         if (!exists) RedirectToAction("Index", "Error");
+        if (!product!.ProductWeights.Any(x => x.Stock > 0))
+        {
+            TempData["Error"] = "Product not found!";
+            return RedirectToAction("Index", "Error");
+        }
         return View(product);
     }
 }

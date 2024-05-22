@@ -4,8 +4,6 @@ const shippingAccordion = document.querySelector(".shipping-return .top");
 const shippingAccordionText = document.querySelector(
   ".shipping-return .bottom"
 );
-const variationName = document.querySelector(".variation-name span");
-const variants = document.querySelectorAll(".variations label");
 
 const slideCount = document.querySelectorAll(
   ".slider .img-container img"
@@ -49,21 +47,6 @@ shippingAccordion.addEventListener("click", () => {
   )}%, rgb(255, 255, 255) ${Math.round(scrollPercentage)}%)`;
 });
 
-// Change variations
-variationName.textContent = variants[0].textContent;
-
-variants.forEach((variant) => {
-  variant.addEventListener("click", () => {
-    if (variant.classList.contains("out")) return;
-
-    variants.forEach((label) => {
-      label.classList.remove("active");
-    });
-
-    variationName.textContent = variant.textContent;
-    variant.classList.add("active");
-  });
-});
 
 const moveSlide = (event) => {
   if (slideCount === 1) return;

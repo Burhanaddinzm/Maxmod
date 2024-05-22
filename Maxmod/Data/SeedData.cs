@@ -92,7 +92,7 @@ public static class SeedData
         }
     }
 
-    public static async Task SeedProductWeight(this IServiceScope scope)
+    public static async Task SeedWeight(this IServiceScope scope)
     {
         var weightRepository = scope.ServiceProvider.GetRequiredService<IWeightRepository>();
 

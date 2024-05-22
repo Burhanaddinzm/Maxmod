@@ -37,7 +37,6 @@
                                      alt="" />
                             }
                         }
-
                     </div>
                 </div>
                 <button class="slider-frwd">
@@ -57,32 +56,80 @@
         <div class="right-side">
             <h1 class="product-title">@Model.Name</h1>
             <div class="price-container">
-                <span class="selling-price">$19.00</span>
-                <span class="old-price">$21.00</span>
-                <span class="sale-badge"></span>
+                @if (Model.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0) != null)
+                {
+                    <span class="selling-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.DiscountPrice</span>
+                    <span class="old-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.Price</span>
+                    <span class="sale-badge"></span>
+                }
+                else
+                {
+                    <span class="selling-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)!.Price</span>
+                }
             </div>
-            <div class="in-stock">&nbsp;&nbsp;&nbsp;In stock</div>
+            @if (Model.ProductWeights.Any(x => x.Stock > 0))
+            {
+                <div class="in-stock">&nbsp;&nbsp;&nbsp;In stock</div>
+            }
             <div class="line"></div>
-            <div class="variation-name">Weight: <span>500gm</span></div>
-            <div class="variations">
-                <label for="variation-500gm" class="variation active">500gm</label>
-                <input checked="checked"
-                       style="display: none"
-                       type="radio"
-                       id="variation-500gm"
-                       name="variation" />
-                <label for="variation-1kg" class="variation out">1kg</label>
-                <input style="display: none"
-                       type="radio"
-                       id="variation-1kg"
-                       name="variation"
-                       disabled />
-                <label for="variation-2kg" class="variation">2kg</label>
-                <input style="display: none"
-                       type="radio"
-                       id="variation-2kg"
-                       name="variation" />
-            </div>
+            @if (!Model.ProductWeights.Any(x => x.Weight.Name == "Default"))
+            {
+                <div class="variation-name">Weight: <span>@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)!.Weight.Name</span></div>
+                <div class="variations">
+                    @foreach (var productWeight in Model.ProductWeights)
+                    {
+
+                        if (productWeight.Stock == 0)
+                        {
+                            <label data-stock="@productWeight.Stock"
+                                   data-price="@productWeight.Price"
+                                   data-discount-price="@productWeight.DiscountPrice"
+                                   for="variation-@productWeight.Id"
+                                   class="variation out">
+                                @productWeight.Weight.Name
+                            </label>
+                            <input style="display: none"
+                                   type="radio"
+                                   id="variation-@productWeight.Id"
+                                   value="@productWeight.Id"
+                                   name="variation"
+                                   disabled />
+                        }
+                        else if (productWeight == @Model.ProductWeights.FirstOrDefault(x => x.Stock > 0))
+                        {
+                            <label data-stock="@productWeight.Stock"
+                                   data-price="@productWeight.Price"
+                                   data-discount-price="@productWeight.DiscountPrice"
+                                   for="variation-@productWeight.Id"
+                                   class="variation active">
+                                @productWeight.Weight.Name
+                            </label>
+                            <input checked="checked"
+                                   style="display: none"
+                                   type="radio"
+                                   id="variation-@productWeight.Id"
+                                   value="@productWeight.Id"
+                                   name="variation" />
+                        }
+                        else
+                        {
+                            <label data-stock="@productWeight.Stock"
+                                   data-price="@productWeight.Price"
+                                   data-discount-price="@productWeight.DiscountPrice"
+                                   for="variation-@productWeight.Id"
+                                   class="variation">
+                                @productWeight.Weight.Name
+                            </label>
+                            <input style="display: none"
+                                   type="radio"
+                                   id="variation-@productWeight.Id"
+                                   value="@productWeight.Id"
+                                   name="variation" />
+                        }
+                    }
+
+                </div>
+            }
             <div class="quantity">Quantity</div>
             <div class="count-control">
                 <button class="decrease">-</button>
@@ -148,5 +195,35 @@
 </div>
 
 @section Scripts {
-    <script src="~/client/assets/js/product-detail.min.js"></script>
+    <script src="~/client/assets/js/product-detail.js"></script>
+
+    <script>
+        const variationName = document.querySelector(".variation-name span");
+        const variants = document.querySelectorAll(".variations label");
+        const priceContainer = document.querySelector(".price-container");
+        // Change variations
+        variationName.textContent = "@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)!.Weight.Name";
+
+        variants.forEach((variant) => {
+            variant.addEventListener("click", () => {
+                if (variant.classList.contains("out")) return;
+
+                variants.forEach((label) => {
+                    label.classList.remove("active");
+                });
+
+                if (variant.dataset.discountPrice != 0) {
+                    priceContainer.innerHTML = ` <span class="selling-price"> $${variant.dataset.discountPrice}</span>
+                                                    <span class="old-price" > $${variant.dataset.price}</span>
+                                                    <span class="sale-badge"></span>`
+                }
+                else {
+                    priceContainer.innerHTML = `<span class="selling-price"> $${variant.dataset.price}</span>`
+                }
+
+                variationName.textContent = variant.textContent;
+                variant.classList.add("active");
+            });
+        });
+    </script>
 }
