@@ -13,6 +13,10 @@ public interface IProductWeightService
     Task<(bool, ProductWeight?)> CheckExistanceAsync(int id);
     Task CreateProductWeightAsync(CreateProductWeightVM createProductWeightVM);
     Task DeleteProductWeightAsync(DeleteProductWeightVM deleteProductWeightVM);
-    Task<List<ProductWeight>> GetAllProductWeightsAsync(Expression<Func<ProductWeight, bool>>? expression = null, params string[] includes);
+    Task<List<ProductWeight>> GetAllProductWeightsAsync(
+       Expression<Func<ProductWeight, bool>>? where = null,
+       Expression<Func<ProductWeight, object>>? order = null,
+       int? take = null,
+       params string[] includes);
     Task UpdateProductWeightAsync(UpdateProductWeightVM updateProductWeightVM, ProductWeight productWeight);
 }

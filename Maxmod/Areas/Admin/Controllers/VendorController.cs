@@ -23,9 +23,9 @@ public class VendorController : Controller
         {
             vendors = await _vendorService.GetAllVendorsAsync(
                 x => x.IsConfirmed &&
-                x.User.UserName == User.Identity!.Name, "User", "Products");
+                x.User.UserName == User.Identity!.Name, null, null, "User", "Products");
         }
-        else vendors = await _vendorService.GetAllVendorsAsync(x => x.IsConfirmed, "User", "Products");
+        else vendors = await _vendorService.GetAllVendorsAsync(x => x.IsConfirmed, null, null, "User", "Products");
         return View(vendors);
     }
 
@@ -34,7 +34,7 @@ public class VendorController : Controller
         if (User.IsInRole("Vendor"))
             return RedirectToAction("Index", "Error", new { Area = "" });
 
-        var newVendors = await _vendorService.GetAllVendorsAsync(x => !x.IsConfirmed, "User");
+        var newVendors = await _vendorService.GetAllVendorsAsync(x => !x.IsConfirmed, null, null, "User");
         return View(newVendors);
     }
 

@@ -1,5 +1,7 @@
-﻿@{
+﻿@inject ISettingsService _settingsService
+@{
     ViewData["Title"] = "Contact";
+    var settings = await _settingsService.GetSettingsAsync();
 }
 @section Styles {
     <link rel="stylesheet" href="~/client/assets/css/contact.min.css" />
@@ -21,14 +23,10 @@
         </form>
         <div class="location-details">
             <h2>Location & Details</h2>
-            <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Id,
-                repudiandae? Officia est veniam cupiditate incidunt praesentium
-                maiores excepturi. Nostrum, odit?
-            </p>
-            <div>Address: <span>4800 San Mateo Ln NE</span></div>
-            <div>Phone: <span>0123-456-789</span></div>
-            <div>Email: <span>demo@demo.com</span></div>
+            <p>@settings.ContactText</p>
+            <div>Address: <span>@settings.Address</span></div>
+            <div>Phone: <span>@settings.Phone</span></div>
+            <div>Email: <span>@settings.Email</span></div>
             <div style="width: 100%">
                 <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=250&amp;hl=en&amp;q=4800%20San%20Mateo%20Ln%20NE+(Maxmod%20HQ)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps trackers</a></iframe>
             </div>

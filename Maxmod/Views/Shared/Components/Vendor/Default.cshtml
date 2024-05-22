@@ -1,0 +1,16 @@
+﻿@model List<Vendor>
+
+<section class="vendor-section">
+    <div class="container">
+        <div class="slider">
+            <div class="slide-container">
+                <div class="slide-wrapper">
+                    @foreach (var vendor in Model)
+                    {
+                        <img class="slide" src="~/client/assets/images/vendor/@vendor.Image" alt="" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

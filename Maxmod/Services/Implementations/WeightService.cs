@@ -62,9 +62,13 @@ public class WeightService : IWeightService
         await _weightRepository.DeleteAsync(deleteWeightVM.Id);
     }
 
-    public async Task<List<Weight>> GetAllWeightsAsync(Expression<Func<Weight, bool>>? expression = null, params string[] includes)
+    public async Task<List<Weight>> GetAllWeightsAsync(
+       Expression<Func<Weight, bool>>? where = null,
+       Expression<Func<Weight, object>>? order = null,
+       int? take = null,
+       params string[] includes)
     {
-        return await _weightRepository.GetAllAsync(expression, includes);
+        return await _weightRepository.GetAllAsync(where,order,take, includes);
     }
 
     public async Task UpdateWeightAsync(UpdateWeightVM updateWeightVM, Weight Weight)

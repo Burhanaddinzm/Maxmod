@@ -26,7 +26,11 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? expression = null, params string[] includes)
+    public async Task<List<T>> GetAllAsync(
+       Expression<Func<T, bool>>? where = null,
+       Expression<Func<T, object>>? order = null,
+       int? take = null,
+       params string[] includes)
     {
         IQueryable<T> query = _context.Set<T>().AsQueryable();
 
@@ -38,10 +42,24 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
             }
         }
 
-        return expression == null ?
-            await query.ToListAsync() :
-            await query.Where(expression).ToListAsync();
+        if (where != null)
+        {
+            query = query.Where(where);
+        }
+
+        if (order != null)
+        {
+            query = query.OrderByDescending(order);
+        }
+
+        if (take.HasValue)
+        {
+            query = query.Take(take.Value);
+        }
+
+        return await query.ToListAsync();
     }
+
 
     public async Task<T?> GetAsync(int id)
     {

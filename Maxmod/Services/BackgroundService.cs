@@ -24,14 +24,11 @@ public class BackgroundService : IHostedService, IDisposable
         {
             var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
 
-            var products = await productRepository.GetAllAsync();
+            var products = await productRepository.GetAllAsync(x => x.CreatedAt.AddDays(7) < DateTime.UtcNow.AddHours(4));
             foreach (var product in products)
             {
-                if (product.CreatedAt.AddDays(7) < DateTime.UtcNow.AddHours(4))
-                {
-                    product.IsNew = false;
-                    await productRepository.UpdateAsync(product);
-                }
+                product.IsNew = false;
+                await productRepository.UpdateAsync(product);
             }
         }
     }

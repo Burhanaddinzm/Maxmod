@@ -67,9 +67,13 @@ public class VendorService : IVendorService
         return await _vendorRepository.GetAsync(id);
     }
 
-    public async Task<List<Vendor>> GetAllVendorsAsync(Expression<Func<Vendor, bool>>? expression = null, params string[] includes)
+    public async Task<List<Vendor>> GetAllVendorsAsync(
+       Expression<Func<Vendor, bool>>? where = null,
+       Expression<Func<Vendor, object>>? order = null,
+       int? take = null,
+       params string[] includes)
     {
-        return await _vendorRepository.GetAllAsync(expression, includes);
+        return await _vendorRepository.GetAllAsync(where, order, take, includes);
     }
 
     public async Task<(bool, Vendor?)> CheckExistanceAsync(int id)

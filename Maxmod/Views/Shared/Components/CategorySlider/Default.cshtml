@@ -1,0 +1,59 @@
+﻿@model List<Category>
+@{
+    int totalProductCount = Model.Sum(x => x.Products?.Count ?? 0);
+}
+
+<section class="shop-by-category-section">
+    <div class="container">
+        <div class="slider-top">
+            <div class="text">
+                <h2>Shop By Top Category</h2>
+                <h3>Fresh, Organic & healthy grocery food etc.</h3>
+            </div>
+            <a href="#" class="btn">View All</a>
+        </div>
+        <div class="slider">
+            <button class="slider-back btn">
+                <img src="~/client/assets/icons/arrow_icon.svg" alt="" />
+            </button>
+            <div class="slide-container">
+                <div class="slide-wrapper">
+                    <div class="slide">
+                        <a href="#">
+                            <div class="img-container">
+                                <img src="~/client/assets/images/category/all_product.png" alt="All Products" />
+                            </div>
+                            <span class="category-name">All Products</span>
+                        </a>
+                        <p class="product-count">@totalProductCount items</p>
+                    </div>
+                    @foreach (var category in Model)
+                    {
+                        if (category.ParentId == null)
+                        {
+                            <div class="slide">
+                                <a href="#">
+                                    <div class="img-container">
+                                        <img src="~/client/assets/images/category/@category.Image" alt="@category.Name" />
+                                    </div>
+                                    <span class="category-name">@category.Name</span>
+                                </a>
+                                @if (category.SubCategories != null && category.SubCategories.Any())
+                                {
+                                    <p class="product-count">@category.SubCategories.Sum(sub => sub.Products?.Count ?? 0) items</p>
+                                }
+                                else
+                                {
+                                    <p class="product-count">0 items</p>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <button class="slider-frwd btn">
+                <img src="~/client/assets/icons/arrow_icon.svg" alt="" />
+            </button>
+        </div>
+    </div>
+</section>

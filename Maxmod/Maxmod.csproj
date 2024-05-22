@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ViewComponents\FooterCategoryViewComponent.cs~RF6baf6.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 

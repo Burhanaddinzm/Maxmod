@@ -74,9 +74,13 @@ public class CategoryService : ICategoryService
         return await _categoryRepository.GetAsync(id);
     }
 
-    public async Task<List<Category>> GetAllCategoriesAsync(Expression<Func<Category, bool>>? expression = null, params string[] includes)
+    public async Task<List<Category>> GetAllCategoriesAsync(
+       Expression<Func<Category, bool>>? where = null,
+       Expression<Func<Category, object>>? order = null,
+       int? take = null,
+       params string[] includes)
     {
-        return await _categoryRepository.GetAllAsync(expression, includes);
+        return await _categoryRepository.GetAllAsync(where, order, take, includes);
     }
 
     public async Task<bool> CheckDuplicateAsync(string categoryName, int? categoryId = null)

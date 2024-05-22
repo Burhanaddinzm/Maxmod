@@ -28,9 +28,13 @@ public class ProductService : IProductService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<List<Product>> GetAllProductsAsync(Expression<Func<Product, bool>>? expression = null, params string[] includes)
+    public async Task<List<Product>> GetAllProductsAsync(
+       Expression<Func<Product, bool>>? where = null,
+       Expression<Func<Product, object>>? order = null,
+       int? take = null,
+       params string[] includes)
     {
-        return await _productRepository.GetAllAsync(expression, includes);
+        return await _productRepository.GetAllAsync(where, order, take, includes);
     }
 
     public async Task<FileValidationResult?> CreateProductAsync(CreateProductVM createProductVM)

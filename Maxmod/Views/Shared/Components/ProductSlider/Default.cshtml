@@ -1,0 +1,78 @@
+﻿@model List<Product>
+
+<section class="weeks-highligths-section">
+    <div class="container">
+        <div class="slider-top">
+            <div class="text">
+                <h2>This Weeks Highlight Products</h2>
+                <h3>Fresh,Organic & helathy grocery food etc.</h3>
+            </div>
+        </div>
+        <div class="slider">
+            <button class="slider-back btn">
+                <img src="~/client/assets/icons/arrow_icon.svg" alt="" />
+            </button>
+            <div class="slide-container">
+                <div class="slide-wrapper">
+                    @foreach (var product in Model)
+                    {
+                        <div class="slide">
+                            <div class="top">
+                                <div class="badges">
+                                    <div class="new-badge"></div>
+                                    <div class="out-of-stock-badge"></div>
+                                    <div class="save-badge" data-dollar="1.00"></div>
+                                </div>
+                                <a href="#">
+                                    <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
+                                         alt=""
+                                         class="main-img" />
+                                    <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
+                                         alt=""
+                                         class="hover-img" />
+                                </a>
+                                <div class="actions">
+                                    <a href="#" class="btn">Detailed Look</a>
+                                    <a href="#" class="btn">Add To Cart</a>
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <h6>Vendor.Name</h6>
+                                <a href="#">Product.Name</a>
+                                <div class="price-wrapper">
+                                    <span class="selling-price">$5.00</span>
+                                    <span class="old-price">$6.00</span>
+                                </div>
+                                <div class="line"></div>
+                                <h5>Weight</h5>
+                                <div class="variations">
+                                    <label for="variation-500gm" class="variation active">500gm</label>
+                                    <input checked="checked"
+                                           style="display: none"
+                                           type="radio"
+                                           id="variation-500gm"
+                                           name="variation" />
+                                    <label for="variation-1kg" class="variation out">1kg</label>
+                                    <input style="display: none"
+                                           type="radio"
+                                           id="variation-1kg"
+                                           name="variation"
+                                           disabled />
+                                    <label for="variation-2kg" class="variation">2kg</label>
+                                    <input style="display: none"
+                                           type="radio"
+                                           id="variation-2kg"
+                                           name="variation" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <button class="slider-frwd btn">
+                <img src="~/client/assets/icons/arrow_icon.svg" alt="" />
+            </button>
+        </div>
+    </div>
+</section>

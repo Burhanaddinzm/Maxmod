@@ -1,4 +1,8 @@
 ﻿@inject ILayoutService _layoutService
+@inject ISettingsService _settingsService
+@{
+    var settings = await _settingsService.GetSettingsAsync();
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -151,8 +155,8 @@
                                 <img src="~/client/assets/icons/chevron.svg" alt="" />
                             </a>
                             <div class="nav-dropdown hidden">
-                                @* Category Component *@
-                                @await Component.InvokeAsync("Category")
+                                @*Header Category Component *@
+                                @await Component.InvokeAsync("HeaderCategory")
                                 <div class="line"></div>
                             </div>
                         </li>
@@ -187,15 +191,15 @@
                         <ul>
                             <li>
                                 <img src="~/client/assets/icons/footer_location.svg" alt="" />
-                                <p>4800 San Mateo Ln NE</p>
+                                <p>@settings.Address</p>
                             </li>
                             <li>
                                 <img src="~/client/assets/icons/footer_phone.svg" alt="" />
-                                <p>0123-456-789</p>
+                                <p>@settings.Phone</p>
                             </li>
                             <li>
                                 <img src="~/client/assets/icons/footer_mail.svg" alt="asd" />
-                                <p>demo@demo.com</p>
+                                <p>@settings.Email</p>
                             </li>
                         </ul>
                     </li>
@@ -218,20 +222,8 @@
                     </li>
                     <li>
                         <h3>Categories</h3>
-                        <ul>
-                            <li>
-                                <a href="#">Fruits</a>
-                            </li>
-                            <li>
-                                <a href="#">Vegetables</a>
-                            </li>
-                            <li>
-                                <a href="#">Dairy</a>
-                            </li>
-                            <li>
-                                <a href="#">Meat</a>
-                            </li>
-                        </ul>
+                        @* Footer Category Component *@
+                        @await Component.InvokeAsync("FooterCategory")
                     </li>
                 </ul>
             </nav>
