@@ -8,79 +8,123 @@
     <link rel="stylesheet" href="~/client/assets/css/cart.min.css" />
 }
 
-<main>
-    <div class="container">
-        <div class="breadcrumbs">
-            <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> Your Shopping Cart</span>
-        </div>
-        <!-- Cart Start -->
-        <section class="cart-section">
-            <div class="left-side">
-                <div class="page-top">
-                    <h2>Shopping cart</h2>
-                    <a href="#">Continue shopping</a>
-                </div>
-                <div class="products-container">
-                    <div class="top">
-                        <span>Products</span>
-                        <span>Quantity</span>
-                        <span>Total</span>
-                    </div>
-                    <div class="line"></div>
-                    <ul class="bottom">
-                        @foreach (var cartItem in Model)
-                        {
-                            <li class="product">
-                                <a href="#">
-                                    <img src="~/client/assets/images/product/@cartItem.ProductImage"
-                                         alt="" />
-                                </a>
-                                <div class="right-side">
-                                    <div class="wrapper">
-                                        <div class="product-detail">
-                                            <a asp-action="detail" asp-controller="product" asp-route-id="@cartItem.ProductId">@cartItem.Product</a>
-                                            <div>
-                                                @if (cartItem.DiscountPrice != 0)
-                                                {
-                                                    <span class="selling-price">$@cartItem.DiscountPrice</span>
-                                                    <span class="old-price">$@cartItem.Price</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="selling-price">$@cartItem.Price</span>
-                                                }
-                                            </div>
-                                            <p>Weight: <span>@cartItem.Weight</span></p>
-                                        </div>
-                                        <div class="quantity">
-                                            <div class="count-control">
-                                                <button class="decrease">-</button>
-                                                <input value="@cartItem.Quantity" type="number" />
-                                                <button class="increase">+</button>
-                                            </div>
-
-                                            <button class="remove-item-btn">
-                                                <img src="~/client/assets/icons/trashcan_2_icon.svg"
-                                                     alt="" />
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <span class="total-price">$@cartItem.TotalPrice</span>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
+<div class="container">
+    <div class="breadcrumbs">
+        <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> Your Shopping Cart</span>
+    </div>
+    <!-- Cart Start -->
+    <section class="cart-section">
+        <div class="left-side">
+            <div class="page-top">
+                <h2>Shopping cart</h2>
+                <a href="#">Continue shopping</a>
             </div>
-            <div class="checkout-container">
-                <div class="subtotal">
-                    <p>Subtotal(@Model.Count)</p>
-                    <span>$@subTotal</span>
+            <div class="products-container">
+                <div class="top">
+                    <span>Products</span>
+                    <span>Quantity</span>
+                    <span>Total</span>
                 </div>
                 <div class="line"></div>
-                <a href="#" class="btn">Checkout</a>
+                <ul class="bottom">
+                    @foreach (var cartItem in Model)
+                    {
+                        <li class="product">
+                            <a asp-action="detail" asp-controller="product" asp-route-id="@cartItem.ProductId">
+                                <img src="~/client/assets/images/product/@cartItem.ProductImage"
+                                     alt="" />
+                            </a>
+                            <div class="right-side">
+                                <div class="wrapper">
+                                    <div class="product-detail">
+                                        <a asp-action="detail" asp-controller="product" asp-route-id="@cartItem.ProductId">@cartItem.Product</a>
+                                        <div>
+                                            @if (cartItem.DiscountPrice != 0)
+                                            {
+                                                <span class="selling-price">$@cartItem.DiscountPrice</span>
+                                                <span class="old-price">$@cartItem.Price</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="selling-price">$@cartItem.Price</span>
+                                            }
+                                        </div>
+                                        @if (cartItem.Weight != "Default")
+                                        {
+                                            <p>Weight: <span>@cartItem.Weight</span></p>
+                                        }
+                                    </div>
+                                    <div class="quantity">
+                                        <div class="count-control">
+                                            <button data-id="@cartItem.ProductWeightId" class="decrease">-</button>
+                                            <input value="@cartItem.Quantity" type="number" />
+                                            <button data-id="@cartItem.ProductWeightId" class="increase">+</button>
+                                        </div>
+
+                                        <button data-id="@cartItem.ProductWeightId" class="remove-item-btn">
+                                            <img src="~/client/assets/icons/trashcan_2_icon.svg"
+                                                 alt="Remove item" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <span class="total-price">$@cartItem.TotalPrice</span>
+                            </div>
+                        </li>
+                    }
+                </ul>
             </div>
-        </section>
-    </div>
-</main>
+        </div>
+        <div class="checkout-container">
+            <div class="subtotal">
+                <p>Subtotal(@Model.Count)</p>
+                <span>$@subTotal</span>
+            </div>
+            <div class="line"></div>
+            <a href="#" class="btn">Checkout</a>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        const refreshCart = async () => {
+            const response = await fetch('@Url.Action("Index", "Cart")');
+            const data = await response.text();
+            document.querySelector('.cart-section').innerHTML =
+                new DOMParser().parseFromString(data, 'text/html').querySelector('.cart-section').innerHTML;
+            bindEventListeners();
+        };
+
+        const bindEventListeners = () => {
+            const removeItemBtns = document.querySelectorAll(".remove-item-btn");
+            const products = document.querySelectorAll(".cart-section .product");
+
+            products.forEach(product => {
+                const increaseBtn = product.querySelector(".count-control .increase");
+                const decreaseBtn = product.querySelector(".count-control .decrease");
+                const countInput = product.querySelector(".count-control input");
+
+                countInput.addEventListener("keypress", () => event.preventDefault());
+                increaseBtn.addEventListener("click", async () => {
+                    await fetch(`@Url.Action("AddToCart", "Cart")/?id=${increaseBtn.dataset.id}&quantity=1`, { method: "POST" });
+                    await refreshCart();
+
+                });
+                decreaseBtn.addEventListener("click", async () => {
+                    if (countInput.value > 1) {
+                        await fetch(`@Url.Action("AddToCart", "Cart")/?id=${decreaseBtn.dataset.id}&quantity=-1`, { method: "POST" });
+                        await refreshCart();
+                    }
+                });
+            });
+
+            removeItemBtns.forEach(btn => btn.addEventListener("click", async () => {
+                await fetch(`@Url.Action("RemoveFromCart", "Cart")/${btn.dataset.id}`, { method: "POST" });
+                await refreshCart();
+            }));
+        };
+
+        document.addEventListener('DOMContentLoaded', bindEventListeners);
+    </script>
+}

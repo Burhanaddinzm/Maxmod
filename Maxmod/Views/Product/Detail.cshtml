@@ -132,14 +132,25 @@
 
                 </div>
             }
+            else
+            {
+                <div class="variations">
+                    <input style="display: none"
+                           checked="checked"
+                           type="radio"
+                           id="variation-@Model.ProductWeights.First().Id"
+                           value="@Model.ProductWeights.First().Id"
+                           name="variation" />
+                </div>
+            }
             <div class="quantity">Quantity</div>
             <div class="count-control">
                 <button class="decrease">-</button>
-                <input value="1" type="number" />
+                <input value="1" min="1" type="number" />
                 <button class="increase">+</button>
             </div>
             <div class="btn-wrapper">
-                <button class="btn">Add To Cart</button>
+                <button id="add-to-cart" class="btn">Add To Cart</button>
                 <a class="btn" href="#">Buy It Now</a>
             </div>
             <p class="shipping-text">Free standard shipping on $100+</p>
@@ -205,40 +216,59 @@
         const priceContainer = document.querySelector(".price-container");
 
         // Change variations
-        variationName.textContent = "@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)!.Weight.Name";
+        if (variationName != null) {
+            variationName.textContent = "@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)!.Weight.Name";
 
-        variants.forEach((variant) => {
-            variant.addEventListener("click", () => {
-                if (variant.classList.contains("out")) return;
+            variants.forEach((variant) => {
+                variant.addEventListener("click", () => {
+                    if (variant.classList.contains("out")) return;
 
-                variants.forEach((label) => {
-                    label.classList.remove("active");
+                    variants.forEach((label) => {
+                        label.classList.remove("active");
+                    });
+
+                    if (variant.dataset.discountPrice != 0) {
+                        priceContainer.innerHTML = ` <span class="selling-price"> $${variant.dataset.discountPrice}</span>
+                                <span class="old-price" > $${variant.dataset.price}</span>
+                                <span class="sale-badge"></span>`
+                    }
+                    else {
+                        priceContainer.innerHTML = `<span class="selling-price"> $${variant.dataset.price}</span>`
+                    }
+                    variationName.textContent = variant.textContent;
+                    variant.classList.add("active");
                 });
-
-                if (variant.dataset.discountPrice != 0) {
-                    priceContainer.innerHTML = ` <span class="selling-price"> $${variant.dataset.discountPrice}</span>
-                                                                    <span class="old-price" > $${variant.dataset.price}</span>
-                                                                    <span class="sale-badge"></span>`
-                }
-                else {
-                    priceContainer.innerHTML = `<span class="selling-price"> $${variant.dataset.price}</span>`
-                }
-
-                variationName.textContent = variant.textContent;
-                variant.classList.add("active");
-
-
             });
-        });
+        }
+
 
         //Add to cart
+        const increaseBtn = document.querySelector("main .count-control .increase");
+        const decreaseBtn = document.querySelector("main .count-control .decrease");
+        const countInput = document.querySelector("main .count-control input");
         const inputGroup = document.querySelectorAll('input[name="variation"]');
-        let selectedValue = document.querySelector('input[name="variation"]:checked').value
-        console.log(selectedValue)
+        const addToCartBtn = document.getElementById("add-to-cart");
+
+        let selectedValue = document.querySelector('input[name="variation"]:checked').value;
+
         inputGroup.forEach(input => input.addEventListener("change", () => {
             selectedValue = document.querySelector('input[name="variation"]:checked').value
-            console.log(selectedValue)
-        }))
+        }));
+
+        countInput.addEventListener("keypress", () => event.preventDefault());
+
+        increaseBtn.addEventListener("click", () => {
+            countInput.value = +countInput.value + 1
+        });
+        decreaseBtn.addEventListener("click", () => {
+            if (countInput.value > 1) {
+                countInput.value -= 1
+            }
+        });
+
+        addToCartBtn.addEventListener("click", async () => {
+            await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedValue}&quantity=${countInput.value}`, { method: "POST" })
+        });
 
     </script>
 }

@@ -84,62 +84,7 @@
                         </div>
                     </div>
                     <!-- Cart -->
-                    <div class="cart-container">
-                        <button class="header-cart">
-                            <div class="cart-icon">
-                                <img src="~/client/assets/icons/cart_icon.svg" alt="" />
-                                <span>0</span>
-                            </div>
-                            <span class="header-cart-total">$0.00</span>
-                        </button>
-                        <div class="cart-drawer hidden">
-                            <div class="drawer-top">
-                                <h3>Shopping cart (1)</h3>
-                                <button>
-                                    <img src="~/client/assets/icons/close_icon.svg" alt="" />
-                                </button>
-                            </div>
-                            <div class="line"></div>
-                            <ul class="drawer-middle">
-                                <li class="product">
-                                    <a href="#">
-                                        <img src="~/client/assets/images/product/product-1.jpg"
-                                             alt="" />
-                                    </a>
-                                    <div class="right-side">
-                                        <div class="product-detail">
-                                            <a href="#">Lorem ipsum dolor sit amet consectetur.</a>
-                                            <p>Weight: <span>500gm</span></p>
-                                            <span class="price">$19.00</span>
-                                        </div>
-                                        <div class="cart-control">
-                                            <button class="btn">
-                                                <img src="~/client/assets/icons/trashcan_icon.svg"
-                                                     alt="" />
-                                            </button>
-                                            <div class="count-control">
-                                                <button class="decrease" id="decrease-btn">-</button>
-                                                <input value="1" type="number" id="count-input" />
-                                                <button class="increase" id="increase-btn">+</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="line"></div>
-                            <div class="drawer-bottom">
-                                <div class="subtotal-container">
-                                    <span>Subtotal (1)</span>
-                                    <span class="subtotal">$19.00</span>
-                                </div>
-                                <div class="wrapper">
-                                    <a class="btn" asp-action="index" asp-controller="cart">View Cart</a>
-                                    <a class="btn" href="#">Checkout</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="overlay hidden"></div>
-                    </div>
+                    @await Component.InvokeAsync("Cart")
                 </div>
             </div>
             <div class="line out-of-container"></div>
@@ -242,7 +187,7 @@
         </button>
     </footer>
     <!-- Scripts -->
-    <script src="~/client/assets/js/layout.min.js"></script>
+    <script src="~/client/assets/js/layout.js"></script>
     @await RenderSectionAsync("Scripts", false)
 </body>
 </html>
