@@ -1,6 +1,8 @@
 ﻿@model Product
+@inject ILayoutService _layoutService
 @{
     ViewData["Title"] = Model.Name;
+    var loggedIn = _layoutService.CheckLoggedIn();
 }
 
 @section Styles {
@@ -64,7 +66,7 @@
                 }
                 else
                 {
-                    <span class="selling-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)!.Price</span>
+                    <span class="selling-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price</span>
                 }
             </div>
             @if (Model.ProductWeights.Any(x => x.Stock > 0))
@@ -74,7 +76,7 @@
             <div class="line"></div>
             @if (!Model.ProductWeights.Any(x => x.Weight.Name == "Default"))
             {
-                <div class="variation-name">Weight: <span>@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)!.Weight.Name</span></div>
+                <div class="variation-name">Weight: <span>@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Weight.Name</span></div>
                 <div class="variations">
                     @foreach (var productWeight in Model.ProductWeights)
                     {
@@ -137,7 +139,7 @@
                 <button class="increase">+</button>
             </div>
             <div class="btn-wrapper">
-                <a class="btn" href="#">Add To Cart</a>
+                <button class="btn">Add To Cart</button>
                 <a class="btn" href="#">Buy It Now</a>
             </div>
             <p class="shipping-text">Free standard shipping on $100+</p>
@@ -201,6 +203,7 @@
         const variationName = document.querySelector(".variation-name span");
         const variants = document.querySelectorAll(".variations label");
         const priceContainer = document.querySelector(".price-container");
+
         // Change variations
         variationName.textContent = "@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)!.Weight.Name";
 
@@ -214,8 +217,8 @@
 
                 if (variant.dataset.discountPrice != 0) {
                     priceContainer.innerHTML = ` <span class="selling-price"> $${variant.dataset.discountPrice}</span>
-                                                    <span class="old-price" > $${variant.dataset.price}</span>
-                                                    <span class="sale-badge"></span>`
+                                                                    <span class="old-price" > $${variant.dataset.price}</span>
+                                                                    <span class="sale-badge"></span>`
                 }
                 else {
                     priceContainer.innerHTML = `<span class="selling-price"> $${variant.dataset.price}</span>`
@@ -223,7 +226,19 @@
 
                 variationName.textContent = variant.textContent;
                 variant.classList.add("active");
+
+
             });
         });
+
+        //Add to cart
+        const inputGroup = document.querySelectorAll('input[name="variation"]');
+        let selectedValue = document.querySelector('input[name="variation"]:checked').value
+        console.log(selectedValue)
+        inputGroup.forEach(input => input.addEventListener("change", () => {
+            selectedValue = document.querySelector('input[name="variation"]:checked').value
+            console.log(selectedValue)
+        }))
+
     </script>
 }

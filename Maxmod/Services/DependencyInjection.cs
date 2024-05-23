@@ -16,6 +16,7 @@ public static class DependencyInjection
         services.AddScoped<IWeightService, WeightService>();
         services.AddScoped<IProductWeightService, ProductWeightService>();
         services.AddScoped<ISettingsService, SettingsService>();
+        services.AddScoped<ICartService, CartService>();
         services.AddHostedService<BackgroundService>();
 
         return services;

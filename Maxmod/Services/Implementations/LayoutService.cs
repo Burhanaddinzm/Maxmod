@@ -26,4 +26,8 @@ public class LayoutService : ILayoutService
         }
         return null;
     }
+    public bool CheckLoggedIn()
+    {
+        return _contextAccessor.HttpContext!.User != null && _contextAccessor.HttpContext.User.Identity!.IsAuthenticated;
+    }
 }

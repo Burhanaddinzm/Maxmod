@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+    var subTotal = Model.Sum(x => x.TotalPrice);
+}
+@model List<CartItemVM>
+
+@section Styles {
+    <link rel="stylesheet" href="~/client/assets/css/cart.min.css" />
+}
+
+<main>
+    <div class="container">
+        <div class="breadcrumbs">
+            <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> Your Shopping Cart</span>
+        </div>
+        <!-- Cart Start -->
+        <section class="cart-section">
+            <div class="left-side">
+                <div class="page-top">
+                    <h2>Shopping cart</h2>
+                    <a href="#">Continue shopping</a>
+                </div>
+                <div class="products-container">
+                    <div class="top">
+                        <span>Products</span>
+                        <span>Quantity</span>
+                        <span>Total</span>
+                    </div>
+                    <div class="line"></div>
+                    <ul class="bottom">
+                        @foreach (var cartItem in Model)
+                        {
+                            <li class="product">
+                                <a href="#">
+                                    <img src="~/client/assets/images/product/@cartItem.ProductImage"
+                                         alt="" />
+                                </a>
+                                <div class="right-side">
+                                    <div class="wrapper">
+                                        <div class="product-detail">
+                                            <a asp-action="detail" asp-controller="product" asp-route-id="@cartItem.ProductId">@cartItem.Product</a>
+                                            <div>
+                                                @if (cartItem.DiscountPrice != 0)
+                                                {
+                                                    <span class="selling-price">$@cartItem.DiscountPrice</span>
+                                                    <span class="old-price">$@cartItem.Price</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="selling-price">$@cartItem.Price</span>
+                                                }
+                                            </div>
+                                            <p>Weight: <span>@cartItem.Weight</span></p>
+                                        </div>
+                                        <div class="quantity">
+                                            <div class="count-control">
+                                                <button class="decrease">-</button>
+                                                <input value="@cartItem.Quantity" type="number" />
+                                                <button class="increase">+</button>
+                                            </div>
+
+                                            <button class="remove-item-btn">
+                                                <img src="~/client/assets/icons/trashcan_2_icon.svg"
+                                                     alt="" />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <span class="total-price">$@cartItem.TotalPrice</span>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="checkout-container">
+                <div class="subtotal">
+                    <p>Subtotal(@Model.Count)</p>
+                    <span>$@subTotal</span>
+                </div>
+                <div class="line"></div>
+                <a href="#" class="btn">Checkout</a>
+            </div>
+        </section>
+    </div>
+</main>

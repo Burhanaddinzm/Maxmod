@@ -3,4 +3,5 @@
 public interface ILayoutService
 {
     Task<string?> GetUserFullNameAsync();
+    bool CheckLoggedIn();
 }

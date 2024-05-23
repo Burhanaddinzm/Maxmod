@@ -265,3 +265,6 @@ C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.AspNetCore
 C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\Burhan\source\repos\Maxmod\Maxmod\obj\Debug\net8.0\Maxmod.sourcelink.json
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Burhan\source\repos\Maxmod\Maxmod\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
