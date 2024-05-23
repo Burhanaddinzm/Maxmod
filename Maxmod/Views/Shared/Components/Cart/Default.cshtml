@@ -1,56 +1,73 @@
-﻿<div class="cart-container">
-    <button class="header-cart">
-        <div class="cart-icon">
-            <img src="~/client/assets/icons/cart_icon.svg" alt="" />
-            <span>0</span>
-        </div>
-        <span class="header-cart-total">$0.00</span>
-    </button>
-    <div class="cart-drawer hidden">
-        <div class="drawer-top">
-            <h3>Shopping cart (1)</h3>
-            <button>
-                <img src="~/client/assets/icons/close_icon.svg" alt="" />
-            </button>
-        </div>
-        <div class="line"></div>
-        <ul class="drawer-middle">
+﻿@{
+    var subTotal = Model.Sum(x => x.TotalPrice);
+}
+@model List<CartItemVM>
+
+<button class="header-cart">
+    <div class="cart-icon">
+        <img src="~/client/assets/icons/cart_icon.svg" alt="" />
+        <span>@Model.Count</span>
+    </div>
+    <span class="header-cart-total">$@subTotal</span>
+</button>
+<div class="cart-drawer hidden">
+    <div class="drawer-top">
+        <h3>Shopping cart (@Model.Count)</h3>
+        <button>
+            <img src="~/client/assets/icons/close_icon.svg" alt="" />
+        </button>
+    </div>
+    <div class="line"></div>
+    <ul class="drawer-middle">
+        @foreach (var cartItem in Model)
+        {
             <li class="product">
-                <a href="#">
-                    <img src="~/client/assets/images/product/product-1.jpg"
+                <a asp-action="detail" asp-controller="product" asp-route-id="@cartItem.ProductId">
+                    <img src="~/client/assets/images/product/@cartItem.ProductImage"
                          alt="" />
                 </a>
                 <div class="right-side">
                     <div class="product-detail">
-                        <a href="#">Lorem ipsum dolor sit amet consectetur.</a>
-                        <p>Weight: <span>500gm</span></p>
-                        <span class="price">$19.00</span>
+                        <a asp-action="detail" asp-controller="product" asp-route-id="@cartItem.ProductId">@cartItem.Product</a>
+                        @if (cartItem.Weight != "Default")
+                        {
+                            <p>Weight: <span>@cartItem.Weight</span></p>
+                        }
+                        @if (cartItem.DiscountPrice != 0)
+                        {
+                            <span class="price">$@cartItem.DiscountPrice</span>
+                            <span style="text-decoration:line-through">$@cartItem.Price</span>
+                        }
+                        else
+                        {
+                            <span class="price">$@cartItem.Price</span>
+                        }
                     </div>
                     <div class="cart-control">
-                        <button class="btn">
+                        <button id="cart-remove" data-id="@cartItem.ProductWeightId" class="btn">
                             <img src="~/client/assets/icons/trashcan_icon.svg"
                                  alt="" />
                         </button>
                         <div class="count-control">
-                            <button class="decrease" id="decrease-btn">-</button>
-                            <input value="1" type="number" id="count-input" />
-                            <button class="increase" id="increase-btn">+</button>
+                            <button data-id="@cartItem.ProductWeightId" class="decrease" id="decrease-btn">-</button>
+                            <input value="@cartItem.Quantity" type="number" id="count-input" />
+                            <button data-id="@cartItem.ProductWeightId" class="increase" id="increase-btn">+</button>
                         </div>
                     </div>
                 </div>
             </li>
-        </ul>
-        <div class="line"></div>
-        <div class="drawer-bottom">
-            <div class="subtotal-container">
-                <span>Subtotal (1)</span>
-                <span class="subtotal">$19.00</span>
-            </div>
-            <div class="wrapper">
-                <a class="btn" asp-action="index" asp-controller="cart">View Cart</a>
-                <a class="btn" href="#">Checkout</a>
-            </div>
+        }
+    </ul>
+    <div class="line"></div>
+    <div class="drawer-bottom">
+        <div class="subtotal-container">
+            <span>Subtotal (@Model.Count)</span>
+            <span class="subtotal">$@subTotal</span>
+        </div>
+        <div class="wrapper">
+            <a class="btn" asp-action="index" asp-controller="cart">View Cart</a>
+            <a class="btn" href="#">Checkout</a>
         </div>
     </div>
-    <div class="overlay hidden"></div>
 </div>
+<div class="overlay hidden"></div>

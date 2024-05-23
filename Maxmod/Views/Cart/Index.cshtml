@@ -109,12 +109,13 @@
                 increaseBtn.addEventListener("click", async () => {
                     await fetch(`@Url.Action("AddToCart", "Cart")/?id=${increaseBtn.dataset.id}&quantity=1`, { method: "POST" });
                     await refreshCart();
-
+                    await refreshLayoutCart();
                 });
                 decreaseBtn.addEventListener("click", async () => {
                     if (countInput.value > 1) {
                         await fetch(`@Url.Action("AddToCart", "Cart")/?id=${decreaseBtn.dataset.id}&quantity=-1`, { method: "POST" });
                         await refreshCart();
+                        await refreshLayoutCart();
                     }
                 });
             });
@@ -122,6 +123,7 @@
             removeItemBtns.forEach(btn => btn.addEventListener("click", async () => {
                 await fetch(`@Url.Action("RemoveFromCart", "Cart")/${btn.dataset.id}`, { method: "POST" });
                 await refreshCart();
+                await refreshLayoutCart();
             }));
         };
 

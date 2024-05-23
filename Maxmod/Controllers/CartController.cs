@@ -31,4 +31,16 @@ public class CartController : Controller
         _cartService.RemoveCartItem(id);
         return Json("");
     }
+
+    [HttpPost]
+    public IActionResult ClearCart()
+    {
+        _cartService.ClearCookies();
+        return Json("");
+    }
+
+    public IActionResult GetLayoutCart()
+    {
+        return PartialView("_LayoutCart");
+    }
 }

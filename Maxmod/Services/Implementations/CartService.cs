@@ -78,6 +78,14 @@ public class CartService : ICartService
         return true;
     }
 
+    public void ClearCookies()
+    {
+        if (_accessor.HttpContext!.Request.Cookies["Cart"] != null)
+        {
+            _accessor.HttpContext!.Response.Cookies.Delete("Cart");
+        }
+    }
+
     public void RemoveCartItem(int id)
     {
         if (!_layoutService.CheckLoggedIn())
@@ -98,7 +106,6 @@ public class CartService : ICartService
     {
         if (!_layoutService.CheckLoggedIn())
         {
-
             List<CartVM> CartVMs;
             if (_accessor.HttpContext!.Request.Cookies["Cart"] != null)
             {

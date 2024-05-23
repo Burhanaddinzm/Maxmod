@@ -7,5 +7,6 @@ public interface ICartService
     Task<List<CartItemVM>> GetCartItemsAsync();
     Task<bool> AddToCartAsync(int id, int quantity);
     void RemoveCartItem(int id);
+    void ClearCookies();
     List<CartVM> GetCart();
 }

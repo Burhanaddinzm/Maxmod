@@ -138,6 +138,8 @@
     <script>
         const productss = document.querySelectorAll(".weeks-highligths-section .slide");
         productss.forEach(product => {
+            //Change variant
+
             const priceWrapper = product.querySelector(".price-wrapper");
             const labels = product.querySelectorAll("label");
             const badges = product.querySelector(".badges")
@@ -153,6 +155,21 @@
                     }
                 })
             })
+
+            //Add to cart
+            const inputGroup = product.querySelectorAll('input');
+            const addToCartBtn = product.querySelector(".product-add-to-cart");
+
+            let selectedInputValue = product.querySelector('input:checked').value;
+
+            inputGroup.forEach(input => input.addEventListener("change", () => {
+                selectedInputValue = product.querySelector('input:checked').value;
+            }));
+
+            addToCartBtn.addEventListener("click", async () => {
+                await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedInputValue}&quantity=1`, { method: "POST" })
+                await refreshLayoutCart();
+            });
         });
     </script>
 }

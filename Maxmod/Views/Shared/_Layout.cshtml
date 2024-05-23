@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Style -->
-    <link rel="stylesheet" href="~/client/assets/css/layout.min.css" />
+    <link rel="stylesheet" href="~/client/assets/css/layout.css" />
     @await RenderSectionAsync("Styles", false)
     <link rel="icon"
           type="image/x-icon"
@@ -84,7 +84,9 @@
                         </div>
                     </div>
                     <!-- Cart -->
-                    @await Component.InvokeAsync("Cart")
+                    <div class="cart-container">
+                        @await Component.InvokeAsync("Cart")
+                    </div>
                 </div>
             </div>
             <div class="line out-of-container"></div>
@@ -188,6 +190,73 @@
     </footer>
     <!-- Scripts -->
     <script src="~/client/assets/js/layout.js"></script>
+    <script>
+        const refreshLayoutCart = async () => {
+            const response = await fetch('@Url.Action("GetLayoutCart", "Cart")');
+            const data = await response.text();
+            document.querySelector('.cart-container').innerHTML = data;
+            document.body.style = ""
+            bindLayoutCartEventListeners();
+        };
+
+        const bindLayoutCartEventListeners = () => {
+            const headerCartEl = document.querySelector(".header-cart");
+            const cartDrawerEl = document.querySelector(".cart-container .cart-drawer");
+            const cartOverlayEl = document.querySelector(".cart-container .overlay");
+            const cartDrawerCloseBtn = document.querySelector(
+                ".cart-container .drawer-top button"
+            );
+
+            // Open drawer on cart click
+            headerCartEl.addEventListener("click", () => {
+                cartDrawerEl.classList.remove("hidden");
+                cartOverlayEl.classList.remove("hidden");
+                document.body.style.overflow = "hidden";
+            });
+
+            // Close drawer
+            [cartDrawerCloseBtn, cartOverlayEl].forEach((element) => {
+                element.addEventListener("click", () => {
+                    cartDrawerEl.classList.add("hidden");
+                    cartOverlayEl.classList.add("hidden");
+                    document.body.style.overflow = "";
+                });
+            });
+
+            //Cart functionallity
+            const removeItemBtns = document.querySelectorAll("#cart-remove");
+            const products = document.querySelectorAll(".drawer-middle .product");
+
+            products.forEach(product => {
+                const increaseBtn = product.querySelector("#increase-btn");
+                const decreaseBtn = product.querySelector("#decrease-btn");
+                const countInput = product.querySelector("#count-input");
+
+                countInput.addEventListener("keypress", () => event.preventDefault());
+                increaseBtn.addEventListener("click", async () => {
+                    await fetch(`@Url.Action("AddToCart", "Cart")/?id=${increaseBtn.dataset.id}&quantity=1`, { method: "POST" });
+                    await refreshLayoutCart();
+                    if ('@(ViewData["Title"])' == "Cart") await refreshCart();
+
+                });
+                decreaseBtn.addEventListener("click", async () => {
+                    if (countInput.value > 1) {
+                        await fetch(`@Url.Action("AddToCart", "Cart")/?id=${decreaseBtn.dataset.id}&quantity=-1`, { method: "POST" });
+                        await refreshLayoutCart();
+                        if ('@(ViewData["Title"])' == "Cart") await refreshCart();
+                    }
+                });
+            });
+
+            removeItemBtns.forEach(btn => btn.addEventListener("click", async () => {
+                await fetch(`@Url.Action("RemoveFromCart", "Cart")/${btn.dataset.id}`, { method: "POST" });
+                await refreshLayoutCart();
+                if ('@(ViewData["Title"])' == "Cart") await refreshCart();
+            }));
+        };
+
+        document.addEventListener('DOMContentLoaded', bindLayoutCartEventListeners);
+    </script>
     @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

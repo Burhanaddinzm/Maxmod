@@ -475,8 +475,9 @@ header .left-side .burger-menu.open .bar:nth-child(3) {
 }
 
 .drawer-middle .product .right-side {
+  width:100%;
   display: flex;
-  gap: 10px;
+  justify-content:space-between;
 }
 
 .drawer-middle .product .cart-control {

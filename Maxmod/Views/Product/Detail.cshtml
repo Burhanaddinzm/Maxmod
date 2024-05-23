@@ -229,8 +229,8 @@
 
                     if (variant.dataset.discountPrice != 0) {
                         priceContainer.innerHTML = ` <span class="selling-price"> $${variant.dataset.discountPrice}</span>
-                                <span class="old-price" > $${variant.dataset.price}</span>
-                                <span class="sale-badge"></span>`
+                                                <span class="old-price" > $${variant.dataset.price}</span>
+                                                <span class="sale-badge"></span>`
                     }
                     else {
                         priceContainer.innerHTML = `<span class="selling-price"> $${variant.dataset.price}</span>`
@@ -268,7 +268,7 @@
 
         addToCartBtn.addEventListener("click", async () => {
             await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedValue}&quantity=${countInput.value}`, { method: "POST" })
+            await refreshLayoutCart();
         });
-
     </script>
 }
