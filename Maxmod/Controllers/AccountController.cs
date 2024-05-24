@@ -10,11 +10,13 @@ public class AccountController : Controller
 {
     private readonly IAccountService _accountService;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly ICartService _cartService;
 
-    public AccountController(IAccountService accountService, SignInManager<AppUser> signInManager)
+    public AccountController(IAccountService accountService, SignInManager<AppUser> signInManager, ICartService cartService)
     {
         _accountService = accountService;
         _signInManager = signInManager;
+        _cartService = cartService;
     }
 
     public IActionResult Login()
@@ -42,6 +44,8 @@ public class AccountController : Controller
             if (result.IsLockedOut) ModelState.AddModelError("", "You have been locked out, try again in 5 minutes!");
             return View(loginVM);
         }
+
+        await _cartService.MigrateToDBAsync();
 
         if (roles!.Contains("Admin"))
         {

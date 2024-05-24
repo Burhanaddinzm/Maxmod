@@ -34,12 +34,12 @@ public class AppDbContext : IdentityDbContext<AppUser>
             {
                 case EntityState.Added:
                     entry.Entity.CreatedBy = currentUserName;
-                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.CreatedAt = DateTime.UtcNow.AddHours(4);
                     entry.Entity.IP = currentIpAddress;
                     break;
                 case EntityState.Modified:
                     entry.Entity.ModifiedBy = currentUserName;
-                    entry.Entity.ModifiedAt = DateTime.UtcNow;
+                    entry.Entity.ModifiedAt = DateTime.UtcNow.AddHours(4);
                     entry.Entity.IP = currentIpAddress;
                     break;
             }
@@ -56,6 +56,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<ProductWeight>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<Vendor>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<Weight>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<Cart>().HasQueryFilter(x => !x.IsDeleted);
 
         base.OnModelCreating(modelBuilder);
     }

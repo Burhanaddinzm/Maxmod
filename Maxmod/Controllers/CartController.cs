@@ -26,21 +26,14 @@ public class CartController : Controller
     }
 
     [HttpPost]
-    public IActionResult RemoveFromCart(int id)
+    public async Task<IActionResult> RemoveFromCart(int id)
     {
-        _cartService.RemoveCartItem(id);
-        return Json("");
-    }
-
-    [HttpPost]
-    public IActionResult ClearCart()
-    {
-        _cartService.ClearCookies();
+        await _cartService.RemoveCartItem(id);
         return Json("");
     }
 
     public IActionResult GetLayoutCart()
     {
-        return PartialView("_LayoutCart");
+        return ViewComponent("Cart");
     }
 }
