@@ -160,7 +160,7 @@ public class CartService : ICartService
 
             if (user != null)
             {
-                List<Cart> cartList = await _cartRepository.GetAllAsync();
+                List<Cart> cartList = await _cartRepository.GetAllAsync(x => x.User == user);
                 if (cartList != null)
                 {
                     foreach (var cart in cartList)
