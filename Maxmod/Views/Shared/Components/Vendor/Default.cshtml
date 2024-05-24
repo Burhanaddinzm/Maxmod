@@ -5,9 +5,42 @@
         <div class="slider">
             <div class="slide-container">
                 <div class="slide-wrapper">
-                    @foreach (var vendor in Model)
+                    @if (Model.Count == 9)
                     {
-                        <img class="slide" src="~/client/assets/images/vendor/@vendor.Image" alt="" />
+                        @foreach (var vendor in Model)
+                        {
+                            <img class="slide" src="~/client/assets/images/vendor/@vendor.Image" alt="" />
+                        }
+                    }
+                    else
+                    {
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/1_c3392416-576e-4c5c-b826-b6e143bb513d.png"
+                             alt="" />
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/2_1c4b30d7-c150-41db-8703-2e4d065c8cbe.png"
+                             alt="" />
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/3_8b98564b-198e-4ecf-9a56-c23986826fbf.png"
+                             alt="" />
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/4_53a90bfe-4c85-479d-937d-a4120a22ee1b.png"
+                             alt="" />
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/1_c3392416-576e-4c5c-b826-b6e143bb513d.png"
+                             alt="" />
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/2_1c4b30d7-c150-41db-8703-2e4d065c8cbe.png"
+                             alt="" />
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/3_8b98564b-198e-4ecf-9a56-c23986826fbf.png"
+                             alt="" />
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/4_53a90bfe-4c85-479d-937d-a4120a22ee1b.png"
+                             alt="" />
+                        <img class="slide"
+                             src="~/client/assets/images/vendor/1_c3392416-576e-4c5c-b826-b6e143bb513d.png"
+                             alt="" />
                     }
                 </div>
             </div>

@@ -1,6 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Shop";
+
+    PagerVM pager = new PagerVM();
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+    }
 }
+@model List<Product>
 
 @section Styles {
     <link rel="stylesheet" href="~/client/assets/css/shop.min.css" />
@@ -426,23 +434,33 @@
                 </div>
             </div>
             <div class="pagination">
-                <a href="#" class="pagination-prev"><</a>
-                <ul class="pagination-btns">
-                    <li>
-                        <a href="#" class="pagination-btn">1</a>
-                    </li>
-                    <span>...</span>
-                    <li>
-                        <a href="#" class="pagination-btn">8</a>
-                    </li>
-                    <li>
-                        <a href="#" class="pagination-btn">9</a>
-                    </li>
-                    <li>
-                        <a href="#" class="pagination-btn active">10</a>
-                    </li>
-                </ul>
-                <a href="#" class="pagination-next disabled">></a>
+                @if (pager.TotalPages > 0)
+                {
+                    @if (pager.CurrentPage > 1)
+                    {
+                        @if (pager.CurrentPage != 2)
+                        {
+                            <a asp-action="index" asp-controller="product" asp-route-page="1" class="pagination-prev">@("<<")</a>
+                        }
+                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage - 1)" class="pagination-prev">@("<")</a>
+                    }
+                    <ul class="pagination-btns">
+                        @for (int i = pager.StartPage; i <= pager.EndPage; i++)
+                        {
+                            <li>
+                                <a asp-action="index" asp-controller="product" asp-route-page="@i" class="pagination-btn @(i == pager.CurrentPage ? "active" : "")">@i</a>
+                            </li>
+                        }
+                    </ul>
+                    @if (pager.CurrentPage < pager.TotalPages)
+                    {
+                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage + 1)" class="pagination-next">@(">")</a>
+                        @if (pager.CurrentPage != pager.TotalPages - 1)
+                        {
+                            <a asp-action="index" asp-controller="product" asp-route-page="@(pager.TotalPages)" class="pagination-next">@(">>")</a>
+                        }
+                    }
+                }
             </div>
         </div>
     </section>

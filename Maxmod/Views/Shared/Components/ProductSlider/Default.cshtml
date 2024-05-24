@@ -84,7 +84,7 @@
                                     else
                                     {
                                         <div class="price-wrapper">
-                                            <span class="selling-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0).Price</span>
+                                            <span class="selling-price">$@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price)</span>
                                         </div>
                                     }
                                     @if (!product.ProductWeights.Any(x => x.Weight.Name == "Default"))

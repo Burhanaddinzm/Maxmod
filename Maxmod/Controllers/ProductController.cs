@@ -1,4 +1,5 @@
 ﻿using Maxmod.Services.Interfaces;
+using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maxmod.Controllers;
@@ -12,9 +13,24 @@ public class ProductController : Controller
         _productService = productService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index(int page = 1)
     {
-        return View();
+        var products = await _productService.GetAllProductsAsync(null, null, null, "ProductWeights.Weight", "Vendor", "ProductImages");
+
+        const int pageSize = 1;
+        if (page < 1) page = 1;
+
+        int itemCount = products.Count();
+
+        var pager = new PagerVM(itemCount, page, pageSize);
+
+        int itemsToSkip = (page - 1) * pageSize;
+
+        var data = products.Skip(itemsToSkip).Take(pager.PageSize).ToList();
+
+        ViewBag.Pager = pager;
+
+        return View(data);
     }
 
     public async Task<IActionResult> Detail(int id)
