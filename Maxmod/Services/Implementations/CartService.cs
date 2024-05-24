@@ -190,13 +190,23 @@ public class CartService : ICartService
             {
                 foreach (var item in cartVM)
                 {
-                    Cart cart = new Cart
+                    var existingCartItem = await _cartRepository.GetAsync(x => x.User == user && x.ProductWeightId == item.ProductWeightId);
+
+                    if (existingCartItem != null)
                     {
-                        Quantity = item.Quantity,
-                        ProductWeightId = item.ProductWeightId,
-                        User = user
-                    };
-                    await _cartRepository.CreateAsync(cart);
+                        existingCartItem.Quantity += item.Quantity;
+                        await _cartRepository.UpdateAsync(existingCartItem);
+                    }
+                    else
+                    {
+                        Cart cart = new Cart
+                        {
+                            Quantity = item.Quantity,
+                            ProductWeightId = item.ProductWeightId,
+                            User = user
+                        };
+                        await _cartRepository.CreateAsync(cart);
+                    }
                 }
                 ClearCookies();
             }

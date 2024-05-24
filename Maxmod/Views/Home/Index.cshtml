@@ -20,7 +20,7 @@
         <p class="intro-text">
             @settings.IntroDescription
         </p>
-        <a href="#" class="btn">Shop Now</a>
+        <a asp-action="index" asp-controller="product" class="btn">Shop Now</a>
     </div>
 </section>
 <!-- Shop by category section -->
@@ -58,21 +58,21 @@
             <h5>@settings.SmallPromoHeading1</h5>
             <h4>@settings.SmallPromoTitle1</h4>
             <p>@settings.SmallPromoText1</p>
-            <a href="#">Shop now</a>
+            <a asp-action="index" asp-controller="product">Shop now</a>
         </div>
         <div class="wrapper">
             <img src="~/client/assets/images/misc/@settings.SmallPromoImage2" alt="" />
             <h5>@settings.SmallPromoHeading2</h5>
             <h4>@settings.SmallPromoTitle2</h4>
             <p>@settings.SmallPromoText2</p>
-            <a href="#">Shop now</a>
+            <a asp-action="index" asp-controller="product">Shop now</a>
         </div>
         <div class="wrapper">
             <img src="~/client/assets/images/misc/@settings.SmallPromoImage3" alt="" />
             <h5>@settings.SmallPromoHeading3</h5>
             <h4>@settings.SmallPromoTitle3</h4>
             <p>@settings.SmallPromoText3</p>
-            <a href="#">Shop now</a>
+            <a asp-action="index" asp-controller="product">Shop now</a>
         </div>
     </div>
 </section>
@@ -126,7 +126,7 @@
         <h3>@settings.BigPromoHeading</h3>
         <h2>@settings.BigPromoTitle</h2>
         <p>@settings.BigPromoText</p>
-        <a href="#" class="btn">Shop Now</a>
+        <a asp-action="index" asp-controller="product" class="btn">Shop Now</a>
     </div>
 </section>
 <!-- Vendor section -->
