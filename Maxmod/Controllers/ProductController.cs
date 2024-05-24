@@ -17,7 +17,7 @@ public class ProductController : Controller
     {
         var products = await _productService.GetAllProductsAsync(null, null, null, "ProductWeights.Weight", "Vendor", "ProductImages");
 
-        const int pageSize = 1;
+        const int pageSize = 6;
         if (page < 1) page = 1;
 
         int itemCount = products.Count();
