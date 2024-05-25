@@ -132,306 +132,168 @@
             </div>
             <div class="line"></div>
             <div class="products-container">
-                <div class="product">
-                    <div class="top">
-                        <div class="badges">
-                            <div class="new-badge"></div>
-                            <div class="out-of-stock-badge"></div>
-                            <div class="save-badge" data-dollar="1.00"></div>
+                @foreach (var product in Model)
+                {
+                    <div class="product">
+                        <div class="top">
+                            <div class="badges">
+                                @if (product.IsNew)
+                                {
+                                    <div class="new-badge"></div>
+                                }
+                                @if (!product.ProductWeights.Any(x => x.Stock > 0))
+                                {
+                                    <div class="out-of-stock-badge"></div>
+                                }
+                                @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0) != null)
+                                {
+                                    <div class="save-badge" data-dollar="@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0).Price
+                                            - product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0).DiscountPrice)"></div>
+                                }
+                            </div>
+                            @if (product.ProductWeights.Any(x => x.Stock > 0))
+                            {
+                                <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">
+                                    <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
+                                         alt=""
+                                         class="main-img" />
+                                    <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
+                                         alt=""
+                                         class="hover-img" />
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" onclick="event.preventDefault()">
+                                    <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
+                                         alt=""
+                                         class="main-img" />
+                                    <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
+                                         alt=""
+                                         class="hover-img" />
+                                </a>
+                            }
+                            <div class="actions">
+                                @if (product.ProductWeights.Any(x => x.Stock > 0))
+                                {
+                                    <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id" class="btn">Detailed Look</a>
+                                }
+                                else
+                                {
+                                    <a href="#" onclick="event.preventDefault()" class="btn">Detailed Look</a>
+                                }
+                                <button class="btn product-add-to-cart">Add To Cart</button>
+                            </div>
                         </div>
-                        <a href="#">
-                            <img src="~/client/assets/images/product/product-1.jpg"
-                                 alt=""
-                                 class="main-img" />
-                            <img src="~/client/assets/images/product/product-2.png"
-                                 alt=""
-                                 class="hover-img" />
-                        </a>
-                        <div class="actions">
-                            <a href="#" class="btn">Detailed Look</a>
-                            <a href="#" class="btn">Add To Cart</a>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <h6>Vendor.Name</h6>
-                        <a href="#">Product.Name</a>
-                        <div class="price-wrapper">
-                            <span class="selling-price">$5.00</span>
-                            <span class="old-price">$6.00</span>
-                        </div>
-                        <div class="line"></div>
-                        <h5>Weight</h5>
-                        <div class="variations">
-                            <label for="variation-500gm" class="variation active">500gm</label>
-                            <input checked="checked"
-                                   style="display: none"
-                                   type="radio"
-                                   id="variation-500gm"
-                                   name="variation" />
-                            <label for="variation-1kg" class="variation out">1kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-1kg"
-                                   name="variation"
-                                   disabled />
-                            <label for="variation-2kg" class="variation">2kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-2kg"
-                                   name="variation" />
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="top">
-                        <div class="badges">
-                            <div class="new-badge"></div>
-                            <div class="out-of-stock-badge"></div>
-                            <div class="save-badge" data-dollar="1.00"></div>
-                        </div>
-                        <a href="#">
-                            <img src="~/client/assets/images/product/product-1.jpg"
-                                 alt=""
-                                 class="main-img" />
-                            <img src="~/client/assets/images/product/product-2.png"
-                                 alt=""
-                                 class="hover-img" />
-                        </a>
-                        <div class="actions">
-                            <a href="#" class="btn">Detailed Look</a>
-                            <a href="#" class="btn">Add To Cart</a>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <h6>Vendor.Name</h6>
-                        <a href="#">Product.Name</a>
-                        <div class="price-wrapper">
-                            <span class="selling-price">$5.00</span>
-                            <span class="old-price">$6.00</span>
-                        </div>
-                        <div class="line"></div>
-                        <h5>Weight</h5>
-                        <div class="variations">
-                            <label for="variation-500gm" class="variation active">500gm</label>
-                            <input checked="checked"
-                                   style="display: none"
-                                   type="radio"
-                                   id="variation-500gm"
-                                   name="variation" />
-                            <label for="variation-1kg" class="variation out">1kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-1kg"
-                                   name="variation"
-                                   disabled />
-                            <label for="variation-2kg" class="variation">2kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-2kg"
-                                   name="variation" />
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="top">
-                        <div class="badges">
-                            <div class="new-badge"></div>
-                            <div class="out-of-stock-badge"></div>
-                            <div class="save-badge" data-dollar="1.00"></div>
-                        </div>
-                        <a href="#">
-                            <img src="~/client/assets/images/product/product-1.jpg"
-                                 alt=""
-                                 class="main-img" />
-                            <img src="~/client/assets/images/product/product-2.png"
-                                 alt=""
-                                 class="hover-img" />
-                        </a>
-                        <div class="actions">
-                            <a href="#" class="btn">Detailed Look</a>
-                            <a href="#" class="btn">Add To Cart</a>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <h6>Vendor.Name</h6>
-                        <a href="#">Product.Name</a>
-                        <div class="price-wrapper">
-                            <span class="selling-price">$5.00</span>
-                            <span class="old-price">$6.00</span>
-                        </div>
-                        <div class="line"></div>
-                        <h5>Weight</h5>
-                        <div class="variations">
-                            <label for="variation-500gm" class="variation active">500gm</label>
-                            <input checked="checked"
-                                   style="display: none"
-                                   type="radio"
-                                   id="variation-500gm"
-                                   name="variation" />
-                            <label for="variation-1kg" class="variation out">1kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-1kg"
-                                   name="variation"
-                                   disabled />
-                            <label for="variation-2kg" class="variation">2kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-2kg"
-                                   name="variation" />
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="top">
-                        <div class="badges">
-                            <div class="new-badge"></div>
-                            <div class="out-of-stock-badge"></div>
-                            <div class="save-badge" data-dollar="1.00"></div>
-                        </div>
-                        <a href="#">
-                            <img src="~/client/assets/images/product/product-1.jpg"
-                                 alt=""
-                                 class="main-img" />
-                            <img src="~/client/assets/images/product/product-2.png"
-                                 alt=""
-                                 class="hover-img" />
-                        </a>
-                        <div class="actions">
-                            <a href="#" class="btn">Detailed Look</a>
-                            <a href="#" class="btn">Add To Cart</a>
+                        <div class="bottom">
+                            <h6>@product.Vendor.Name</h6>
+                            @if (product.ProductWeights.Any(x => x.Stock > 0))
+                            {
+                                <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">@product.Name</a>
+                            }
+                            else
+                            {
+                                <a href="#" onclick="event.preventDefault()">@product.Name</a>
+                            }
+                            @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0) != null)
+                            {
+                                <div class="price-wrapper">
+                                    <span class="selling-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.DiscountPrice</span>
+                                    <span class="old-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.Price</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="price-wrapper">
+                                    <span class="selling-price">$@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price)</span>
+                                </div>
+                            }
+                            @if (!product.ProductWeights.Any(x => x.Weight.Name == "Default"))
+                            {
+                                <div class="line"></div>
+                                <h5>Weight</h5>
+                                <div class="variations">
+                                    @foreach (var productWeight in product.ProductWeights)
+                                    {
+                                        if (productWeight.Stock == 0)
+                                        {
+                                            <label data-stock="@productWeight.Stock"
+                                                   data-price="@productWeight.Price"
+                                                   data-discount-price="@productWeight.DiscountPrice"
+                                                   data-new="@product.IsNew"
+                                                   for="variation-@productWeight.Id"
+                                                   class="variation out">
+                                                @productWeight.Weight.Name
+                                            </label>
+                                            <input style="display: none"
+                                                   type="radio"
+                                                   id="variation-@productWeight.Id"
+                                                   value="@productWeight.Id"
+                                                   name="variation-@product.Id"
+                                                   disabled />
+                                        }
+                                        else if (productWeight == @product.ProductWeights.FirstOrDefault(x => x.Stock > 0))
+                                        {
+                                            <label data-stock="@productWeight.Stock"
+                                                   data-price="@productWeight.Price"
+                                                   data-discount-price="@productWeight.DiscountPrice"
+                                                   data-new="@product.IsNew"
+                                                   for="variation-@productWeight.Id"
+                                                   class="variation active">
+                                                @productWeight.Weight.Name
+                                            </label>
+                                            <input checked="checked"
+                                                   style="display: none"
+                                                   type="radio"
+                                                   id="variation-@productWeight.Id"
+                                                   value="@productWeight.Id"
+                                                   name="variation-@product.Id" />
+                                        }
+                                        else
+                                        {
+                                            <label data-stock="@productWeight.Stock"
+                                                   data-price="@productWeight.Price"
+                                                   data-discount-price="@productWeight.DiscountPrice"
+                                                   data-new="@product.IsNew"
+                                                   for="variation-@productWeight.Id"
+                                                   class="variation">
+                                                @productWeight.Weight.Name
+                                            </label>
+                                            <input style="display: none"
+                                                   type="radio"
+                                                   id="variation-@productWeight.Id"
+                                                   value="@productWeight.Id"
+                                                   name="variation-@product.Id" />
+                                        }
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                if (product.ProductWeights.First().Stock > 0)
+                                {
+                                    <input data-new="@product.IsNew"
+                                           style="display: none"
+                                           checked="checked"
+                                           type="radio"
+                                           id="variation-@product.ProductWeights.First().Id"
+                                           value="@product.ProductWeights.First().Id"
+                                           name="variation-@product.ProductWeights.First().Id" />
+                                }
+                                else
+                                {
+                                    <input data-new="@product.IsNew"
+                                           style="display: none"
+                                           type="radio"
+                                           id="variation-@product.ProductWeights.First().Id"
+                                           value="@product.ProductWeights.First().Id"
+                                           name="variation-@product.ProductWeights.First()"
+                                           disabled />
+                                }
+                            }
                         </div>
                     </div>
-                    <div class="bottom">
-                        <h6>Vendor.Name</h6>
-                        <a href="#">Product.Name</a>
-                        <div class="price-wrapper">
-                            <span class="selling-price">$5.00</span>
-                            <span class="old-price">$6.00</span>
-                        </div>
-                        <div class="line"></div>
-                        <h5>Weight</h5>
-                        <div class="variations">
-                            <label for="variation-500gm" class="variation active">500gm</label>
-                            <input checked="checked"
-                                   style="display: none"
-                                   type="radio"
-                                   id="variation-500gm"
-                                   name="variation" />
-                            <label for="variation-1kg" class="variation out">1kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-1kg"
-                                   name="variation"
-                                   disabled />
-                            <label for="variation-2kg" class="variation">2kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-2kg"
-                                   name="variation" />
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="top">
-                        <div class="badges">
-                            <div class="new-badge"></div>
-                            <div class="out-of-stock-badge"></div>
-                            <div class="save-badge" data-dollar="1.00"></div>
-                        </div>
-                        <a href="#">
-                            <img src="~/client/assets/images/product/product-1.jpg"
-                                 alt=""
-                                 class="main-img" />
-                            <img src="~/client/assets/images/product/product-2.png"
-                                 alt=""
-                                 class="hover-img" />
-                        </a>
-                        <div class="actions">
-                            <a href="#" class="btn">Detailed Look</a>
-                            <a href="#" class="btn">Add To Cart</a>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <h6>Vendor.Name</h6>
-                        <a href="#">Product.Name</a>
-                        <div class="price-wrapper">
-                            <span class="selling-price">$5.00</span>
-                            <span class="old-price">$6.00</span>
-                        </div>
-                        <div class="line"></div>
-                        <h5>Weight</h5>
-                        <div class="variations">
-                            <label for="variation-500gm" class="variation active">500gm</label>
-                            <input checked="checked"
-                                   style="display: none"
-                                   type="radio"
-                                   id="variation-500gm"
-                                   name="variation" />
-                            <label for="variation-1kg" class="variation out">1kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-1kg"
-                                   name="variation"
-                                   disabled />
-                            <label for="variation-2kg" class="variation">2kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-2kg"
-                                   name="variation" />
-                        </div>
-                    </div>
-                </div>
-                <div class="product">
-                    <div class="top">
-                        <div class="badges">
-                            <div class="new-badge"></div>
-                            <div class="out-of-stock-badge"></div>
-                            <div class="save-badge" data-dollar="1.00"></div>
-                        </div>
-                        <a href="#">
-                            <img src="~/client/assets/images/product/product-1.jpg"
-                                 alt=""
-                                 class="main-img" />
-                            <img src="~/client/assets/images/product/product-2.png"
-                                 alt=""
-                                 class="hover-img" />
-                        </a>
-                        <div class="actions">
-                            <a href="#" class="btn">Detailed Look</a>
-                            <a href="#" class="btn">Add To Cart</a>
-                        </div>
-                    </div>
-                    <div class="bottom">
-                        <h6>Vendor.Name</h6>
-                        <a href="#">Product.Name</a>
-                        <div class="price-wrapper">
-                            <span class="selling-price">$5.00</span>
-                            <span class="old-price">$6.00</span>
-                        </div>
-                        <div class="line"></div>
-                        <h5>Weight</h5>
-                        <div class="variations">
-                            <label for="variation-500gm" class="variation active">500gm</label>
-                            <input checked="checked"
-                                   style="display: none"
-                                   type="radio"
-                                   id="variation-500gm"
-                                   name="variation" />
-                            <label for="variation-1kg" class="variation out">1kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-1kg"
-                                   name="variation"
-                                   disabled />
-                            <label for="variation-2kg" class="variation">2kg</label>
-                            <input style="display: none"
-                                   type="radio"
-                                   id="variation-2kg"
-                                   name="variation" />
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
             <div class="pagination">
                 @if (pager.TotalPages > 0)
@@ -468,4 +330,39 @@
 
 @section Scripts {
     <script src="~/client/assets/js/shop.js"></script>
+
+    <script>
+        const products = document.querySelectorAll(".product");
+
+        products.forEach((product) => {
+            // Change variation
+
+            const variants = product.querySelectorAll(".variations label");
+            const priceWrapper = product.querySelector(".price-wrapper");
+            const badges = product.querySelector(".badges")
+
+            variants.forEach((variant) => {
+                variant.addEventListener("click", () => {
+                    if (variant.classList.contains("out")) return;
+
+                    const activeVariants = product.querySelectorAll(
+                        ".variations label.active"
+                    );
+                    activeVariants.forEach((label) => {
+                        label.classList.remove("active");
+                    });
+
+                    variant.classList.add("active");
+
+                    if (variant.dataset.discountPrice != 0) {
+                        priceWrapper.innerHTML = `<span class="selling-price">$${variant.dataset.discountPrice} </span><span class="old-price" > $${variant.dataset.price}</span>`;
+                        badges.innerHTML = `${variant.dataset.new ? '<div class="new-badge"></div>' : ''}<div class="save-badge" data-dollar="${(variant.dataset.price - variant.dataset.discountPrice).toFixed(2)}" > </div>`
+                    } else {
+                        priceWrapper.innerHTML = `<span class="selling-price">$${variant.dataset.price} </span>`;
+                        badges.innerHTML = `${variant.dataset.new ? '<div class="new-badge"></div>' : ''}`
+                    }
+                });
+            });
+        });
+    </script>
 }

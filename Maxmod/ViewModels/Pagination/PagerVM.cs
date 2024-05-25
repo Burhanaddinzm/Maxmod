@@ -30,7 +30,7 @@ public class PagerVM
         if (endPage > totalPages)
         {
             endPage = totalPages;
-            if(endPage > 10)
+            if(endPage > 8)
             {
                 startPage = endPage - 7;
             }

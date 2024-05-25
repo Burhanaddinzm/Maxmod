@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "h13HZRojknwA/Z+KCTal1uQ/LBuyW3ogESJxALWINJ4=",
+  "Hash": "PIbI8gDzLePWPvIK9hXa7FEb6gSJdDMB6i+Ed4gL6Dk=",
   "Source": "Maxmod",
   "BasePath": "_content/Maxmod",
   "Mode": "Default",
@@ -36478,6 +36478,25 @@
       "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\3f9719f1-254f-4439-ba58-48c1b76c3768_fruit-snacks-at-picnic.png"
     },
     {
+      "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\495ab7d9-4ca2-4821-ad25-2bca8541ff2a_b3.png",
+      "SourceId": "Maxmod",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\",
+      "BasePath": "_content/Maxmod",
+      "RelativePath": "client/assets/images/product/495ab7d9-4ca2-4821-ad25-2bca8541ff2a_b3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\495ab7d9-4ca2-4821-ad25-2bca8541ff2a_b3.png"
+    },
+    {
       "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\4fe24aa2-d2f8-43c2-8e1a-4bc378148225_81fe-JjLYwL._AC_SL1500_.jpg",
       "SourceId": "Maxmod",
       "SourceType": "Discovered",
@@ -36552,6 +36571,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\7d0ba818-2856-4977-beab-518acf4e5cc2_intro_img.png"
+    },
+    {
+      "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\903f6529-a79f-403c-b6a8-29b692b617c5_bnr1.png",
+      "SourceId": "Maxmod",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\",
+      "BasePath": "_content/Maxmod",
+      "RelativePath": "client/assets/images/product/903f6529-a79f-403c-b6a8-29b692b617c5_bnr1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\903f6529-a79f-403c-b6a8-29b692b617c5_bnr1.png"
     },
     {
       "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\a1c5d581-a439-4648-94d2-1077d22d11ee_bnr1.png",

@@ -30656,6 +30656,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\3f9719f1-254f-4439-ba58-48c1b76c3768_fruit-snacks-at-picnic.png))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\495ab7d9-4ca2-4821-ad25-2bca8541ff2a_b3.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>Maxmod</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Maxmod</BasePath>
+      <RelativePath>client/assets/images/product/495ab7d9-4ca2-4821-ad25-2bca8541ff2a_b3.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\495ab7d9-4ca2-4821-ad25-2bca8541ff2a_b3.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\4fe24aa2-d2f8-43c2-8e1a-4bc378148225_81fe-JjLYwL._AC_SL1500_.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>Maxmod</SourceId>
@@ -30719,6 +30735,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\7d0ba818-2856-4977-beab-518acf4e5cc2_intro_img.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\903f6529-a79f-403c-b6a8-29b692b617c5_bnr1.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>Maxmod</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Maxmod</BasePath>
+      <RelativePath>client/assets/images/product/903f6529-a79f-403c-b6a8-29b692b617c5_bnr1.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\903f6529-a79f-403c-b6a8-29b692b617c5_bnr1.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\a1c5d581-a439-4648-94d2-1077d22d11ee_bnr1.png))">
       <SourceType>Package</SourceType>

@@ -161,12 +161,14 @@
             const addToCartBtn = product.querySelector(".product-add-to-cart");
 
             let selectedInputValue = 0;
-            if (!product.querySelector("input").disabled)
-                selectedInputValue = product.querySelector('input:checked').value;
+            inputGroup.forEach(input => {
+                if (!input.disabled && selectedInputValue === 0)
+                    selectedInputValue = input.value;
+            });
 
             inputGroup.forEach(input => input.addEventListener("change", () => {
-                if (!product.querySelector("input").disabled)
-                    selectedInputValue = product.querySelector('input:checked').value;
+                if (!input.disabled && input.checked)
+                    selectedInputValue = input.value;
             }));
 
             addToCartBtn.addEventListener("click", async () => {
