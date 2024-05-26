@@ -12,18 +12,13 @@
     }
     if (ViewBag.Categories != null)
     {
-        categories = ViewBag.Categories;
+        categories = ViewBag.Categories as List<Category>;
     }
 }
 @model List<Product>
 
 @section Styles {
-    <link rel="stylesheet" href="~/client/assets/css/shop.min.css" />
-    <style>
-        main .filter-categories-ul li {
-            padding: 4px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="~/client/assets/css/shop.css" />
 }
 
 <div class="container">
@@ -132,10 +127,38 @@
             <div class="page-top">
                 <label for="sort-select">Sort by:</label>
                 <select name="sort" id="sort-select">
-                    <option value="newest">Date, newest</option>
-                    <option value="oldest">Date, oldest</option>
-                    <option value="highest-price">Price, highest</option>
-                    <option value="lowest-price">Price, lowest</option>
+                    @if (orderByDesc == "CreatedAt")
+                    {
+                        <option value="newest" selected>Date, newest</option>
+                    }
+                    else
+                    {
+                        <option value="newest">Date, newest</option>
+                    }
+                    @if (orderBy == "CreatedAt")
+                    {
+                        <option value="oldest" selected>Date, oldest</option>
+                    }
+                    else
+                    {
+                        <option value="oldest">Date, oldest</option>
+                    }
+                    @if (orderBy == "Price")
+                    {
+                        <option value="lowest-price" selected>Price, lowest</option>
+                    }
+                    else
+                    {
+                        <option value="lowest-price">Price, lowest</option>
+                    }
+                    @if (orderByDesc == "Price")
+                    {
+                        <option value="highest-price" selected>Price, highest</option>
+                    }
+                    else
+                    {
+                        <option value="highest-price">Price, highest</option>
+                    }
                 </select>
                 <button class="filter-sort">
                     <img src="~/client/assets/icons/filter_sort_icon.svg" alt="" />
@@ -326,7 +349,7 @@
                 }
             </div>
             <div class="pagination">
-                @if (pager.TotalPages > 0)
+                @if (pager?.TotalPages > 0)
                 {
                     @if (pager.CurrentPage > 1)
                     {
@@ -414,6 +437,39 @@
                     await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedInputValue}&quantity=1`, { method: "POST" })
                     await refreshLayoutCart();
                 }
+            });
+        });
+
+        // Sort by order
+        document.addEventListener("DOMContentLoaded", () => {
+            const sortSelectEl = document.getElementById("sort-select");
+
+            sortSelectEl.addEventListener("change", () => {
+                const selectedSort = sortSelectEl.value;
+                const urlParams = new URLSearchParams(window.location.search);
+
+                switch (selectedSort) {
+                    case "oldest":
+                        urlParams.set("orderBy", "CreatedAt");
+                        urlParams.delete("orderByDesc");
+                        break;
+                    case "newest":
+                        urlParams.set("orderByDesc", "CreatedAt");
+                        urlParams.delete("orderBy");
+                        break;
+                    case "lowest-price":
+                        urlParams.set("orderBy", "Price");
+                        urlParams.delete("orderByDesc");
+                        break;
+                    case "highest-price":
+                        urlParams.set("orderByDesc", "Price");
+                        urlParams.delete("orderBy");
+                        break;
+                    default:
+                        break;
+                }
+
+                window.location.search = urlParams.toString();
             });
         });
     </script>

@@ -21,6 +21,12 @@ public class ProductController : Controller
     {
         var products = new List<Product>();
         var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Parent", "SubCategories");
+
+        if (orderByDesc == null && orderBy == null)
+        {
+            orderByDesc = "CreatedAt";
+        }
+
         if (category != null)
         {
             products = await _productService.GetAllProductsAsync(

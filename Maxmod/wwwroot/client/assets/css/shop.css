@@ -27,8 +27,16 @@
   border: 1px solid #f6f6f6;
 }
 
-.shop-section .filter-categories *:hover {
-  color: #234925;
+.shop-section .filter-categories > button {
+  transition: color 0.2s ease-in-out;
+}
+
+main .filter-categories-ul li {
+  padding: 4px 0;
+}
+
+.shop-section .filter-categories:hover > button {
+  color: #39743c;
 }
 
 .shop-section .filter-categories-btn {
@@ -61,6 +69,22 @@
 
 .shop-section .filter-categories-ul.open {
   max-height: 100%;
+}
+
+.shop-section .filter-categories-ul > li > a {
+  transition: color 0.2s ease-in-out;
+}
+
+.shop-section .filter-categories-ul > li:hover > a {
+  color: #23634c;
+}
+
+.shop-section .filter-subcategories-ul > li > a {
+  transition: color 0.2s ease-in-out;
+}
+
+.shop-section .filter-subcategories-ul > li:hover > a {
+  color: #39743c;
 }
 
 .shop-section .category-btn {
