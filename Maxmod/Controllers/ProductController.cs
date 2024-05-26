@@ -19,29 +19,48 @@ public class ProductController : Controller
         _weightService = weightService;
     }
 
-    public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, int page = 1)
+    public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, string? searchString, int page = 1)
     {
         var products = new List<Product>();
         var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Parent", "SubCategories");
-        var weights = await _weightService.GetAllWeightsAsync(x=> x.Name != "Default");
+        var weights = await _weightService.GetAllWeightsAsync(x => x.Name != "Default");
 
         if (orderByDesc == null && orderBy == null)
         {
             orderByDesc = "CreatedAt";
         }
 
-        if (category != null)
+        if (searchString != null)
         {
-            products = await _productService.GetAllProductsAsync(
-                x => x.Category.Name == category || x.Category.Parent.Name == category,
-                orderBy, orderByDesc, null,
-                "ProductWeights.Weight", "Vendor", "ProductImages");
+            if (category != null)
+            {
+                products = await _productService.GetAllProductsAsync(
+                    x => x.Category.Name == category || x.Category.Parent.Name == category && x.Name.ToLower().StartsWith(searchString.Trim().ToLower()),
+                    orderBy, orderByDesc, null,
+                    "ProductWeights.Weight", "Vendor", "ProductImages");
+            }
+            else
+            {
+                products = await _productService.GetAllProductsAsync(
+                             x => x.Name.ToLower().StartsWith(searchString.Trim().ToLower()), orderBy, orderByDesc, null,
+                             "ProductWeights.Weight", "Vendor", "ProductImages");
+            }
         }
         else
         {
-            products = await _productService.GetAllProductsAsync(
-                         null, orderBy, orderByDesc, null,
-                         "ProductWeights.Weight", "Vendor", "ProductImages");
+            if (category != null)
+            {
+                products = await _productService.GetAllProductsAsync(
+                    x => x.Category.Name == category || x.Category.Parent.Name == category,
+                    orderBy, orderByDesc, null,
+                    "ProductWeights.Weight", "Vendor", "ProductImages");
+            }
+            else
+            {
+                products = await _productService.GetAllProductsAsync(
+                             null, orderBy, orderByDesc, null,
+                             "ProductWeights.Weight", "Vendor", "ProductImages");
+            }
         }
 
         const int pageSize = 6;
@@ -63,6 +82,7 @@ public class ProductController : Controller
         ViewBag.Category = category;
         ViewBag.OrderBy = orderBy;
         ViewBag.OrderByDesc = orderByDesc;
+        ViewBag.SerachString = searchString;
         ViewBag.Categories = categories;
         ViewBag.Weights = weights;
 
