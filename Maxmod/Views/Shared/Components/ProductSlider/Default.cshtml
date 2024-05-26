@@ -17,137 +17,137 @@
                     @foreach (var product in Model)
                     {
                         <div class="slide">
-                                <div class="top">
-                                    <div class="badges">
-                                        <div class="new-badge"></div>
-                                        @if (!product.ProductWeights.Any(x => x.Stock > 0))
-                                        {
-                                            <div class="out-of-stock-badge"></div>
-                                        }
-                                        @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0) != null)
-                                        {
-                                            <div class="save-badge" data-dollar="@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0).Price
-                                            - product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0).DiscountPrice)"></div>
-                                        }
-                                    </div>
-                                    @if (product.ProductWeights.Any(x => x.Stock > 0))
+                            <div class="top">
+                                <div class="badges">
+                                    <div class="new-badge"></div>
+                                    @if (!product.ProductWeights.Any(x => x.Stock > 0))
                                     {
-                                        <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">
-                                            <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
-                                                 alt=""
-                                                 class="main-img" />
-                                            <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
-                                                 alt=""
-                                                 class="hover-img" />
-                                        </a>
+                                        <div class="out-of-stock-badge"></div>
                                     }
-                                    else
+                                    @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0) != null && product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice != 0)
                                     {
-                                        <a href="#" onclick="event.preventDefault()">
-                                            <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
-                                                 alt=""
-                                                 class="main-img" />
-                                            <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
-                                                 alt=""
-                                                 class="hover-img" />
-                                        </a>
+                                        <div class="save-badge" data-dollar="@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)?.Price
+                                            - product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)?.DiscountPrice)"></div>
                                     }
-                                    <div class="actions">
-                                        @if (product.ProductWeights.Any(x => x.Stock > 0))
-                                        {
-                                            <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id" class="btn">Detailed Look</a>
-                                        }
-                                        else
-                                        {
-                                            <a href="#" onclick="event.preventDefault()" class="btn">Detailed Look</a>
-                                        }
-                                        <button class="btn product-add-to-cart">Add To Cart</button>
-                                    </div>
                                 </div>
-                                <div class="bottom">
-                                    <h6>@product.Vendor.Name</h6>
+                                @if (product.ProductWeights.Any(x => x.Stock > 0))
+                                {
+                                    <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">
+                                        <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
+                                             alt=""
+                                             class="main-img" />
+                                        <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
+                                             alt=""
+                                             class="hover-img" />
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="#" onclick="event.preventDefault()">
+                                        <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsMain).Url"
+                                             alt=""
+                                             class="main-img" />
+                                        <img src="~/client/assets/images/product/@product.ProductImages.FirstOrDefault(x=>x.IsHover).Url"
+                                             alt=""
+                                             class="hover-img" />
+                                    </a>
+                                }
+                                <div class="actions">
                                     @if (product.ProductWeights.Any(x => x.Stock > 0))
                                     {
-                                        <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">@product.Name</a>
+                                        <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id" class="btn">Detailed Look</a>
                                     }
                                     else
                                     {
-                                        <a href="#" onclick="event.preventDefault()">@product.Name</a>
+                                        <a href="#" onclick="event.preventDefault()" class="btn">Detailed Look</a>
                                     }
-                                    @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0) != null)
-                                    {
-                                        <div class="price-wrapper">
-                                            <span class="selling-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.DiscountPrice</span>
-                                            <span class="old-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.Price</span>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="price-wrapper">
-                                            <span class="selling-price">$@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price)</span>
-                                        </div>
-                                    }
-                                    @if (!product.ProductWeights.Any(x => x.Weight.Name == "Default"))
-                                    {
-                                        <div class="line"></div>
-                                        <h5>Weight</h5>
-                                        <div class="variations">
-                                            @foreach (var productWeight in product.ProductWeights)
-                                            {
-                                                if (productWeight.Stock == 0)
-                                                {
-                                                    <label data-stock="@productWeight.Stock"
-                                                           data-price="@productWeight.Price"
-                                                           data-discount-price="@productWeight.DiscountPrice"
-                                                           for="variation-@productWeight.Id"
-                                                           class="variation out">
-                                                        @productWeight.Weight.Name
-                                                    </label>
-                                                    <input style="display: none"
-                                                           type="radio"
-                                                           id="variation-@productWeight.Id"
-                                                           value="@productWeight.Id"
-                                                           name="variation-@product.Id"
-                                                           disabled />
-                                                }
-                                                else if (productWeight == @product.ProductWeights.FirstOrDefault(x => x.Stock > 0))
-                                                {
-                                                    <label data-stock="@productWeight.Stock"
-                                                           data-price="@productWeight.Price"
-                                                           data-discount-price="@productWeight.DiscountPrice"
-                                                           for="variation-@productWeight.Id"
-                                                           class="variation active">
-                                                        @productWeight.Weight.Name
-                                                    </label>
-                                                    <input checked="checked"
-                                                           style="display: none"
-                                                           type="radio"
-                                                           id="variation-@productWeight.Id"
-                                                           value="@productWeight.Id"
-                                                           name="variation-@product.Id" />
-                                                }
-                                                else
-                                                {
-                                                    <label data-stock="@productWeight.Stock"
-                                                           data-price="@productWeight.Price"
-                                                           data-discount-price="@productWeight.DiscountPrice"
-                                                           for="variation-@productWeight.Id"
-                                                           class="variation">
-                                                        @productWeight.Weight.Name
-                                                    </label>
-                                                    <input style="display: none"
-                                                           type="radio"
-                                                           id="variation-@productWeight.Id"
-                                                           value="@productWeight.Id"
-                                                           name="variation-@product.Id" />
-                                                }
-                                            }
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        if (product.ProductWeights.First().Stock > 0)
+                                    <button class="btn product-add-to-cart">Add To Cart</button>
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <h6>@product.Vendor.Name</h6>
+                                @if (product.ProductWeights.Any(x => x.Stock > 0))
+                                {
+                                    <a asp-action="detail" asp-controller="product" asp-route-id="@product.Id">@product.Name</a>
+                                }
+                                else
+                                {
+                                    <a href="#" onclick="event.preventDefault()">@product.Name</a>
+                                }
+                                @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0) != null && product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice != 0)
+                                {
+                                    <div class="price-wrapper">
+                                        <span class="selling-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice</span>
+                                        <span class="old-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price</span>
+                                    </div>
+                                }
+                                else if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0) != null && product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice == 0)
+                                {
+                                    <div class="price-wrapper">
+                                        <span class="selling-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price</span>
+                                    </div>
+                                }
+                                @if (!product.ProductWeights.Any(x => x.Weight.Name == "Default"))
+                                {
+                                    <div class="line"></div>
+                                    <h5>Weight</h5>
+                                    <div class="variations">
+                                        @foreach (var productWeight in product.ProductWeights)
                                         {
+                                            if (productWeight.Stock == 0)
+                                            {
+                                                <label data-stock="@productWeight.Stock"
+                                                       data-price="@productWeight.Price"
+                                                       data-discount-price="@productWeight.DiscountPrice"
+                                                       for="variation-@productWeight.Id"
+                                                       class="variation out">
+                                                    @productWeight.Weight.Name
+                                                </label>
+                                                <input style="display: none"
+                                                       type="radio"
+                                                       id="variation-@productWeight.Id"
+                                                       value="@productWeight.Id"
+                                                       name="variation-@product.Id"
+                                                       disabled />
+                                            }
+                                            else if (productWeight == @product.ProductWeights.FirstOrDefault(x => x.Stock > 0))
+                                            {
+                                                <label data-stock="@productWeight.Stock"
+                                                       data-price="@productWeight.Price"
+                                                       data-discount-price="@productWeight.DiscountPrice"
+                                                       for="variation-@productWeight.Id"
+                                                       class="variation active">
+                                                    @productWeight.Weight.Name
+                                                </label>
+                                                <input checked="checked"
+                                                       style="display: none"
+                                                       type="radio"
+                                                       id="variation-@productWeight.Id"
+                                                       value="@productWeight.Id"
+                                                       name="variation-@product.Id" />
+                                            }
+                                            else
+                                            {
+                                                <label data-stock="@productWeight.Stock"
+                                                       data-price="@productWeight.Price"
+                                                       data-discount-price="@productWeight.DiscountPrice"
+                                                       for="variation-@productWeight.Id"
+                                                       class="variation">
+                                                    @productWeight.Weight.Name
+                                                </label>
+                                                <input style="display: none"
+                                                       type="radio"
+                                                       id="variation-@productWeight.Id"
+                                                       value="@productWeight.Id"
+                                                       name="variation-@product.Id" />
+                                            }
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    if (product.ProductWeights.First().Stock > 0)
+                                    {
                                         <label style="display:none"
                                                data-stock="@product.ProductWeights.First().Stock"
                                                data-price="@product.ProductWeights.First().Price"
@@ -162,9 +162,9 @@
                                                id="variation-@product.ProductWeights.First().Id"
                                                value="@product.ProductWeights.First().Id"
                                                name="variation-@product.ProductWeights.First().Id" />
-                                        }
-                                        else
-                                        {
+                                    }
+                                    else
+                                    {
                                         <label style="display:none"
                                                data-stock="@product.ProductWeights.First().Stock"
                                                data-price="@product.ProductWeights.First().Price"
@@ -177,11 +177,11 @@
                                                type="radio"
                                                id="variation-@product.ProductWeights.First().Id"
                                                value="@product.ProductWeights.First().Id"
-                                               name="variation-@product.ProductWeights.First()"
+                                               name="variation-@product.ProductWeights.First().Id"
                                                disabled />
-                                        }
                                     }
-                                </div>
+                                }
+                            </div>
                         </div>
                     }
                 </div>

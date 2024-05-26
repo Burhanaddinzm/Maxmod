@@ -58,13 +58,13 @@
         <div class="right-side">
             <h1 class="product-title">@Model.Name</h1>
             <div class="price-container">
-                @if (Model.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0) != null)
+                @if (Model.ProductWeights.FirstOrDefault(x => x.Stock > 0) != null && Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice != 0)
                 {
-                    <span class="selling-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.DiscountPrice</span>
-                    <span class="old-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.Price</span>
+                    <span class="selling-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice</span>
+                    <span class="old-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price</span>
                     <span class="sale-badge"></span>
                 }
-                else
+                else if (Model.ProductWeights.FirstOrDefault(x => x.Stock > 0) != null && Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice == 0)
                 {
                     <span class="selling-price">$@Model.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price</span>
                 }

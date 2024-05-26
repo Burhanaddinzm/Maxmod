@@ -1,7 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Shop";
 
-    PagerVM pager = new PagerVM();
+    PagerVM? pager = new PagerVM();
+    List<Category>? categories = new List<Category>();
     var category = ViewBag.Category as string;
     var orderBy = ViewBag.OrderBy as string;
     var orderByDesc = ViewBag.OrderByDesc as string;
@@ -9,16 +10,25 @@
     {
         pager = ViewBag.Pager as PagerVM;
     }
+    if (ViewBag.Categories != null)
+    {
+        categories = ViewBag.Categories;
+    }
 }
 @model List<Product>
 
 @section Styles {
     <link rel="stylesheet" href="~/client/assets/css/shop.min.css" />
+    <style>
+        main .filter-categories-ul li {
+            padding: 4px 0;
+        }
+    </style>
 }
 
 <div class="container">
     <div class="breadcrumbs">
-        <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> @(category?? "All Products")</span>
+        <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> @(category ?? "All Products")</span>
     </div>
     <!-- Shop Start -->
     <section class="shop-section">
@@ -30,39 +40,39 @@
                     <img src="~/client/assets/icons/chevron.svg" alt="" />
                 </button>
                 <ul class="filter-categories-ul hidden">
-                    <li>
-                        <button class="category-btn">
-                            Fruits
-                            <img src="~/client/assets/icons/chevron.svg" alt="" />
-                        </button>
-                        <ul class="filter-subcategories-ul hidden">
-                            <li>
-                                <button class="subcategory" data-subcategory="Apple">
-                                    Apple
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="filter-categories-ul hidden">
-                    <li>
-                        <button class="category-btn">
-                            Dairy
-                            <img src="~/client/assets/icons/chevron.svg" alt="" />
-                        </button>
-                        <ul class="filter-subcategories-ul hidden">
-                            <li>
-                                <button class="subcategory" data-subcategory="Milk">
-                                    Milk
-                                </button>
-                            </li>
-                            <li>
-                                <button class="subcategory" data-subcategory="Butter">
-                                    Butter
-                                </button>
-                            </li>
-                        </ul>
-                    </li>
+                    @foreach (var cat in categories)
+                    {
+                        @if (cat.Parent == null)
+                        {
+                            @if (cat.SubCategories.Count == 0)
+                            {
+                                <li>
+                                    <a asp-action="index" asp-controller="product" asp-route-category="@cat.Name" class="category-btn">
+                                        @cat.Name
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a onclick="event.preventDefault()" href="#" class="category-btn">
+                                        @cat.Name
+                                        <img src="~/client/assets/icons/chevron.svg" alt="" />
+                                    </a>
+                                    <ul class="filter-subcategories-ul hidden">
+                                        @foreach (var subcategory in cat.SubCategories)
+                                        {
+                                            <li>
+                                                <a asp-action="index" asp-controller="product" asp-route-category="@subcategory.Name" class="subcategory">
+                                                    @subcategory.Name
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    }
                 </ul>
             </div>
             <div class="filter-container">
@@ -147,10 +157,10 @@
                                 {
                                     <div class="out-of-stock-badge"></div>
                                 }
-                                @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0) != null)
+                                @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0) != null && product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice != 0)
                                 {
-                                    <div class="save-badge" data-dollar="@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0).Price
-                                            - product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0).DiscountPrice)"></div>
+                                    <div class="save-badge" data-dollar="@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)?.Price
+                                            - product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)?.DiscountPrice)"></div>
                                 }
                             </div>
                             @if (product.ProductWeights.Any(x => x.Stock > 0))
@@ -197,17 +207,17 @@
                             {
                                 <a href="#" onclick="event.preventDefault()">@product.Name</a>
                             }
-                            @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0) != null)
+                            @if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0) != null && product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice != 0)
                             {
                                 <div class="price-wrapper">
-                                    <span class="selling-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.DiscountPrice</span>
-                                    <span class="old-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0 && x.DiscountPrice != 0)!.Price</span>
+                                    <span class="selling-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice</span>
+                                    <span class="old-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price</span>
                                 </div>
                             }
-                            else
+                            else if (product.ProductWeights.FirstOrDefault(x => x.Stock > 0) != null && product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.DiscountPrice == 0)
                             {
                                 <div class="price-wrapper">
-                                    <span class="selling-price">$@(product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price)</span>
+                                    <span class="selling-price">$@product.ProductWeights.FirstOrDefault(x => x.Stock > 0)?.Price</span>
                                 </div>
                             }
                             @if (!product.ProductWeights.Any(x => x.Weight.Name == "Default"))
@@ -307,7 +317,7 @@
                                            type="radio"
                                            id="variation-@product.ProductWeights.First().Id"
                                            value="@product.ProductWeights.First().Id"
-                                           name="variation-@product.ProductWeights.First()"
+                                           name="variation-@product.ProductWeights.First().Id"
                                            disabled />
                                 }
                             }

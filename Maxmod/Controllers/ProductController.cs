@@ -9,16 +9,18 @@ namespace Maxmod.Controllers;
 public class ProductController : Controller
 {
     private readonly IProductService _productService;
+    private readonly ICategoryService _categoryService;
 
-    public ProductController(IProductService productService)
+    public ProductController(IProductService productService, ICategoryService categoryService)
     {
         _productService = productService;
+        _categoryService = categoryService;
     }
 
     public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, int page = 1)
     {
         var products = new List<Product>();
-
+        var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Parent", "SubCategories");
         if (category != null)
         {
             products = await _productService.GetAllProductsAsync(
@@ -41,7 +43,7 @@ public class ProductController : Controller
         if (itemCount == 0)
         {
             TempData["Error"] = "Products not found!";
-            return RedirectToAction("Index", "Error"); 
+            return RedirectToAction("Index", "Error");
         }
 
         var pager = new PagerVM(itemCount, page, pageSize);
@@ -54,6 +56,7 @@ public class ProductController : Controller
         ViewBag.Category = category;
         ViewBag.OrderBy = orderBy;
         ViewBag.OrderByDesc = orderByDesc;
+        ViewBag.Categories = categories;
 
         return View(data);
     }
@@ -61,7 +64,7 @@ public class ProductController : Controller
     public async Task<IActionResult> Detail(int id)
     {
         var (exists, product) = await _productService.CheckExistanceAsync(id);
-        if (!exists) RedirectToAction("Index", "Error");
+        if (!exists) return RedirectToAction("Index", "Error");
         if (!product!.ProductWeights.Any(x => x.Stock > 0))
         {
             TempData["Error"] = "Product not found!";

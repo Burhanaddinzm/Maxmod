@@ -458,7 +458,7 @@ header .left-side .burger-menu.open .bar:nth-child(3) {
   flex-direction: column;
   gap: 12px;
   min-height: 15%;
-  max-height: 85%;
+  max-height: 50%;
 }
 
 .cart-drawer .drawer-middle .product {

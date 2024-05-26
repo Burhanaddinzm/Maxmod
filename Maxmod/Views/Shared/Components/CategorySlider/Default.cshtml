@@ -32,7 +32,7 @@
                         if (category.ParentId == null)
                         {
                             <div class="slide">
-                                <a href="#">
+                                <a asp-action="index" asp-controller="product" asp-route-category="@category.Name">
                                     <div class="img-container">
                                         <img src="~/client/assets/images/category/@category.Image" alt="@category.Name" />
                                     </div>
