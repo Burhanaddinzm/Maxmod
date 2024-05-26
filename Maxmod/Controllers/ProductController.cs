@@ -10,17 +10,20 @@ public class ProductController : Controller
 {
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
+    private readonly IWeightService _weightService;
 
-    public ProductController(IProductService productService, ICategoryService categoryService)
+    public ProductController(IProductService productService, ICategoryService categoryService, IWeightService weightService)
     {
         _productService = productService;
         _categoryService = categoryService;
+        _weightService = weightService;
     }
 
     public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, int page = 1)
     {
         var products = new List<Product>();
         var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Parent", "SubCategories");
+        var weights = await _weightService.GetAllWeightsAsync(x=> x.Name != "Default");
 
         if (orderByDesc == null && orderBy == null)
         {
@@ -54,15 +57,14 @@ public class ProductController : Controller
 
         var pager = new PagerVM(itemCount, page, pageSize);
 
-        int itemsToSkip = (page - 1) * pageSize;
-
-        var data = products.Skip(itemsToSkip).Take(pager.PageSize).ToList();
+        var data = _productService.PaginateProduct(pager, products);
 
         ViewBag.Pager = pager;
         ViewBag.Category = category;
         ViewBag.OrderBy = orderBy;
         ViewBag.OrderByDesc = orderByDesc;
         ViewBag.Categories = categories;
+        ViewBag.Weights = weights;
 
         return View(data);
     }

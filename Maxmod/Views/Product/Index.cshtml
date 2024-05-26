@@ -3,6 +3,7 @@
 
     PagerVM? pager = new PagerVM();
     List<Category>? categories = new List<Category>();
+    List<Weight>? weights = new List<Weight>();
     var category = ViewBag.Category as string;
     var orderBy = ViewBag.OrderBy as string;
     var orderByDesc = ViewBag.OrderByDesc as string;
@@ -13,6 +14,10 @@
     if (ViewBag.Categories != null)
     {
         categories = ViewBag.Categories as List<Category>;
+    }
+    if (ViewBag.Weights != null)
+    {
+        weights = ViewBag.Weights as List<Weight>;
     }
 }
 @model List<Product>
@@ -35,36 +40,39 @@
                     <img src="~/client/assets/icons/chevron.svg" alt="" />
                 </button>
                 <ul class="filter-categories-ul hidden">
-                    @foreach (var cat in categories)
+                    @if (categories != null)
                     {
-                        @if (cat.Parent == null)
+                        @foreach (var cat in categories)
                         {
-                            @if (cat.SubCategories.Count == 0)
+                            @if (cat.Parent == null)
                             {
-                                <li>
-                                    <a asp-action="index" asp-controller="product" asp-route-category="@cat.Name" class="category-btn">
-                                        @cat.Name
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li>
-                                    <a onclick="event.preventDefault()" href="#" class="category-btn">
-                                        @cat.Name
-                                        <img src="~/client/assets/icons/chevron.svg" alt="" />
-                                    </a>
-                                    <ul class="filter-subcategories-ul hidden">
-                                        @foreach (var subcategory in cat.SubCategories)
-                                        {
-                                            <li>
-                                                <a asp-action="index" asp-controller="product" asp-route-category="@subcategory.Name" class="subcategory">
-                                                    @subcategory.Name
-                                                </a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </li>
+                                @if (cat.SubCategories!.Count == 0)
+                                {
+                                    <li>
+                                        <a asp-action="index" asp-controller="product" asp-route-category="@cat.Name" class="category-btn">
+                                            @cat.Name
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a onclick="event.preventDefault()" href="#" class="category-btn">
+                                            @cat.Name
+                                            <img src="~/client/assets/icons/chevron.svg" alt="" />
+                                        </a>
+                                        <ul class="filter-subcategories-ul hidden">
+                                            @foreach (var subcategory in cat.SubCategories)
+                                            {
+                                                <li>
+                                                    <a asp-action="index" asp-controller="product" asp-route-category="@subcategory.Name" class="subcategory">
+                                                        @subcategory.Name
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
                             }
                         }
                     }
@@ -100,24 +108,18 @@
                     </button>
                     <div class="line"></div>
                     <ul class="filter-ul open">
-                        <li>
-                            <label for="filter-500gm">
-                                <input type="checkbox" id="filter-500gm" />
-                                <span>500gm</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label for="filter-1kg">
-                                <input type="checkbox" id="filter-1kg" />
-                                <span>1kg</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label for="filter-2kg">
-                                <input type="checkbox" id="filter-2kg" />
-                                <span>2kg</span>
-                            </label>
-                        </li>
+                        @if (weights != null)
+                        {
+                            @foreach (var weight in weights)
+                            {
+                                <li>
+                                    <label for="filter-@weight.Name">
+                                        <input type="checkbox" id="filter-@weight.Name" value="@weight.Id" />
+                                        <span>@weight.Name</span>
+                                    </label>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>

@@ -3,6 +3,9 @@
 }
 @model Settings
 
+<div style="display:grid;gap:10px" class="mb-4">
+    <a class="btn btn-primary" asp-action="update" asp-controller="settings">Update</a>
+</div>
 <div class="mb-4">
     <h3 class="text-primary">Modified</h3>
     <span style="color:hotpink;font-size:18px">Last modified @Model.ModifiedAt by @Model.ModifiedBy</span>
