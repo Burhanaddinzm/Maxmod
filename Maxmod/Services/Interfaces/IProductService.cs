@@ -9,9 +9,10 @@ public interface IProductService
 {
     Task<List<Product>> GetAllProductsAsync(
        Expression<Func<Product, bool>>? where = null,
-       Expression<Func<Product, object>>? order = null,
-       int? take = null,
-       params string[] includes);
+        string? order = null,
+        string? orderByDesc = null,
+        int? take = null,
+        params string[] includes);
     Task<FileValidationResult?> CreateProductAsync(CreateProductVM createProductVM);
     Task<FileValidationResult> ValidateAndCreateImageAsync(List<IFormFile> files, List<ProductImage> productImages);
     Task<ProductImage> CreateProductImageAsync(IFormFile file, bool isMain, bool isHover);

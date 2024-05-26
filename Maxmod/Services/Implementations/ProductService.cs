@@ -33,11 +33,12 @@ public class ProductService : IProductService
 
     public async Task<List<Product>> GetAllProductsAsync(
        Expression<Func<Product, bool>>? where = null,
-       Expression<Func<Product, object>>? order = null,
-       int? take = null,
-       params string[] includes)
+        string? order = null,
+        string? orderByDesc = null,
+        int? take = null,
+        params string[] includes)
     {
-        return await _productRepository.GetAllAsync(where, order, take, includes);
+        return await _productRepository.GetAllAsync(where, order, orderByDesc, take, includes);
     }
 
     public async Task<FileValidationResult?> CreateProductAsync(CreateProductVM createProductVM)

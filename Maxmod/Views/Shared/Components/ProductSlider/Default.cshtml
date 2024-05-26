@@ -148,21 +148,37 @@
                                     {
                                         if (product.ProductWeights.First().Stock > 0)
                                         {
-                                            <input style="display: none"
-                                                   checked="checked"
-                                                   type="radio"
-                                                   id="variation-@product.ProductWeights.First().Id"
-                                                   value="@product.ProductWeights.First().Id"
-                                                   name="variation-@product.ProductWeights.First().Id" />
+                                        <label style="display:none"
+                                               data-stock="@product.ProductWeights.First().Stock"
+                                               data-price="@product.ProductWeights.First().Price"
+                                               data-discount-price="@product.ProductWeights.First().DiscountPrice"
+                                               for="variation-@product.ProductWeights.First().Id"
+                                               class="variation">
+                                            @product.ProductWeights.First().Weight.Name
+                                        </label>
+                                        <input style="display: none"
+                                               checked="checked"
+                                               type="radio"
+                                               id="variation-@product.ProductWeights.First().Id"
+                                               value="@product.ProductWeights.First().Id"
+                                               name="variation-@product.ProductWeights.First().Id" />
                                         }
                                         else
                                         {
-                                            <input style="display: none"
-                                                   type="radio"
-                                                   id="variation-@product.ProductWeights.First().Id"
-                                                   value="@product.ProductWeights.First().Id"
-                                                   name="variation-@product.ProductWeights.First()"
-                                                   disabled />
+                                        <label style="display:none"
+                                               data-stock="@product.ProductWeights.First().Stock"
+                                               data-price="@product.ProductWeights.First().Price"
+                                               data-discount-price="@product.ProductWeights.First().DiscountPrice"
+                                               for="variation-@product.ProductWeights.First().Id"
+                                               class="variation">
+                                            @product.ProductWeights.First().Weight.Name
+                                        </label>
+                                        <input style="display: none"
+                                               type="radio"
+                                               id="variation-@product.ProductWeights.First().Id"
+                                               value="@product.ProductWeights.First().Id"
+                                               name="variation-@product.ProductWeights.First()"
+                                               disabled />
                                         }
                                     }
                                 </div>

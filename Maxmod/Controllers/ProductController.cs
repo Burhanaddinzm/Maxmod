@@ -1,6 +1,8 @@
-﻿using Maxmod.Services.Interfaces;
+﻿using Maxmod.Models;
+using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace Maxmod.Controllers;
 
@@ -13,14 +15,34 @@ public class ProductController : Controller
         _productService = productService;
     }
 
-    public async Task<IActionResult> Index(int page = 1)
+    public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, int page = 1)
     {
-        var products = await _productService.GetAllProductsAsync(null, null, null, "ProductWeights.Weight", "Vendor", "ProductImages");
+        var products = new List<Product>();
+
+        if (category != null)
+        {
+            products = await _productService.GetAllProductsAsync(
+                x => x.Category.Name == category || x.Category.Parent.Name == category,
+                orderBy, orderByDesc, null,
+                "ProductWeights.Weight", "Vendor", "ProductImages");
+        }
+        else
+        {
+            products = await _productService.GetAllProductsAsync(
+                         null, orderBy, orderByDesc, null,
+                         "ProductWeights.Weight", "Vendor", "ProductImages");
+        }
 
         const int pageSize = 6;
         if (page < 1) page = 1;
 
         int itemCount = products.Count();
+
+        if (itemCount == 0)
+        {
+            TempData["Error"] = "Products not found!";
+            return RedirectToAction("Index", "Error"); 
+        }
 
         var pager = new PagerVM(itemCount, page, pageSize);
 
@@ -29,6 +51,9 @@ public class ProductController : Controller
         var data = products.Skip(itemsToSkip).Take(pager.PageSize).ToList();
 
         ViewBag.Pager = pager;
+        ViewBag.Category = category;
+        ViewBag.OrderBy = orderBy;
+        ViewBag.OrderByDesc = orderByDesc;
 
         return View(data);
     }

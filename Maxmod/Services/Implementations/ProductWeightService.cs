@@ -91,11 +91,12 @@ public class ProductWeightService : IProductWeightService
 
     public async Task<List<ProductWeight>> GetAllProductWeightsAsync(
        Expression<Func<ProductWeight, bool>>? where = null,
-       Expression<Func<ProductWeight, object>>? order = null,
-       int? take = null,
-       params string[] includes)
+        string? order = null,
+        string? orderByDesc = null,
+        int? take = null,
+        params string[] includes)
     {
-        return await _productWeightRepository.GetAllAsync(where, order, take, includes);
+        return await _productWeightRepository.GetAllAsync(where, order, orderByDesc, take, includes);
     }
 
     public async Task UpdateProductWeightAsync(UpdateProductWeightVM updateProductWeightVM, ProductWeight productWeight)

@@ -11,18 +11,18 @@
             if (category.SubCategories.Count == 0)
             {
                 <li>
-                    <a href="#">@category.Name</a>
+                    <a asp-action="index" asp-controller="product" asp-route-category="@category.Name">@category.Name</a>
                 </li>
             }
             else
             {
                 <li>
-                    <a href="#">@category.Name</a>
+                    <a asp-action="index" asp-controller="product" asp-route-category="@category.Name">@category.Name</a>
                     <div class="line"></div>
                     <div class="children">
                         @foreach (var subcategory in category.SubCategories)
                         {
-                            <a href="#">@subcategory.Name</a>
+                            <a asp-action="index" asp-controller="product" asp-route-category="@subcategory.Name">@subcategory.Name</a>
                         }
                     </div>
                 </li>

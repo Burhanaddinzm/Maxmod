@@ -14,7 +14,7 @@ public class CategorySliderViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var categories = await _categoryService.GetAllCategoriesAsync(null, null, 8, "SubCategories", "Products");
+        var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, 8, "SubCategories", "Products");
         return View(categories);
     }
 }

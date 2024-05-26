@@ -28,10 +28,10 @@ public class ProductController : Controller
         List<Product>? products;
         if (User.IsInRole("Vendor"))
         {
-            products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name, null, null,
+            products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name, null, null, null,
                 "ProductImages", "Category", "Vendor");
         }
-        else products = await _productService.GetAllProductsAsync(null, null, null, "ProductImages", "Category", "Vendor");
+        else products = await _productService.GetAllProductsAsync(null, null, null, null, "ProductImages", "Category", "Vendor");
         return View(products);
     }
 

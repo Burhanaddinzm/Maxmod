@@ -2,10 +2,12 @@
     ViewData["Title"] = "Shop";
 
     PagerVM pager = new PagerVM();
-
+    var category = ViewBag.Category as string;
+    var orderBy = ViewBag.OrderBy as string;
+    var orderByDesc = ViewBag.OrderByDesc as string;
     if (ViewBag.Pager != null)
     {
-        pager = ViewBag.Pager;
+        pager = ViewBag.Pager as PagerVM;
     }
 }
 @model List<Product>
@@ -16,7 +18,7 @@
 
 <div class="container">
     <div class="breadcrumbs">
-        <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> Model.Category.Name</span>
+        <span><a asp-action="index" asp-controller="home">Home </a>>&nbsp;</span><span> @(category?? "All Products")</span>
     </div>
     <!-- Shop Start -->
     <section class="shop-section">
@@ -272,6 +274,15 @@
                             {
                                 if (product.ProductWeights.First().Stock > 0)
                                 {
+                                    <label style="display:none"
+                                           data-stock="@product.ProductWeights.First().Stock"
+                                           data-price="@product.ProductWeights.First().Price"
+                                           data-discount-price="@product.ProductWeights.First().DiscountPrice"
+                                           data-new="@product.IsNew"
+                                           for="variation-@product.ProductWeights.First().Id"
+                                           class="variation">
+                                        @product.ProductWeights.First().Weight.Name
+                                    </label>
                                     <input data-new="@product.IsNew"
                                            style="display: none"
                                            checked="checked"
@@ -282,6 +293,15 @@
                                 }
                                 else
                                 {
+                                    <label style="display:none"
+                                           data-stock="@product.ProductWeights.First().Stock"
+                                           data-price="@product.ProductWeights.First().Price"
+                                           data-discount-price="@product.ProductWeights.First().DiscountPrice"
+                                           data-new="@product.IsNew"
+                                           for="variation-@product.ProductWeights.First().Id"
+                                           class="variation">
+                                        @product.ProductWeights.First().Weight.Name
+                                    </label>
                                     <input data-new="@product.IsNew"
                                            style="display: none"
                                            type="radio"
@@ -302,24 +322,24 @@
                     {
                         @if (pager.CurrentPage != 2)
                         {
-                            <a asp-action="index" asp-controller="product" asp-route-page="1" class="pagination-prev">@("<<")</a>
+                            <a asp-action="index" asp-controller="product" asp-route-page="1" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" class="pagination-prev">@("<<")</a>
                         }
-                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage - 1)" class="pagination-prev">@("<")</a>
+                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage - 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" class="pagination-prev">@("<")</a>
                     }
                     <ul class="pagination-btns">
                         @for (int i = pager.StartPage; i <= pager.EndPage; i++)
                         {
                             <li>
-                                <a asp-action="index" asp-controller="product" asp-route-page="@i" class="pagination-btn @(i == pager.CurrentPage ? "active" : "")">@i</a>
+                                <a asp-action="index" asp-controller="product" asp-route-page="@i" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" class="pagination-btn @(i == pager.CurrentPage ? "active" : "")">@i</a>
                             </li>
                         }
                     </ul>
                     @if (pager.CurrentPage < pager.TotalPages)
                     {
-                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage + 1)" class="pagination-next">@(">")</a>
+                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage + 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" class="pagination-next">@(">")</a>
                         @if (pager.CurrentPage != pager.TotalPages - 1)
                         {
-                            <a asp-action="index" asp-controller="product" asp-route-page="@(pager.TotalPages)" class="pagination-next">@(">>")</a>
+                            <a asp-action="index" asp-controller="product" asp-route-page="@(pager.TotalPages)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" class="pagination-next">@(">>")</a>
                         }
                     }
                 }
@@ -332,9 +352,9 @@
     <script src="~/client/assets/js/shop.js"></script>
 
     <script>
-        const products = document.querySelectorAll(".product");
+        const productsss = document.querySelectorAll("main .product");
 
-        products.forEach((product) => {
+        productsss.forEach((product) => {
             // Change variation
 
             const variants = product.querySelectorAll(".variations label");
@@ -362,6 +382,28 @@
                         badges.innerHTML = `${variant.dataset.new ? '<div class="new-badge"></div>' : ''}`
                     }
                 });
+            });
+
+            //Add to cart
+            const inputGroup = product.querySelectorAll('input');
+            const addToCartBtn = product.querySelector(".product-add-to-cart");
+
+            let selectedInputValue = 0;
+            inputGroup.forEach(input => {
+                if (!input.disabled && selectedInputValue === 0)
+                    selectedInputValue = input.value;
+            });
+
+            inputGroup.forEach(input => input.addEventListener("change", () => {
+                if (!input.disabled && input.checked)
+                    selectedInputValue = input.value;
+            }));
+
+            addToCartBtn.addEventListener("click", async () => {
+                if (selectedInputValue != 0) {
+                    await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedInputValue}&quantity=1`, { method: "POST" })
+                    await refreshLayoutCart();
+                }
             });
         });
     </script>

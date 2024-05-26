@@ -10,9 +10,10 @@ public interface IRepository<T> where T : BaseAuditableEntity
     Task DeleteAsync(int id);
     Task<List<T>> GetAllAsync(
        Expression<Func<T, bool>>? where = null,
-       Expression<Func<T, object>>? order = null,
-       int? take = null,
-       params string[] includes);
+        string? order = null,
+        string? orderByDesc = null,
+        int? take = null,
+        params string[] includes);
     Task<T?> GetAsync(int id);
     Task<T?> GetAsync(Expression<Func<T, bool>>? expression, params string[] includes);
 }

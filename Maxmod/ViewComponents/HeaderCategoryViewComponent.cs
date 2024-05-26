@@ -14,7 +14,7 @@ public class HeaderCategoryViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, "Parent", "SubCategories");
+        var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Parent", "SubCategories");
         return View(categories);
     }
 }

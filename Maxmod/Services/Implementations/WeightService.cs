@@ -64,11 +64,12 @@ public class WeightService : IWeightService
 
     public async Task<List<Weight>> GetAllWeightsAsync(
        Expression<Func<Weight, bool>>? where = null,
-       Expression<Func<Weight, object>>? order = null,
-       int? take = null,
-       params string[] includes)
+        string? order = null,
+        string? orderByDesc = null,
+        int? take = null,
+        params string[] includes)
     {
-        return await _weightRepository.GetAllAsync(where, order, take, includes);
+        return await _weightRepository.GetAllAsync(where, order, orderByDesc, take, includes);
     }
 
     public async Task UpdateWeightAsync(UpdateWeightVM updateWeightVM, Weight Weight)

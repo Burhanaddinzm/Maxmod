@@ -17,7 +17,7 @@ public class CategoryController : Controller
     }
     public async Task<IActionResult> Index()
     {
-        List<Category>? categories = await _categoryService.GetAllCategoriesAsync(null, null, null, "Products");
+        List<Category>? categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Products");
         return View(categories);
     }
 

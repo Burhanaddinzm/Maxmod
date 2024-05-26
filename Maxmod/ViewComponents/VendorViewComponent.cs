@@ -14,7 +14,7 @@ public class VendorViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var vendors = await _vendorService.GetAllVendorsAsync(x => x.IsConfirmed, null, 9);
+        var vendors = await _vendorService.GetAllVendorsAsync(x => x.IsConfirmed, null, null, 9);
         return View(vendors);
     }
 }

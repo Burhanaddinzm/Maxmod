@@ -28,10 +28,10 @@ public class ProductWeightController : Controller
         if (User.IsInRole("Vendor"))
         {
             productWeights = await _productWeightService.GetAllProductWeightsAsync(
-                x => x.Product.Vendor.User.UserName == User.Identity!.Name, null, null,
+                x => x.Product.Vendor.User.UserName == User.Identity!.Name, null, null, null,
                 "Product", "Weight");
         }
-        else productWeights = await _productWeightService.GetAllProductWeightsAsync(null, null, null, "Product", "Weight");
+        else productWeights = await _productWeightService.GetAllProductWeightsAsync(null, null, null, null, "Product", "Weight");
         return View(productWeights);
     }
 

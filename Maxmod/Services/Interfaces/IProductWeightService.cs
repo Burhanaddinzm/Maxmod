@@ -15,8 +15,9 @@ public interface IProductWeightService
     Task DeleteProductWeightAsync(DeleteProductWeightVM deleteProductWeightVM);
     Task<List<ProductWeight>> GetAllProductWeightsAsync(
        Expression<Func<ProductWeight, bool>>? where = null,
-       Expression<Func<ProductWeight, object>>? order = null,
-       int? take = null,
-       params string[] includes);
+        string? order = null,
+        string? orderByDesc = null,
+        int? take = null,
+        params string[] includes);
     Task UpdateProductWeightAsync(UpdateProductWeightVM updateProductWeightVM, ProductWeight productWeight);
 }

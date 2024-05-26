@@ -3,6 +3,7 @@ using Maxmod.Models.Common;
 using Maxmod.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Maxmod.Repositories.Implementations;
 
@@ -13,6 +14,7 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
     {
         _context = context;
     }
+
     public async Task CreateAsync(T entity)
     {
         await _context.Set<T>().AddAsync(entity);
@@ -22,15 +24,19 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
     public async Task DeleteAsync(int id)
     {
         var entity = await _context.Set<T>().FindAsync(id);
-        entity!.IsDeleted = true;
-        await _context.SaveChangesAsync();
+        if (entity != null)
+        {
+            entity.IsDeleted = true;
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task<List<T>> GetAllAsync(
-       Expression<Func<T, bool>>? where = null,
-       Expression<Func<T, object>>? order = null,
-       int? take = null,
-       params string[] includes)
+        Expression<Func<T, bool>>? where = null,
+        string? order = null,
+        string? orderByDesc = null,
+        int? take = null,
+        params string[] includes)
     {
         IQueryable<T> query = _context.Set<T>().AsQueryable();
 
@@ -47,9 +53,14 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
             query = query.Where(where);
         }
 
-        if (order != null)
+        if (!string.IsNullOrEmpty(order))
         {
-            query = query.OrderByDescending(order);
+            query = ApplyOrderBy(query, order, false);
+        }
+
+        if (!string.IsNullOrEmpty(orderByDesc))
+        {
+            query = ApplyOrderBy(query, orderByDesc, true);
         }
 
         if (take.HasValue)
@@ -60,7 +71,6 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
         return await query.ToListAsync();
     }
 
-
     public async Task<T?> GetAsync(int id)
     {
         return await _context.Set<T>().FindAsync(id);
@@ -70,8 +80,6 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
     {
         IQueryable<T> query = _context.Set<T>().AsQueryable();
 
-        if (expression == null) return await query.FirstOrDefaultAsync();
-
         if (includes.Length > 0)
         {
             foreach (var include in includes)
@@ -80,12 +88,32 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
             }
         }
 
-        return await query.FirstOrDefaultAsync(expression);
+        if (expression != null)
+        {
+            return await query.FirstOrDefaultAsync(expression);
+        }
+
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task UpdateAsync(T entity)
     {
         _context.Set<T>().Update(entity);
         await _context.SaveChangesAsync();
+    }
+
+    private IQueryable<T> ApplyOrderBy(IQueryable<T> query, string propertyName, bool descending)
+    {
+        var propertyInfo = typeof(T).GetProperty(propertyName);
+        if (propertyInfo == null)
+        {
+            throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'");
+        }
+
+        var parameter = Expression.Parameter(typeof(T), "x");
+        var propertyExpression = Expression.Property(parameter, propertyInfo);
+        var lambda = Expression.Lambda<Func<T, object>>(Expression.Convert(propertyExpression, typeof(object)), parameter);
+
+        return descending ? query.OrderByDescending(lambda) : query.OrderBy(lambda);
     }
 }

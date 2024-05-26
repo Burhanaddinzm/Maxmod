@@ -76,11 +76,12 @@ public class CategoryService : ICategoryService
 
     public async Task<List<Category>> GetAllCategoriesAsync(
        Expression<Func<Category, bool>>? where = null,
-       Expression<Func<Category, object>>? order = null,
-       int? take = null,
-       params string[] includes)
+        string? order = null,
+        string? orderByDesc = null,
+        int? take = null,
+        params string[] includes)
     {
-        return await _categoryRepository.GetAllAsync(where, order, take, includes);
+        return await _categoryRepository.GetAllAsync(where, order, orderByDesc, take, includes);
     }
 
     public async Task<bool> CheckDuplicateAsync(string categoryName, int? categoryId = null)

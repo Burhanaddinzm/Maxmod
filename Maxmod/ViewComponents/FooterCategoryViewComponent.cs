@@ -14,7 +14,7 @@ public class FooterCategoryViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null, null, 4);
+        var categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null, null, null, 4);
         return View(categories);
     }
 }
