@@ -2,6 +2,7 @@
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
+using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq.Expressions;
 
@@ -64,6 +65,13 @@ public class ProductWeightService : IProductWeightService
             tempData["Error"] = "Product-Weight not found!";
 
         return (productWeight != null, productWeight);
+    }
+
+    public List<ProductWeight> PaginateProductWeight(PagerVM pager, List<ProductWeight> productWeights)
+    {
+        int itemsToSkip = (pager.CurrentPage - 1) * pager.PageSize;
+
+        return productWeights.Skip(itemsToSkip).Take(pager.PageSize).ToList();
     }
 
     public async Task CreateProductWeightAsync(CreateProductWeightVM createProductWeightVM)

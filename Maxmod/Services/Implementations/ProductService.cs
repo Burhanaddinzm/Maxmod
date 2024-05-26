@@ -3,7 +3,9 @@ using Maxmod.Extensions;
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
+using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Drawing.Printing;
 using System.Linq.Expressions;
 using static Maxmod.Extensions.FileExtension;
 
@@ -40,6 +42,14 @@ public class ProductService : IProductService
     {
         return await _productRepository.GetAllAsync(where, order, orderByDesc, take, includes);
     }
+
+    public List<Product> PaginateProduct(PagerVM pager, List<Product> products)
+    {
+        int itemsToSkip = (pager.CurrentPage - 1) * pager.PageSize;
+
+        return products.Skip(itemsToSkip).Take(pager.PageSize).ToList();
+    }
+
 
     public async Task<FileValidationResult?> CreateProductAsync(CreateProductVM createProductVM)
     {

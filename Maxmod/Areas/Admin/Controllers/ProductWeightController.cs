@@ -1,6 +1,7 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.ProductWeight;
 using Maxmod.Models;
 using Maxmod.Services.Interfaces;
+using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Maxmod.Areas.Admin.Controllers;
@@ -22,7 +23,7 @@ public class ProductWeightController : Controller
         _weightService = weightService;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int page = 1)
     {
         List<ProductWeight>? productWeights;
         if (User.IsInRole("Vendor"))
@@ -32,7 +33,19 @@ public class ProductWeightController : Controller
                 "Product", "Weight");
         }
         else productWeights = await _productWeightService.GetAllProductWeightsAsync(null, null, null, null, "Product", "Weight");
-        return View(productWeights);
+
+        const int pageSize = 10;
+        if (page < 1) page = 1;
+
+        int itemCount = productWeights.Count();
+
+        var pager = new PagerVM(itemCount, page, pageSize);
+
+        var data = _productWeightService.PaginateProductWeight(pager, productWeights);
+
+        ViewBag.Pager = pager;
+
+        return View(data);
     }
 
     public async Task<IActionResult> Create()
@@ -41,7 +54,7 @@ public class ProductWeightController : Controller
             ViewBag.Products = await _productService.GetAllProductsAsync(x => x.Vendor.User.UserName == User.Identity!.Name);
         else
             ViewBag.Products = await _productService.GetAllProductsAsync();
-        ViewBag.Weights = await _weightService.GetAllWeightsAsync(x=> x.Name != "Default");
+        ViewBag.Weights = await _weightService.GetAllWeightsAsync(x => x.Name != "Default");
 
         return View();
     }

@@ -1,6 +1,7 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.ProductWeight;
 using Maxmod.Areas.Admin.ViewModels.Weight;
 using Maxmod.Models;
+using Maxmod.ViewModels.Pagination;
 using System.Linq.Expressions;
 
 namespace Maxmod.Services.Interfaces;
@@ -20,4 +21,5 @@ public interface IProductWeightService
         int? take = null,
         params string[] includes);
     Task UpdateProductWeightAsync(UpdateProductWeightVM updateProductWeightVM, ProductWeight productWeight);
+    List<ProductWeight> PaginateProductWeight(PagerVM pager, List<ProductWeight> productWeights);
 }

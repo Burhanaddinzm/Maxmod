@@ -1,9 +1,11 @@
-﻿using Maxmod.Areas.Admin.ViewModels.Vendor;
+﻿using Azure;
+using Maxmod.Areas.Admin.ViewModels.Vendor;
 using Maxmod.Enums;
 using Maxmod.Extensions;
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
+using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq.Expressions;
@@ -75,6 +77,13 @@ public class VendorService : IVendorService
         params string[] includes)
     {
         return await _vendorRepository.GetAllAsync(where, order, orderByDesc, take, includes);
+    }
+
+    public List<Vendor> PaginateVendor(PagerVM pager, List<Vendor> vendors)
+    {
+        int itemsToSkip = (pager.CurrentPage - 1) * pager.PageSize;
+
+        return vendors.Skip(itemsToSkip).Take(pager.PageSize).ToList();
     }
 
     public async Task<(bool, Vendor?)> CheckExistanceAsync(int id)

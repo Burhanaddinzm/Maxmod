@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Maxmod.Areas.Admin.ViewModels.Vendor;
 using Maxmod.Models;
+using Maxmod.ViewModels.Pagination;
 
 namespace Maxmod.Areas.Admin.Controllers;
 [Authorize(Roles = "Admin,Vendor")]
@@ -16,7 +17,7 @@ public class VendorController : Controller
         _vendorService = vendorService;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int page = 1)
     {
         List<Vendor>? vendors;
         if (User.IsInRole("Vendor"))
@@ -26,7 +27,19 @@ public class VendorController : Controller
                 x.User.UserName == User.Identity!.Name, null, null, null, "User", "Products");
         }
         else vendors = await _vendorService.GetAllVendorsAsync(x => x.IsConfirmed, null, null, null, "User", "Products");
-        return View(vendors);
+
+        const int pageSize = 10;
+        if (page < 1) page = 1;
+
+        int itemCount = vendors.Count();
+
+        var pager = new PagerVM(itemCount, page, pageSize);
+
+        var data = _vendorService.PaginateVendor(pager, vendors);
+
+        ViewBag.Pager = pager;
+
+        return View(data);
     }
 
     public async Task<IActionResult> Requests()

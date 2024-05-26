@@ -1,6 +1,7 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.Product;
 using Maxmod.Models;
 using Maxmod.Services.Interfaces;
+using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ public class ProductController : Controller
         _vendorService = vendorService;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int page = 1)
     {
         List<Product>? products;
         if (User.IsInRole("Vendor"))
@@ -32,7 +33,19 @@ public class ProductController : Controller
                 "ProductImages", "Category", "Vendor");
         }
         else products = await _productService.GetAllProductsAsync(null, null, null, null, "ProductImages", "Category", "Vendor");
-        return View(products);
+
+        const int pageSize = 6;
+        if (page < 1) page = 1;
+
+        int itemCount = products.Count();
+
+        var pager = new PagerVM(itemCount, page, pageSize);
+
+        var data = _productService.PaginateProduct(pager, products);
+
+        ViewBag.Pager = pager;
+
+        return View(data);
     }
 
     public async Task<IActionResult> Create()

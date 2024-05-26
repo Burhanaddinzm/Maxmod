@@ -1,5 +1,6 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.Product;
 using Maxmod.Models;
+using Maxmod.ViewModels.Pagination;
 using System.Linq.Expressions;
 using static Maxmod.Extensions.FileExtension;
 
@@ -20,4 +21,5 @@ public interface IProductService
     Task<bool> CheckDuplicateAsync(string productName, int? productId = null);
     Task<FileValidationResult?> UpdateProductAsync(UpdateProductVM updateProductVM, Product product);
     Task DeleteProductAsync(DeleteProductVM deleteProductVM);
+    List<Product> PaginateProduct(PagerVM pager, List<Product> products);
 }
