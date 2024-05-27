@@ -15,4 +15,6 @@ public interface IOrderService
         params string[] includes);
     List<Order> PaginateOrder(PagerVM pager, List<Order> orders);
     Task CreateOrderAsync(CreateOrderVM createOrderVM);
+    Task<(bool, Order?)> CheckExistanceAsync(int id);
+    Task UpdateOrderAsync(Order order);
 }

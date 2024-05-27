@@ -19,9 +19,21 @@
                     <div id="bt-dropin"></div>
                 </div>
             </section>
-            @Html.HiddenFor(n => n.Nonce, new { @id = "nonce" })
+
+            <!-- Include hidden fields for all properties -->
+            @for (int i = 0; i < Model.Quantity.Count; i++)
+            {
+                @Html.HiddenFor(m => m.Quantity[i])
+                @Html.HiddenFor(m => m.ProductWeightId[i])
+                @Html.HiddenFor(m => m.TotalPrice[i])
+            }
+            @Html.HiddenFor(m => m.UserId)
+            @Html.HiddenFor(m => m.Nonce, new { @id = "nonce" })
+
             <hr />
-            <button class="btn" style="border-radius:8px;padding:4px 12px;margin:20px auto 0" type="submit"><span>Confirm payment - $@Model.TotalPrice.Sum()</span></button>
+            <button class="btn" style="border-radius:8px;padding:4px 12px;margin:20px auto 0" type="submit">
+                <span>Confirm payment - $@Model.TotalPrice.Sum()</span>
+            </button>
         </form>
     </div>
 </div>

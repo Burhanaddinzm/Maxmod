@@ -72,8 +72,8 @@
                                             <td>@order.TotalPrice</td>
                                             <td>@order.User.Email</td>
                                             <td style="display:grid; gap:8px;border-bottom:none;">
-                                                <a class="btn btn-primary" asp-route-id="@order.Id" asp-controller="order" asp-action="confirm">Confirmed</a>
-                                                <a class="btn btn-danger mt-2" asp-route-id="@order.Id" asp-controller="order" asp-action="reject">Rejected</a>
+                                                <a class="btn btn-primary" asp-action="confirm" asp-controller="order" asp-area="admin" asp-route-id="@order.Id">Confirmed</a>
+                                                <a class="btn btn-danger mt-2" asp-action="reject" asp-controller="order" asp-area="admin" asp-route-id="@order.Id">Rejected</a>
                                             </td>
                                         </tr>
                                     }

@@ -42,12 +42,12 @@ public class ContactController : Controller
         try
         {
             await smtpClient.SendMailAsync(mailMessage);
-            ViewData["Notification"] = "Email sent successfully!";
+            TempData["Notification"] = "Email sent successfully!";
             return RedirectToAction("Index", "Notification");
         }
         catch (Exception ex)
         {
-            ViewData["Notification"] = $"Error sending email: {ex.Message}";
+            TempData["Notification"] = $"Error sending email: {ex.Message}";
             return RedirectToAction("Index", "Notification");
         }
     }

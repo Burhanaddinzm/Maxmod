@@ -1,9 +1,11 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.Order;
 using Maxmod.Models;
+using Maxmod.Repositories.Implementations;
 using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Linq.Expressions;
 
 namespace Maxmod.Services.Implementations;
@@ -49,5 +51,18 @@ public class OrderService : IOrderService
         };
 
         await _orderRepository.CreateAsync(order);
+    }
+
+    public async Task<(bool, Order?)> CheckExistanceAsync(int id)
+    {
+        var httpContext = _accessor.HttpContext;
+
+        Order? order = await _orderRepository.GetAsync(id);
+        return (order != null, order);
+    }
+
+    public async Task UpdateOrderAsync(Order order)
+    {
+        await _orderRepository.UpdateAsync(order);
     }
 }

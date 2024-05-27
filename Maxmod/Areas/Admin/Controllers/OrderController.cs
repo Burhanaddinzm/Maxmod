@@ -44,4 +44,32 @@ public class OrderController : Controller
 
         return View(data);
     }
+
+    public async Task<IActionResult> Confirm(int id)
+    {
+        var (exists, order) = await _orderService.CheckExistanceAsync(id);
+        if (!exists)
+        {
+            TempData["Error"] = "Order not found!";
+            return RedirectToAction("Index", "Error");
+        }
+
+        order!.IsComplete = true;
+        order!.IsDeleted = true;
+        await _orderService.UpdateOrderAsync(order);
+        return RedirectToAction("Index");
+    }
+    public async Task<IActionResult> Reject(int id)
+    {
+        var (exists, order) = await _orderService.CheckExistanceAsync(id);
+        if (!exists)
+        {
+            TempData["Error"] = "Order not found!";
+            return RedirectToAction("Index", "Error");
+        }
+
+        order!.IsDeleted = true;
+        await _orderService.UpdateOrderAsync(order);
+        return RedirectToAction("Index");
+    }
 }
