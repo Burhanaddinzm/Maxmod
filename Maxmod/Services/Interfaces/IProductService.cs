@@ -22,4 +22,6 @@ public interface IProductService
     Task<FileValidationResult?> UpdateProductAsync(UpdateProductVM updateProductVM, Product product);
     Task DeleteProductAsync(DeleteProductVM deleteProductVM);
     List<Product> PaginateProduct(PagerVM pager, List<Product> products);
+    List<Product> ApplyInStockFilter(List<Product> products, string? inStock);
+    Task<List<Product>> FetchClientProductsAsync(string? category, string? orderBy, string? orderByDesc, string? searchString);
 }

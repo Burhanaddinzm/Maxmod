@@ -3,6 +3,7 @@ using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System.Linq.Expressions;
 
 namespace Maxmod.Controllers;
 
@@ -19,55 +20,28 @@ public class ProductController : Controller
         _weightService = weightService;
     }
 
-    public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, string? searchString, int page = 1)
+    public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, string? searchString, string? inStock, int page = 1)
     {
-        var products = new List<Product>();
-        var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Parent", "SubCategories");
-        var weights = await _weightService.GetAllWeightsAsync(x => x.Name != "Default");
-
+        // Parameter validation and defaults
         if (orderByDesc == null && orderBy == null)
         {
             orderByDesc = "CreatedAt";
         }
+        page = page < 1 ? 1 : page;
 
-        if (searchString != null)
-        {
-            if (category != null)
-            {
-                products = await _productService.GetAllProductsAsync(
-                    x => x.Category.Name == category || x.Category.Parent.Name == category && x.Name.ToLower().StartsWith(searchString.Trim().ToLower()),
-                    orderBy, orderByDesc, null,
-                    "ProductWeights.Weight", "Vendor", "ProductImages");
-            }
-            else
-            {
-                products = await _productService.GetAllProductsAsync(
-                             x => x.Name.ToLower().StartsWith(searchString.Trim().ToLower()), orderBy, orderByDesc, null,
-                             "ProductWeights.Weight", "Vendor", "ProductImages");
-            }
-        }
-        else
-        {
-            if (category != null)
-            {
-                products = await _productService.GetAllProductsAsync(
-                    x => x.Category.Name == category || x.Category.Parent.Name == category,
-                    orderBy, orderByDesc, null,
-                    "ProductWeights.Weight", "Vendor", "ProductImages");
-            }
-            else
-            {
-                products = await _productService.GetAllProductsAsync(
-                             null, orderBy, orderByDesc, null,
-                             "ProductWeights.Weight", "Vendor", "ProductImages");
-            }
-        }
+        // Fetch categories and weights
+        var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Parent", "SubCategories");
+        var weights = await _weightService.GetAllWeightsAsync(x => x.Name != "Default");
 
+        // Fetch products
+        var products = await _productService.FetchClientProductsAsync(category, orderBy, orderByDesc, searchString);
+
+        // Apply in-stock filter
+        products = _productService.ApplyInStockFilter(products, inStock);
+
+        // Pagination logic
         const int pageSize = 6;
-        if (page < 1) page = 1;
-
         int itemCount = products.Count();
-
         if (itemCount == 0)
         {
             TempData["Error"] = "Products not found!";
@@ -75,9 +49,9 @@ public class ProductController : Controller
         }
 
         var pager = new PagerVM(itemCount, page, pageSize);
+        var paginatedProducts = _productService.PaginateProduct(pager, products);
 
-        var data = _productService.PaginateProduct(pager, products);
-
+        // Assign data to ViewBag
         ViewBag.Pager = pager;
         ViewBag.Category = category;
         ViewBag.OrderBy = orderBy;
@@ -85,8 +59,9 @@ public class ProductController : Controller
         ViewBag.SerachString = searchString;
         ViewBag.Categories = categories;
         ViewBag.Weights = weights;
+        ViewBag.InStock = inStock;
 
-        return View(data);
+        return View(paginatedProducts);
     }
 
     public async Task<IActionResult> Detail(int id)

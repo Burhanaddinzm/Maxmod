@@ -193,4 +193,33 @@ public class ProductService : IProductService
 
         return (product != null, product);
     }
+
+    public List<Product> ApplyInStockFilter(List<Product> products, string? inStock)
+    {
+        return inStock switch
+        {
+            "true" => products.Where(p => p.ProductWeights.Any(w => w.Stock > 0)).ToList(),
+            "false" => products.Where(p => p.ProductWeights.All(w => w.Stock == 0)).ToList(),
+            "both" => products,
+            _ => products
+        };
+    }
+
+    public async Task<List<Product>> FetchClientProductsAsync(string? category, string? orderBy, string? orderByDesc, string? searchString)
+    {
+        Expression<Func<Product, bool>>? filterExpression = null;
+
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            filterExpression = category != null
+                ? x => (x.Category.Name == category || x.Category.Parent.Name == category) && x.Name.ToLower().StartsWith(searchString.Trim().ToLower())
+                : x => x.Name.ToLower().StartsWith(searchString.Trim().ToLower());
+        }
+        else if (category != null)
+        {
+            filterExpression = x => x.Category.Name == category || x.Category.Parent.Name == category;
+        }
+
+        return await GetAllProductsAsync(filterExpression, orderBy, orderByDesc, null, "ProductWeights.Weight", "Vendor", "ProductImages");
+    }
 }

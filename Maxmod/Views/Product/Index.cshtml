@@ -8,6 +8,7 @@
     var orderBy = ViewBag.OrderBy as string;
     var orderByDesc = ViewBag.OrderByDesc as string;
     var searchString = ViewBag.SerachString as string;
+    var inStock = ViewBag.InStock as string;
     if (ViewBag.Pager != null)
     {
         pager = ViewBag.Pager as PagerVM;
@@ -89,16 +90,36 @@
                     <div class="line"></div>
                     <ul class="filter-ul open">
                         <li>
-                            <label for="filter-instock">
-                                <input type="checkbox" id="filter-instock" />
-                                <span>In stock</span>
-                            </label>
+                            @if (inStock == "true" || inStock == "both")
+                            {
+                                <label for="filter-instock">
+                                    <input type="checkbox" checked="checked" id="filter-instock" value="true" name="inStock" />
+                                    <span>In stock</span>
+                                </label>
+                            }
+                            else
+                            {
+                                <label for="filter-instock">
+                                    <input type="checkbox" id="filter-instock" value="true" name="inStock" />
+                                    <span>In stock</span>
+                                </label>
+                            }
                         </li>
                         <li>
-                            <label for="filter-outofstock">
-                                <input type="checkbox" id="filter-outofstock" />
-                                <span>Out of stock</span>
-                            </label>
+                            @if (inStock == "false" || inStock == "both")
+                            {
+                                <label for="filter-outofstock">
+                                    <input type="checkbox" checked="checked" id="filter-outofstock" value="false" name="inStock" />
+                                    <span>Out of stock</span>
+                                </label>
+                            }
+                            else
+                            {
+                                <label for="filter-outofstock">
+                                    <input type="checkbox" id="filter-outofstock" value="false" name="inStock" />
+                                    <span>Out of stock</span>
+                                </label>
+                            }
                         </li>
                     </ul>
                 </div>
@@ -358,24 +379,24 @@
                     {
                         @if (pager.CurrentPage != 2)
                         {
-                            <a asp-action="index" asp-controller="product" asp-route-page="1" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" class="pagination-prev">@("<<")</a>
+                            <a asp-action="index" asp-controller="product" asp-route-page="1" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-prev">@("<<")</a>
                         }
-                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage - 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" class="pagination-prev">@("<")</a>
+                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage - 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-prev">@("<")</a>
                     }
                     <ul class="pagination-btns">
                         @for (int i = pager.StartPage; i <= pager.EndPage; i++)
                         {
                             <li>
-                                <a asp-action="index" asp-controller="product" asp-route-page="@i" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" class="pagination-btn @(i == pager.CurrentPage ? "active" : "")">@i</a>
+                                <a asp-action="index" asp-controller="product" asp-route-page="@i" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-btn @(i == pager.CurrentPage ? "active" : "")">@i</a>
                             </li>
                         }
                     </ul>
                     @if (pager.CurrentPage < pager.TotalPages)
                     {
-                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage + 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" class="pagination-next">@(">")</a>
+                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage + 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-next">@(">")</a>
                         @if (pager.CurrentPage != pager.TotalPages - 1)
                         {
-                            <a asp-action="index" asp-controller="product" asp-route-page="@(pager.TotalPages)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" class="pagination-next">@(">>")</a>
+                            <a asp-action="index" asp-controller="product" asp-route-page="@(pager.TotalPages)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-next">@(">>")</a>
                         }
                     }
                 }
@@ -388,65 +409,67 @@
     <script src="~/client/assets/js/shop.js"></script>
 
     <script>
-        const productsss = document.querySelectorAll("main .product");
+        document.addEventListener("DOMContentLoaded", () => {
+            // Handle product variations
+            const products = document.querySelectorAll("main .product");
 
-        productsss.forEach((product) => {
-            // Change variation
+            products.forEach(product => {
+                const variants = product.querySelectorAll(".variations label");
+                const priceWrapper = product.querySelector(".price-wrapper");
+                const badges = product.querySelector(".badges");
 
-            const variants = product.querySelectorAll(".variations label");
-            const priceWrapper = product.querySelector(".price-wrapper");
-            const badges = product.querySelector(".badges")
+                variants.forEach(variant => {
+                    variant.addEventListener("click", () => {
+                        if (variant.classList.contains("out")) return;
 
-            variants.forEach((variant) => {
-                variant.addEventListener("click", () => {
-                    if (variant.classList.contains("out")) return;
+                        const activeVariants = product.querySelectorAll(".variations label.active");
+                        activeVariants.forEach(label => {
+                            label.classList.remove("active");
+                        });
 
-                    const activeVariants = product.querySelectorAll(
-                        ".variations label.active"
-                    );
-                    activeVariants.forEach((label) => {
-                        label.classList.remove("active");
+                        variant.classList.add("active");
+
+                        if (variant.dataset.discountPrice != 0) {
+                            priceWrapper.innerHTML = `
+                                                                                                    <span class="selling-price">$${variant.dataset.discountPrice}</span>
+                                                                                                    <span class="old-price">$${variant.dataset.price}</span>`;
+                            badges.innerHTML = `
+                                                                                                    ${variant.dataset.new ? '<div class="new-badge"></div>' : ''}
+                                                                                                    <div class="save-badge" data-dollar="${(variant.dataset.price - variant.dataset.discountPrice).toFixed(2)}"></div>`;
+                        } else {
+                            priceWrapper.innerHTML = `<span class="selling-price">$${variant.dataset.price}</span>`;
+                            badges.innerHTML = `${variant.dataset.new ? '<div class="new-badge"></div>' : ''}`;
+                        }
                     });
+                });
 
-                    variant.classList.add("active");
+                // Add to cart functionality
+                const inputGroup = product.querySelectorAll('input');
+                const addToCartBtn = product.querySelector(".product-add-to-cart");
+                let selectedInputValue = 0;
 
-                    if (variant.dataset.discountPrice != 0) {
-                        priceWrapper.innerHTML = `<span class="selling-price">$${variant.dataset.discountPrice} </span><span class="old-price" > $${variant.dataset.price}</span>`;
-                        badges.innerHTML = `${variant.dataset.new ? '<div class="new-badge"></div>' : ''}<div class="save-badge" data-dollar="${(variant.dataset.price - variant.dataset.discountPrice).toFixed(2)}" > </div>`
-                    } else {
-                        priceWrapper.innerHTML = `<span class="selling-price">$${variant.dataset.price} </span>`;
-                        badges.innerHTML = `${variant.dataset.new ? '<div class="new-badge"></div>' : ''}`
+                inputGroup.forEach(input => {
+                    if (!input.disabled && selectedInputValue === 0) {
+                        selectedInputValue = input.value;
+                    }
+                });
+
+                inputGroup.forEach(input => input.addEventListener("change", () => {
+                    if (!input.disabled && input.checked) {
+                        selectedInputValue = input.value;
+                    }
+                }));
+
+                addToCartBtn.addEventListener("click", async () => {
+                    if (selectedInputValue != 0) {
+                        await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedInputValue}&quantity=1`, { method: "POST" });
+                        await refreshLayoutCart();
                     }
                 });
             });
 
-            //Add to cart
-            const inputGroup = product.querySelectorAll('input');
-            const addToCartBtn = product.querySelector(".product-add-to-cart");
-
-            let selectedInputValue = 0;
-            inputGroup.forEach(input => {
-                if (!input.disabled && selectedInputValue === 0)
-                    selectedInputValue = input.value;
-            });
-
-            inputGroup.forEach(input => input.addEventListener("change", () => {
-                if (!input.disabled && input.checked)
-                    selectedInputValue = input.value;
-            }));
-
-            addToCartBtn.addEventListener("click", async () => {
-                if (selectedInputValue != 0) {
-                    await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedInputValue}&quantity=1`, { method: "POST" })
-                    await refreshLayoutCart();
-                }
-            });
-        });
-
-        // Sort by order
-        document.addEventListener("DOMContentLoaded", () => {
+            // Sort by order
             const sortSelectEl = document.getElementById("sort-select");
-
             sortSelectEl.addEventListener("change", () => {
                 const selectedSort = sortSelectEl.value;
                 const urlParams = new URLSearchParams(window.location.search);
@@ -474,6 +497,37 @@
 
                 window.location.search = urlParams.toString();
             });
+
+            // Handle stock filters
+            const instockCheckbox = document.getElementById("filter-instock");
+            const outofstockCheckbox = document.getElementById("filter-outofstock");
+
+            function updateStockFilter() {
+                const urlParams = new URLSearchParams(window.location.search);
+
+                if (instockCheckbox.checked && outofstockCheckbox.checked) {
+                    urlParams.set('inStock', 'both');
+                } else if (instockCheckbox.checked) {
+                    urlParams.set('inStock', 'true');
+                } else if (outofstockCheckbox.checked) {
+                    urlParams.set('inStock', 'false');
+                } else {
+                    urlParams.delete('inStock');
+                }
+
+                window.location.search = urlParams.toString();
+            }
+
+            instockCheckbox.addEventListener("change", updateStockFilter);
+            outofstockCheckbox.addEventListener("change", updateStockFilter);
         });
+
+        // After filters are applied if total page count drops it would auto correct to lastest page
+        const urlParameters = new URLSearchParams(window.location.search);
+        if (@pager?.TotalPages < @pager?.CurrentPage) {
+            urlParameters.set('page', '@pager?.TotalPages');
+            window.location.search = urlParameters.toString();
+        }
     </script>
+
 }
