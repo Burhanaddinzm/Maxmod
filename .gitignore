@@ -1,0 +1,8 @@
+# Ignore appsettings.json files in Maxmod directory
+/Maxmod/appsettings*.json
+
+# Ignore other files and directories
+bin/
+obj/
+*.log
+*.tmp
