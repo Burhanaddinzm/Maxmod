@@ -21,6 +21,8 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<Weight> Weights => Set<Weight>();
     public DbSet<Vendor> Vendors => Set<Vendor>();
     public DbSet<Settings> Settings => Set<Settings>();
+    public DbSet<Cart> Cart => Set<Cart>();
+    public DbSet<Order> Orders => Set<Order>();
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
@@ -57,6 +59,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
         modelBuilder.Entity<Vendor>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<Weight>().HasQueryFilter(x => !x.IsDeleted);
         modelBuilder.Entity<Cart>().HasQueryFilter(x => !x.IsDeleted);
+        modelBuilder.Entity<Order>().HasQueryFilter(x => !x.IsDeleted);
 
         base.OnModelCreating(modelBuilder);
     }

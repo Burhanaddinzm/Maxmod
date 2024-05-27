@@ -161,6 +161,20 @@
                     </div>
                 </div>
             </li>
+            
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders"
+                   aria-expanded="true" aria-controls="collapseOrders">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Orders</span>
+                </a>
+                <div id="collapseOrders" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-controller="order" asp-action="index" asp-area="admin">Orders List</a>
+                    </div>
+                </div>
+            </li>
 
         </ul>
         <!-- End of Sidebar -->

@@ -30720,6 +30720,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\52130c65-beee-4742-951e-3cfa354572bf_b2.png))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\5f5779b7-9c7a-4c64-aa70-4532b7925fb8_WhatsApp Image 2024-05-06 at 16.31.19.jpeg))">
+      <SourceType>Package</SourceType>
+      <SourceId>Maxmod</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Maxmod</BasePath>
+      <RelativePath>client/assets/images/product/5f5779b7-9c7a-4c64-aa70-4532b7925fb8_WhatsApp Image 2024-05-06 at 16.31.19.jpeg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\5f5779b7-9c7a-4c64-aa70-4532b7925fb8_WhatsApp Image 2024-05-06 at 16.31.19.jpeg))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\product\6a4f5626-d55a-49d3-a47e-7419cae2b787_product-2-2.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>Maxmod</SourceId>

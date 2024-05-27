@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IProductWeightRepository, ProductWeightRepository>();
         services.AddScoped<ISettingsRepository, SettingsRepository>();
         services.AddScoped<ICartRepository, CartRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
 
         return services;
     }

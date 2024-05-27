@@ -13,12 +13,12 @@
     </div>
     <!-- Contact Start -->
     <section class="contact-section">
-        <form id="contact-form">
+        <form method="post" asp-action="SendEmail">
             <h1>Contact</h1>
-            <input placeholder="Name" type="text" id="name" />
-            <input placeholder="Email" type="email" id="email" />
-            <input placeholder="Phone" type="text" id="phone" />
-            <textarea placeholder="Message" type="text" id="phone"></textarea>
+            <input placeholder="Name" type="text" name="Name" required />
+            <input placeholder="Email" type="email" name="Email" required />
+            <input placeholder="Phone" type="text" name="Phone" />
+            <textarea placeholder="Message" name="Message" required></textarea>
             <button class="btn" type="submit">Send</button>
         </form>
         <div class="location-details">

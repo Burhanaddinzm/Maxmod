@@ -49,7 +49,7 @@ public class CategoryController : Controller
 
     public async Task<IActionResult> Update(int id)
     {
-        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null);
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null && x.Id != id);
 
         var (exists, category) = await _categoryService.CheckExistanceAsync(id);
 
@@ -62,7 +62,7 @@ public class CategoryController : Controller
     [HttpPost]
     public async Task<IActionResult> Update(UpdateCategoryVM updateCategoryVM)
     {
-        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null);
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null && x.Id != updateCategoryVM.Id);
 
         if (!ModelState.IsValid) return View(updateCategoryVM);
 
@@ -87,7 +87,7 @@ public class CategoryController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
-        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null);
+        ViewBag.Categories = await _categoryService.GetAllCategoriesAsync(x => x.ParentId == null && x.Id != id);
 
         if (id == 0)
         {

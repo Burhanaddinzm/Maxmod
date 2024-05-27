@@ -2,6 +2,7 @@
     ViewData["Title"] = "Cart";
     var subTotal = Model.Sum(x => x.TotalPrice);
 }
+@inject ILayoutService _layoutService
 @model List<CartItemVM>
 
 @section Styles {
@@ -81,7 +82,21 @@
                 <span>$@subTotal</span>
             </div>
             <div class="line"></div>
-            <a href="#" class="btn">Checkout</a>
+            @if (!_layoutService.CheckLoggedIn())
+            {
+                <a asp-action="login" asp-controller="account" class="btn">Checkout</a>
+            }
+            else
+            {
+                @if (Model.Count > 0)
+                {
+                    <a asp-action="index" asp-controller="checkout" class="btn">Checkout</a>
+                }
+                else
+                {
+                    <a href="#" class="btn">Checkout</a>
+                }
+            }
         </div>
     </section>
 </div>

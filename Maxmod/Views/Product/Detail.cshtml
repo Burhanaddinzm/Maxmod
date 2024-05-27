@@ -151,7 +151,7 @@
             </div>
             <div class="btn-wrapper">
                 <button id="add-to-cart" class="btn">Add To Cart</button>
-                <a class="btn" href="#">Buy It Now</a>
+                <button class="btn" id="buy-now">Buy It Now</button>
             </div>
             <p class="shipping-text">Free standard shipping on $100+</p>
             <div class="shop-principles">
@@ -248,6 +248,7 @@
         const countInput = document.querySelector("main .count-control input");
         const inputGroup = document.querySelectorAll('input[name="variation"]');
         const addToCartBtn = document.getElementById("add-to-cart");
+        const buyNowBtn = document.getElementById("buy-now");
 
         let selectedValue = document.querySelector('input[name="variation"]:checked').value;
 
@@ -266,8 +267,13 @@
             }
         });
 
+        buyNowBtn.addEventListener("click", async () => {
+            await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedValue}&quantity=${countInput.value}`, { method: "POST" });
+            window.location.href = "@(Url.Action("Index","Checkout"))";
+        });
+
         addToCartBtn.addEventListener("click", async () => {
-            await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedValue}&quantity=${countInput.value}`, { method: "POST" })
+            await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedValue}&quantity=${countInput.value}`, { method: "POST" });
             await refreshLayoutCart();
         });
     </script>

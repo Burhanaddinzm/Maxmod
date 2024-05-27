@@ -1,9 +1,6 @@
-﻿using Maxmod.Models;
-using Maxmod.Services.Interfaces;
+﻿using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using System.Linq.Expressions;
 
 namespace Maxmod.Controllers;
 
@@ -66,7 +63,6 @@ public class ProductController : Controller
 
         return View(paginatedProducts);
     }
-
 
     public async Task<IActionResult> Detail(int id)
     {

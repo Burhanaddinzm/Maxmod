@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hQFYLH1ApECyB7pIUmDTXJCD6DgLEQLf68GT3EeYM/0=",
+  "Hash": "iJBlfVPjTaiKuPsjpu5KEaKFFt4/LjKQZRBn7EvGSgE=",
   "Source": "Maxmod",
   "BasePath": "_content/Maxmod",
   "Mode": "Default",
@@ -36552,6 +36552,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\52130c65-beee-4742-951e-3cfa354572bf_b2.png"
+    },
+    {
+      "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\5f5779b7-9c7a-4c64-aa70-4532b7925fb8_WhatsApp Image 2024-05-06 at 16.31.19.jpeg",
+      "SourceId": "Maxmod",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\",
+      "BasePath": "_content/Maxmod",
+      "RelativePath": "client/assets/images/product/5f5779b7-9c7a-4c64-aa70-4532b7925fb8_WhatsApp Image 2024-05-06 at 16.31.19.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\client\\assets\\images\\product\\5f5779b7-9c7a-4c64-aa70-4532b7925fb8_WhatsApp Image 2024-05-06 at 16.31.19.jpeg"
     },
     {
       "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\product\\6a4f5626-d55a-49d3-a47e-7419cae2b787_product-2-2.jpg",
