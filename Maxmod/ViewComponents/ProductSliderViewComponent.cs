@@ -14,7 +14,7 @@ public class ProductSliderViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-        var products = await _productService.GetAllProductsAsync(x => x.IsNew, null, "CreatedAt", 10, "ProductWeights.Weight", "Vendor", "ProductImages");
+        var products = await _productService.GetAllProductsAsync(x => x.IsNew && x.ProductWeights.Any(x => x.Stock > 0), null, "CreatedAt", 10, "ProductWeights.Weight", "Vendor", "ProductImages");
         return View(products);
     }
 }

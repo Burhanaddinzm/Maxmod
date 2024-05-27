@@ -20,7 +20,7 @@ public class ProductController : Controller
         _weightService = weightService;
     }
 
-    public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, string? searchString, string? inStock, int page = 1)
+    public async Task<IActionResult> Index(string? category, string? orderBy, string? orderByDesc, string? searchString, string? inStock, string? weights, int page = 1)
     {
         // Parameter validation and defaults
         if (orderByDesc == null && orderBy == null)
@@ -31,10 +31,12 @@ public class ProductController : Controller
 
         // Fetch categories and weights
         var categories = await _categoryService.GetAllCategoriesAsync(null, null, null, null, "Parent", "SubCategories");
-        var weights = await _weightService.GetAllWeightsAsync(x => x.Name != "Default");
+        var weightList = await _weightService.GetAllWeightsAsync(x => x.Name != "Default");
+
+        List<string>? weightFilters = weights?.Split(',').ToList();
 
         // Fetch products
-        var products = await _productService.FetchClientProductsAsync(category, orderBy, orderByDesc, searchString);
+        var products = await _productService.FetchClientProductsAsync(category, orderBy, orderByDesc, searchString, weightFilters);
 
         // Apply in-stock filter
         products = _productService.ApplyInStockFilter(products, inStock);
@@ -58,11 +60,13 @@ public class ProductController : Controller
         ViewBag.OrderByDesc = orderByDesc;
         ViewBag.SerachString = searchString;
         ViewBag.Categories = categories;
-        ViewBag.Weights = weights;
+        ViewBag.Weights = weightList;
         ViewBag.InStock = inStock;
+        ViewBag.SelectedWeights = weightFilters;
 
         return View(paginatedProducts);
     }
+
 
     public async Task<IActionResult> Detail(int id)
     {

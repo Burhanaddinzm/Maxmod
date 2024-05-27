@@ -205,7 +205,7 @@ public class ProductService : IProductService
         };
     }
 
-    public async Task<List<Product>> FetchClientProductsAsync(string? category, string? orderBy, string? orderByDesc, string? searchString)
+    public async Task<List<Product>> FetchClientProductsAsync(string? category, string? orderBy, string? orderByDesc, string? searchString, List<string>? weightFilters)
     {
         Expression<Func<Product, bool>>? filterExpression = null;
 
@@ -220,6 +220,14 @@ public class ProductService : IProductService
             filterExpression = x => x.Category.Name == category || x.Category.Parent.Name == category;
         }
 
-        return await GetAllProductsAsync(filterExpression, orderBy, orderByDesc, null, "ProductWeights.Weight", "Vendor", "ProductImages");
+        var products = await GetAllProductsAsync(filterExpression, orderBy, orderByDesc, null, "ProductWeights.Weight", "Vendor", "ProductImages");
+
+        if (weightFilters != null && weightFilters.Any())
+        {
+            products = products.Where(p => p.ProductWeights.Any(pw => weightFilters.Contains(pw.Weight.Name))).ToList();
+        }
+
+        return products;
     }
+
 }

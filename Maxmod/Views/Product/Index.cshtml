@@ -4,14 +4,20 @@
     PagerVM? pager = new PagerVM();
     List<Category>? categories = new List<Category>();
     List<Weight>? weights = new List<Weight>();
+    List<string>? selectedWeights = new List<string>();
     var category = ViewBag.Category as string;
     var orderBy = ViewBag.OrderBy as string;
     var orderByDesc = ViewBag.OrderByDesc as string;
     var searchString = ViewBag.SerachString as string;
     var inStock = ViewBag.InStock as string;
+
     if (ViewBag.Pager != null)
     {
         pager = ViewBag.Pager as PagerVM;
+    }
+    if (ViewBag.SelectedWeights != null)
+    {
+        selectedWeights = ViewBag.SelectedWeights;
     }
     if (ViewBag.Categories != null)
     {
@@ -136,7 +142,11 @@
                             {
                                 <li>
                                     <label for="filter-@weight.Name">
-                                        <input type="checkbox" id="filter-@weight.Name" value="@weight.Id" />
+                                        <input type="checkbox"
+                                               id="filter-@weight.Name"
+                                               name="weights"
+                                               value="@weight.Name"
+                                        @(selectedWeights.Contains(weight.Name) ? "checked" : "") />
                                         <span>@weight.Name</span>
                                     </label>
                                 </li>
@@ -379,24 +389,24 @@
                     {
                         @if (pager.CurrentPage != 2)
                         {
-                            <a asp-action="index" asp-controller="product" asp-route-page="1" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-prev">@("<<")</a>
+                            <a asp-action="index" asp-controller="product" asp-route-page="1" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" asp-route-weights="@(selectedWeights != null && selectedWeights.Any(x => x != null) ? string.Join(",", selectedWeights.Where(x => x != null)) : null)" class="pagination-prev">@("<<")</a>
                         }
-                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage - 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-prev">@("<")</a>
+                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage - 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" asp-route-weights="@(selectedWeights != null && selectedWeights.Any(x => x != null) ? string.Join(",", selectedWeights.Where(x => x != null)) : null)" class="pagination-prev">@("<")</a>
                     }
                     <ul class="pagination-btns">
                         @for (int i = pager.StartPage; i <= pager.EndPage; i++)
                         {
                             <li>
-                                <a asp-action="index" asp-controller="product" asp-route-page="@i" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-btn @(i == pager.CurrentPage ? "active" : "")">@i</a>
+                                <a asp-action="index" asp-controller="product" asp-route-page="@i" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" asp-route-weights="@(selectedWeights != null && selectedWeights.Any(x => x != null) ? string.Join(",", selectedWeights.Where(x => x != null)) : null)" class="pagination-btn @(i == pager.CurrentPage ? "active" : "")">@i</a>
                             </li>
                         }
                     </ul>
                     @if (pager.CurrentPage < pager.TotalPages)
                     {
-                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage + 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-next">@(">")</a>
+                        <a asp-action="index" asp-controller="product" asp-route-page="@(pager.CurrentPage + 1)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" asp-route-weights="@(selectedWeights != null && selectedWeights.Any(x => x != null) ? string.Join(",", selectedWeights.Where(x => x != null)) : null)" class="pagination-next">@(">")</a>
                         @if (pager.CurrentPage != pager.TotalPages - 1)
                         {
-                            <a asp-action="index" asp-controller="product" asp-route-page="@(pager.TotalPages)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" class="pagination-next">@(">>")</a>
+                            <a asp-action="index" asp-controller="product" asp-route-page="@(pager.TotalPages)" asp-route-category="@category" asp-route-orderBy="@orderBy" asp-route-orderByDesc="@orderByDesc" asp-route-searchString="@searchString" asp-route-inStock="@inStock" asp-route-weights="@(selectedWeights != null && selectedWeights.Any(x => x != null) ? string.Join(",", selectedWeights.Where(x => x != null)) : null)" class="pagination-next">@(">>")</a>
                         }
                     }
                 }
@@ -431,11 +441,11 @@
 
                         if (variant.dataset.discountPrice != 0) {
                             priceWrapper.innerHTML = `
-                                                                                                    <span class="selling-price">$${variant.dataset.discountPrice}</span>
-                                                                                                    <span class="old-price">$${variant.dataset.price}</span>`;
+                                                                                                                                                    <span class="selling-price">$${variant.dataset.discountPrice}</span>
+                                                                                                                                                    <span class="old-price">$${variant.dataset.price}</span>`;
                             badges.innerHTML = `
-                                                                                                    ${variant.dataset.new ? '<div class="new-badge"></div>' : ''}
-                                                                                                    <div class="save-badge" data-dollar="${(variant.dataset.price - variant.dataset.discountPrice).toFixed(2)}"></div>`;
+                                                                                                                                                    ${variant.dataset.new ? '<div class="new-badge"></div>' : ''}
+                                                                                                                                                    <div class="save-badge" data-dollar="${(variant.dataset.price - variant.dataset.discountPrice).toFixed(2)}"></div>`;
                         } else {
                             priceWrapper.innerHTML = `<span class="selling-price">$${variant.dataset.price}</span>`;
                             badges.innerHTML = `${variant.dataset.new ? '<div class="new-badge"></div>' : ''}`;
@@ -521,6 +531,25 @@
             instockCheckbox.addEventListener("change", updateStockFilter);
             outofstockCheckbox.addEventListener("change", updateStockFilter);
         });
+
+        // Handle weight filters
+        const weightCheckboxes = document.querySelectorAll('input[name="weights"]');
+        function updateWeightFilter() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedWeights = Array.from(weightCheckboxes)
+                .filter(cb => cb.checked && cb.value !== "")
+                .map(cb => cb.value);
+
+            if (selectedWeights.length > 0) {
+                urlParams.set('weights', selectedWeights.join(','));
+            } else {
+                urlParams.delete('weights');
+            }
+
+            window.location.search = urlParams.toString();
+        }
+
+        weightCheckboxes.forEach(cb => cb.addEventListener("change", updateWeightFilter));
 
         // After filters are applied if total page count drops it would auto correct to lastest page
         const urlParameters = new URLSearchParams(window.location.search);
