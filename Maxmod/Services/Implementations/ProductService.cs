@@ -5,7 +5,6 @@ using Maxmod.Repositories.Interfaces;
 using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System.Drawing.Printing;
 using System.Linq.Expressions;
 using static Maxmod.Extensions.FileExtension;
 
@@ -212,8 +211,8 @@ public class ProductService : IProductService
         if (!string.IsNullOrEmpty(searchString))
         {
             filterExpression = category != null
-                ? x => (x.Category.Name == category || x.Category.Parent.Name == category) && x.Name.ToLower().StartsWith(searchString.Trim().ToLower())
-                : x => x.Name.ToLower().StartsWith(searchString.Trim().ToLower());
+                ? x => (x.Category.Name == category || x.Category.Parent.Name == category) && x.Name.ToLower().Contains(searchString.Trim().ToLower())
+                : x => x.Name.ToLower().Contains(searchString.Trim().ToLower());
         }
         else if (category != null)
         {

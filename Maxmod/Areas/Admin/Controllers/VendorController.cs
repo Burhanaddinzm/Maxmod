@@ -42,13 +42,25 @@ public class VendorController : Controller
         return View(data);
     }
 
-    public async Task<IActionResult> Requests()
+    public async Task<IActionResult> Requests(int page = 1)
     {
         if (User.IsInRole("Vendor"))
             return RedirectToAction("Index", "Error", new { Area = "" });
 
         var newVendors = await _vendorService.GetAllVendorsAsync(x => !x.IsConfirmed, null, null, null, "User");
-        return View(newVendors);
+
+        const int pageSize = 10;
+        if (page < 1) page = 1;
+
+        int itemCount = newVendors.Count();
+
+        var pager = new PagerVM(itemCount, page, pageSize);
+
+        var data = _vendorService.PaginateVendor(pager, newVendors);
+
+        ViewBag.Pager = pager;
+
+        return View(data);
     }
 
     public async Task<IActionResult> Update(int id)

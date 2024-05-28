@@ -1,16 +1,15 @@
 ﻿using Maxmod.Data.Contexts;
-using Maxmod.Models;
 using Maxmod.Models.Common;
 using Maxmod.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace Maxmod.Repositories.Implementations;
 
 public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
 {
-    readonly AppDbContext _context;
+    protected readonly AppDbContext _context;
+
     public Repository(AppDbContext context)
     {
         _context = context;
@@ -32,7 +31,7 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
         }
     }
 
-    public async Task<List<T>> GetAllAsync(
+    public virtual async Task<List<T>> GetAllAsync(
          Expression<Func<T, bool>>? where = null,
          string? order = null,
          string? orderByDesc = null,
@@ -103,42 +102,18 @@ public class Repository<T> : IRepository<T> where T : BaseAuditableEntity
         await _context.SaveChangesAsync();
     }
 
-    private IQueryable<T> ApplyOrderBy(IQueryable<T> query, string propertyName, bool descending)
+    protected IQueryable<T> ApplyOrderBy(IQueryable<T> query, string propertyName, bool descending)
     {
-        if (typeof(T) == typeof(Product) && propertyName == "Price")
+        var propertyInfo = typeof(T).GetProperty(propertyName);
+        if (propertyInfo == null)
         {
-            var productQuery = query.Cast<Product>();
-
-            if (descending)
-            {
-                productQuery = productQuery
-                    .OrderByDescending(p => p.ProductWeights
-                        .Where(pw => pw.Stock > 0)
-                        .Min(pw => pw.DiscountPrice != 0 ? pw.DiscountPrice : pw.Price));
-            }
-            else
-            {
-                productQuery = productQuery
-                    .OrderBy(p => p.ProductWeights
-                        .Where(pw => pw.Stock > 0)
-                        .Min(pw => pw.DiscountPrice != 0 ? pw.DiscountPrice : pw.Price));
-            }
-
-            return (IQueryable<T>)productQuery;
+            throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'");
         }
-        else
-        {
-            var propertyInfo = typeof(T).GetProperty(propertyName);
-            if (propertyInfo == null)
-            {
-                throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'");
-            }
 
-            var parameter = Expression.Parameter(typeof(T), "x");
-            var propertyExpression = Expression.Property(parameter, propertyInfo);
-            var lambda = Expression.Lambda<Func<T, object>>(Expression.Convert(propertyExpression, typeof(object)), parameter);
+        var parameter = Expression.Parameter(typeof(T), "x");
+        var propertyExpression = Expression.Property(parameter, propertyInfo);
+        var lambda = Expression.Lambda<Func<T, object>>(Expression.Convert(propertyExpression, typeof(object)), parameter);
 
-            return descending ? query.OrderByDescending(lambda) : query.OrderBy(lambda);
-        }
+        return descending ? query.OrderByDescending(lambda) : query.OrderBy(lambda);
     }
 }

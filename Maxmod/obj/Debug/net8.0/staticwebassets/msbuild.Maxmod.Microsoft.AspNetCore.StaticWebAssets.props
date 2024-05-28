@@ -31152,22 +31152,6 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\vendor\57d683bc-1621-4e57-be39-e9bbfbef5266_1683786237647.jpg))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\vendor\f6737486-0374-4d3e-92cb-ba7c41f64103_7bbb7a57-cc31-4dec-bba4-f1c4b7f8408d.jpg))">
-      <SourceType>Package</SourceType>
-      <SourceId>Maxmod</SourceId>
-      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
-      <BasePath>_content/Maxmod</BasePath>
-      <RelativePath>client/assets/images/vendor/f6737486-0374-4d3e-92cb-ba7c41f64103_7bbb7a57-cc31-4dec-bba4-f1c4b7f8408d.jpg</RelativePath>
-      <AssetKind>All</AssetKind>
-      <AssetMode>All</AssetMode>
-      <AssetRole>Primary</AssetRole>
-      <RelatedAsset></RelatedAsset>
-      <AssetTraitName></AssetTraitName>
-      <AssetTraitValue></AssetTraitValue>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\images\vendor\f6737486-0374-4d3e-92cb-ba7c41f64103_7bbb7a57-cc31-4dec-bba4-f1c4b7f8408d.jpg))</OriginalItemSpec>
-    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\client\assets\js\index.js))">
       <SourceType>Package</SourceType>
       <SourceId>Maxmod</SourceId>

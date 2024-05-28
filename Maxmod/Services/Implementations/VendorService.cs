@@ -1,5 +1,4 @@
-﻿using Azure;
-using Maxmod.Areas.Admin.ViewModels.Vendor;
+﻿using Maxmod.Areas.Admin.ViewModels.Vendor;
 using Maxmod.Enums;
 using Maxmod.Extensions;
 using Maxmod.Models;

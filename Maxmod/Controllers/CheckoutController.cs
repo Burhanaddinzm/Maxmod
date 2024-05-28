@@ -5,7 +5,6 @@ using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Checkout;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Maxmod.Controllers;
 
@@ -19,7 +18,14 @@ public class CheckoutController : Controller
     private readonly IOrderService _orderService;
     private readonly ILayoutService _layoutService;
 
-    public CheckoutController(IBraintreeService braintreeService, ICartService cartService, IHttpContextAccessor accessor, UserManager<AppUser> userManager, IProductWeightService productWeightService, IOrderService orderService, ILayoutService layoutService)
+    public CheckoutController(
+        IBraintreeService braintreeService,
+        ICartService cartService,
+        IHttpContextAccessor accessor,
+        UserManager<AppUser> userManager,
+        IProductWeightService productWeightService,
+        IOrderService orderService,
+        ILayoutService layoutService)
     {
         _braintreeService = braintreeService;
         _cartService = cartService;
@@ -49,7 +55,7 @@ public class CheckoutController : Controller
         var data = new PurchaseVM
         {
             UserId = user!.Id,
-            Nonce = "fake-valid-nonce"
+            Nonce = ""
         };
 
         var consolidatedCart = new Dictionary<int, (int Quantity, decimal TotalPrice)>();

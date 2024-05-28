@@ -1,6 +1,4 @@
-﻿using Maxmod.Models;
-
-namespace Maxmod.ViewModels.Checkout;
+﻿namespace Maxmod.ViewModels.Checkout;
 
 public class PurchaseVM
 {

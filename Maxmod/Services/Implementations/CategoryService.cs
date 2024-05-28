@@ -1,5 +1,4 @@
 ﻿using Maxmod.Areas.Admin.ViewModels.Category;
-using Maxmod.Areas.Admin.ViewModels.Vendor;
 using Maxmod.Extensions;
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;

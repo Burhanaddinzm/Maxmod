@@ -1,7 +1,6 @@
 ﻿using Maxmod.Data.Contexts;
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Maxmod.Repositories.Implementations;
 

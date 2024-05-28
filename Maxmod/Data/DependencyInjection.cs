@@ -1,6 +1,5 @@
 ﻿using Maxmod.Data.Contexts;
 using Maxmod.Models;
-using Maxmod.Repositories.Implementations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

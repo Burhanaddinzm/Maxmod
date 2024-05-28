@@ -1,5 +1,4 @@
 ﻿using Maxmod.Models;
-using Maxmod.Services.Implementations;
 using Maxmod.Services.Interfaces;
 using Maxmod.ViewModels.Pagination;
 using Microsoft.AspNetCore.Authorization;

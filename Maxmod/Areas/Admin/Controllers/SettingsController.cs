@@ -1,7 +1,4 @@
-﻿using Maxmod.Areas.Admin.ViewModels.Category;
-using Maxmod.Areas.Admin.ViewModels.Settings;
-using Maxmod.Models;
-using Maxmod.Services.Implementations;
+﻿using Maxmod.Areas.Admin.ViewModels.Settings;
 using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

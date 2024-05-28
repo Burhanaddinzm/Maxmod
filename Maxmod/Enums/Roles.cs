@@ -1,9 +1,8 @@
-﻿namespace Maxmod.Enums
+﻿namespace Maxmod.Enums;
+
+public enum Roles
 {
-    public enum Roles
-    {
-        Admin,
-        Vendor,
-        Customer
-    }
+    Admin,
+    Vendor,
+    Customer
 }

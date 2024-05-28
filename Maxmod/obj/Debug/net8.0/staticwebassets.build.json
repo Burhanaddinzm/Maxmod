@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "iJBlfVPjTaiKuPsjpu5KEaKFFt4/LjKQZRBn7EvGSgE=",
+  "Hash": "weaTHPVca03pxRN21DQEaIAHa18yYQ+ksBZ5CICo+sw=",
   "Source": "Maxmod",
   "BasePath": "_content/Maxmod",
   "Mode": "Default",
@@ -37065,25 +37065,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\client\\assets\\images\\vendor\\57d683bc-1621-4e57-be39-e9bbfbef5266_1683786237647.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\images\\vendor\\f6737486-0374-4d3e-92cb-ba7c41f64103_7bbb7a57-cc31-4dec-bba4-f1c4b7f8408d.jpg",
-      "SourceId": "Maxmod",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\",
-      "BasePath": "_content/Maxmod",
-      "RelativePath": "client/assets/images/vendor/f6737486-0374-4d3e-92cb-ba7c41f64103_7bbb7a57-cc31-4dec-bba4-f1c4b7f8408d.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\client\\assets\\images\\vendor\\f6737486-0374-4d3e-92cb-ba7c41f64103_7bbb7a57-cc31-4dec-bba4-f1c4b7f8408d.jpg"
     },
     {
       "Identity": "C:\\Users\\Burhan\\source\\repos\\Maxmod\\Maxmod\\wwwroot\\client\\assets\\js\\index.js",
