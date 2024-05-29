@@ -2,7 +2,6 @@
 using Maxmod.Enums;
 using Maxmod.Models;
 using Maxmod.Repositories.Interfaces;
-using Maxmod.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Maxmod.Data;

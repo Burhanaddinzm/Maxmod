@@ -4,7 +4,7 @@
 @model ProductWeight
 
 <form asp-controller="productweight" asp-action="delete" asp-area="admin" method="post">
-    <input asp-for="Id" style="display:none" />
+    <input asp-for="Id" type="hidden" />
     <div class="mb-3">
         <label for="Product" class="form-label">Product</label>
         <select disabled id="Product" class="form-control" asp-for="ProductId" asp-items="@(new SelectList(ViewBag.Products,nameof(Product.Id),nameof(Product.Name),Model.ProductId))">

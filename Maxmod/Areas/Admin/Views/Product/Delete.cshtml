@@ -4,7 +4,7 @@
 @model Product
 
 <form asp-controller="product" asp-action="delete" asp-area="admin" method="post" enctype="multipart/form-data">
-    <input asp-for="Id" style="display:none" />
+    <input asp-for="Id" type="hidden" />
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input asp-for="Name" class="form-control" id="name" disabled>

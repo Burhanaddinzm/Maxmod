@@ -118,10 +118,14 @@ public class VendorService : IVendorService
 
     public async Task DeleteVendorAsync(DeleteVendorVM deleteVendorVM)
     {
-        await _vendorRepository.DeleteAsync(deleteVendorVM.Id);
+        AppUser? user = await _userManager.FindByIdAsync(deleteVendorVM.UserId);
 
-        await _userManager.RemoveFromRoleAsync(deleteVendorVM.User, Roles.Vendor.ToString());
-        await _userManager.AddToRoleAsync(deleteVendorVM.User, Roles.Customer.ToString());
+        await _vendorRepository.DeleteAsync(deleteVendorVM.Id);
+        if (user != null)
+        {
+            await _userManager.RemoveFromRoleAsync(user, Roles.Vendor.ToString());
+            await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
+        }
     }
 
     public async Task AcceptVendor(Vendor vendor)
