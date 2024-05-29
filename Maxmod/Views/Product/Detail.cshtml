@@ -271,6 +271,10 @@
                 await fetch(`@Url.Action("AddToCart", "Cart")/?id=${selectedValue}&quantity=${countInput.value}`, { method: "POST" });
                 window.location.href = "@(Url.Action("Index", "Checkout"))";
             });
+        } else {
+            buyNowBtn.addEventListener("click", async () => {
+                window.location.href = "@(Url.Action("Login", "Account"))";
+            });
         }
 
         addToCartBtn.addEventListener("click", async () => {
