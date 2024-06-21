@@ -444,11 +444,11 @@
                                                                                                                                                     <span class="selling-price">$${variant.dataset.discountPrice}</span>
                                                                                                                                                     <span class="old-price">$${variant.dataset.price}</span>`;
                             badges.innerHTML = `
-                                                                                                                                                    ${variant.dataset.new ? '<div class="new-badge"></div>' : ''}
+                                                                                                                                                    ${variant.dataset.new == "True" ? '<div class="new-badge"></div>' : ''}
                                                                                                                                                     <div class="save-badge" data-dollar="${(variant.dataset.price - variant.dataset.discountPrice).toFixed(2)}"></div>`;
                         } else {
                             priceWrapper.innerHTML = `<span class="selling-price">$${variant.dataset.price}</span>`;
-                            badges.innerHTML = `${variant.dataset.new ? '<div class="new-badge"></div>' : ''}`;
+                            badges.innerHTML = `${variant.dataset.new == "True" ? '<div class="new-badge"></div>' : ''}`;
                         }
                     });
                 });

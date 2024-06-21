@@ -99,6 +99,7 @@
                                                 <label data-stock="@productWeight.Stock"
                                                        data-price="@productWeight.Price"
                                                        data-discount-price="@productWeight.DiscountPrice"
+                                                       data-new="@product.IsNew"
                                                        for="variation-@productWeight.Id"
                                                        class="variation out">
                                                     @productWeight.Weight.Name
@@ -115,6 +116,7 @@
                                                 <label data-stock="@productWeight.Stock"
                                                        data-price="@productWeight.Price"
                                                        data-discount-price="@productWeight.DiscountPrice"
+                                                       data-new="@product.IsNew"
                                                        for="variation-@productWeight.Id"
                                                        class="variation active">
                                                     @productWeight.Weight.Name
@@ -131,6 +133,7 @@
                                                 <label data-stock="@productWeight.Stock"
                                                        data-price="@productWeight.Price"
                                                        data-discount-price="@productWeight.DiscountPrice"
+                                                       data-new="@product.IsNew"
                                                        for="variation-@productWeight.Id"
                                                        class="variation">
                                                     @productWeight.Weight.Name
@@ -152,6 +155,7 @@
                                                data-stock="@product.ProductWeights.First().Stock"
                                                data-price="@product.ProductWeights.First().Price"
                                                data-discount-price="@product.ProductWeights.First().DiscountPrice"
+                                               data-new="@product.IsNew"
                                                for="variation-@product.ProductWeights.First().Id"
                                                class="variation">
                                             @product.ProductWeights.First().Weight.Name
@@ -169,6 +173,7 @@
                                                data-stock="@product.ProductWeights.First().Stock"
                                                data-price="@product.ProductWeights.First().Price"
                                                data-discount-price="@product.ProductWeights.First().DiscountPrice"
+                                               data-new="@product.IsNew"
                                                for="variation-@product.ProductWeights.First().Id"
                                                class="variation">
                                             @product.ProductWeights.First().Weight.Name

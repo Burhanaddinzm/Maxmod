@@ -148,10 +148,10 @@
                 label.addEventListener("click", () => {
                     if (label.dataset.discountPrice != 0) {
                         priceWrapper.innerHTML = `<span class="selling-price">$${label.dataset.discountPrice} </span><span class="old-price" > $${label.dataset.price}</span>`;
-                        badges.innerHTML = `<div class="new-badge"></div><div class="save-badge" data-dollar="${(label.dataset.price - label.dataset.discountPrice).toFixed(2)}"></div>`
+                        badges.innerHTML = `${label.dataset.new == "True" ? "<div class='new-badge'></div>" : ""}<div class="save-badge" data-dollar="${(label.dataset.price - label.dataset.discountPrice).toFixed(2)}"></div>`;
                     } else {
                         priceWrapper.innerHTML = `<span class="selling-price">$${label.dataset.price} </span>`;
-                        badges.innerHTML = `<div class="new-badge"></div>`
+                        badges.innerHTML = label.dataset.new == "True" ? "<div class='new-badge'></div>" : "";
                     }
                 })
             })
